@@ -17,6 +17,7 @@
 
 package ru.nanit.limbo.connection;
 
+import cn.jja8.limbo.Player;
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
@@ -49,6 +50,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ClientConnection extends ChannelInboundHandlerAdapter {
 
+    private final Player player;
     private final LimboServer server;
     private final Channel channel;
     private final GameProfile gameProfile;
@@ -69,6 +71,11 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
         this.encoder = encoder;
         this.address = channel.remoteAddress();
         this.gameProfile = new GameProfile();
+        this.player = new Player(this);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public UUID getUuid() {

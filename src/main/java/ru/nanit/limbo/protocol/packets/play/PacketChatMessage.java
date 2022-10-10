@@ -17,13 +17,18 @@
 
 package ru.nanit.limbo.protocol.packets.play;
 
+import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.ByteMessage;
+import ru.nanit.limbo.protocol.PacketIn;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
+import ru.nanit.limbo.server.LimboServer;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.UUID;
 
-public class PacketChatMessage implements PacketOut {
+public class PacketChatMessage implements PacketOut{
 
     private String jsonData;
     private PositionLegacy position;
@@ -71,5 +76,4 @@ public class PacketChatMessage implements PacketOut {
         }
 
     }
-
 }

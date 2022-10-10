@@ -17,6 +17,7 @@
 
 package ru.nanit.limbo.protocol.registry;
 
+import cn.jja8.limbo.packets.PackReg;
 import ru.nanit.limbo.protocol.Packet;
 import ru.nanit.limbo.protocol.packets.PacketHandshake;
 import ru.nanit.limbo.protocol.packets.login.*;
@@ -76,6 +77,8 @@ public enum State {
     },
     PLAY(3) {
         {
+            PackReg.reg(serverBound,clientBound);
+            //保持连接
             serverBound.register(PacketKeepAlive::new,
                     map(0x00, V1_8, V1_8),
                     map(0x0B, V1_9, V1_11_1),
@@ -89,6 +92,7 @@ public enum State {
                     map(0x12, V1_19_1, V1_19_1)
             );
 
+            //数据包声明
             clientBound.register(PacketDeclareCommands::new,
                     map(0x11, V1_13, V1_14_4),
                     map(0x12, V1_15, V1_15_2),
@@ -97,6 +101,7 @@ public enum State {
                     map(0x12, V1_17, V1_18_2),
                     map(0x0F, V1_19, V1_19_1)
             );
+            //加入游戏包
             clientBound.register(PacketJoinGame::new,
                     map(0x01, V1_8, V1_8),
                     map(0x23, V1_9, V1_12_2),
@@ -108,6 +113,7 @@ public enum State {
                     map(0x23, V1_19, V1_19),
                     map(0x25, V1_19_1, V1_19_1)
             );
+            //插件消息包
             clientBound.register(PacketPluginMessage::new,
                     map(0x19, V1_13, V1_13_2),
                     map(0x18, V1_14, V1_14_4),
@@ -156,6 +162,7 @@ public enum State {
                     map(0x1E, V1_19, V1_19),
                     map(0x20, V1_19_1, V1_19_1)
             );
+
             clientBound.register(PacketChatMessage::new,
                     map(0x02, V1_8, V1_8),
                     map(0x0F, V1_9, V1_12_2),
@@ -166,6 +173,8 @@ public enum State {
                     map(0x5F, V1_19, V1_19),
                     map(0x62, V1_19_1, V1_19_1)
             );
+
+            //boos血条包
             clientBound.register(PacketBossBar::new,
                     map(0x0C, V1_9, V1_14_4),
                     map(0x0D, V1_15, V1_15_2),
@@ -173,6 +182,7 @@ public enum State {
                     map(0x0D, V1_17, V1_18_2),
                     map(0x0A, V1_19, V1_19_1)
             );
+            //玩家信息包
             clientBound.register(PacketPlayerInfo::new,
                     map(0x38, V1_8, V1_8),
                     map(0x2D, V1_9, V1_12),
@@ -186,6 +196,7 @@ public enum State {
                     map(0x34, V1_19, V1_19),
                     map(0x37, V1_19_1, V1_19_1)
             );
+            //玩家标题包,老版本
             clientBound.register(PacketTitleLegacy::new,
                     map(0x45, V1_8, V1_11_1),
                     map(0x47, V1_12, V1_12),
@@ -195,21 +206,25 @@ public enum State {
                     map(0x50, V1_15, V1_15_2),
                     map(0x4F, V1_16, V1_16_4)
             );
+            //玩家标题包，新版本
             clientBound.register(PacketTitleSetTitle::new,
                     map(0x59, V1_17, V1_17_1),
                     map(0x5A, V1_18, V1_19),
                     map(0x5D, V1_19_1, V1_19_1)
             );
+            //玩家副标题包
             clientBound.register(PacketTitleSetSubTitle::new,
                     map(0x57, V1_17, V1_17_1),
                     map(0x58, V1_18, V1_19),
                     map(0x5B, V1_19_1, V1_19_1)
             );
+            //标题时间包
             clientBound.register(PacketTitleTimes::new,
                     map(0x5A, V1_17, V1_17_1),
                     map(0x5B, V1_18, V1_19),
                     map(0x5E, V1_19_1, V1_19_1)
             );
+            //玩家列表包
             clientBound.register(PacketPlayerListHeader::new,
                     map(0x47, V1_8, V1_8),
                     map(0x48, V1_9, V1_9_2),
@@ -316,7 +331,7 @@ public enum State {
 
     }
 
-    private static class Mapping {
+    public static class Mapping {
 
         private final int packetId;
         private final Version from;

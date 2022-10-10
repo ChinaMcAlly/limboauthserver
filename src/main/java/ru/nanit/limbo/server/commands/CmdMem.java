@@ -14,15 +14,15 @@ public class CmdMem implements Command {
         long free = runtime.freeMemory() / mb;
         long max = runtime.maxMemory() / mb;
 
-        Logger.info("Memory usage:");
-        Logger.info("Used: %d MB", used);
-        Logger.info("Total: %d MB", total);
-        Logger.info("Free: %d MB", free);
-        Logger.info("Max: %d MB", max);
+        Logger.info("内存使用情况:");
+        Logger.info("使用中: %d MB", used);
+        Logger.info("已申请: %d MB", total);
+        Logger.info("剩余: %d MB", free);
+        Logger.info("最大: %d MB", max);
     }
 
     @Override
     public String description() {
-        return "Display memory usage";
+        return "显示内存使用情况";
     }
 }

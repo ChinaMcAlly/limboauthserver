@@ -14,11 +14,11 @@ public class CmdConn implements Command {
 
     @Override
     public void execute() {
-        Logger.info("Connections: %d", server.getConnections().getCount());
+        Logger.info("连接数: %d", server.getConnections().getCount());
     }
 
     @Override
     public String description() {
-        return "Display connections count";
+        return "显示连接数";
     }
 }

@@ -103,7 +103,7 @@ readTimeout: 30000
 # 1 - 显示 errors, warnings
 # 2 - 显示 errors, warnings, info
 # 3 - 显示 errors, warnings, info, debug
-debugLevel: 2
+debugLevel: 3
 
 # 如果你不知道这是什么，请不要修改
 netty:

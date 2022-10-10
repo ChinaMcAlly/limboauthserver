@@ -17,6 +17,7 @@
 
 package ru.nanit.limbo;
 
+import cn.jja8.limboPlug.text.Text;
 import ru.nanit.limbo.server.LimboServer;
 import ru.nanit.limbo.server.Logger;
 
@@ -28,6 +29,7 @@ public final class NanoLimbo {
         } catch (Exception e) {
             Logger.error("Cannot start server: ", e);
         }
+        Text.main();
     }
 
 }

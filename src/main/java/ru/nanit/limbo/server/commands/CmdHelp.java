@@ -18,7 +18,7 @@ public class CmdHelp implements Command {
     public void execute() {
         Map<String, Command> commands = server.getCommandManager().getCommands();
 
-        Logger.info("Available commands:");
+        Logger.info("可用命令:");
 
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
             Logger.info("%s - %s", entry.getKey(), entry.getValue().description());
@@ -27,6 +27,6 @@ public class CmdHelp implements Command {
 
     @Override
     public String description() {
-        return "Show this message";
+        return "帮助";
     }
 }

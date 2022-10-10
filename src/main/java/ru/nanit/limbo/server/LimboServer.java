@@ -72,7 +72,7 @@ public final class LimboServer {
     }
 
     public void start() throws Exception {
-        Logger.info("Starting server...");
+        Logger.info("服务器启动中...");
 
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
 
@@ -92,7 +92,7 @@ public final class LimboServer {
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop, "NanoLimbo shutdown thread"));
 
-        Logger.info("Server started on %s", config.getAddress());
+        Logger.info("服务器已启动，地址: %s", config.getAddress());
 
         Logger.setLevel(config.getDebugLevel());
 
@@ -132,7 +132,7 @@ public final class LimboServer {
     }
 
     private void stop() {
-        Logger.info("Stopping server...");
+        Logger.info("正在关闭服务器...");
 
         if (keepAliveTask != null) {
             keepAliveTask.cancel(true);
@@ -146,7 +146,7 @@ public final class LimboServer {
             workerGroup.shutdownGracefully();
         }
 
-        Logger.info("Server stopped, Goodbye!");
+        Logger.info("服务器已关闭!");
     }
 
 }
