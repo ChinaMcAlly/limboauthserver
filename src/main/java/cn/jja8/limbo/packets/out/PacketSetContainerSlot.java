@@ -1,8 +1,15 @@
 package cn.jja8.limbo.packets.out;
 
+import com.grack.nanojson.JsonWriter;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
+import net.kyori.adventure.nbt.TagStringIO;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
+
+import javax.swing.border.CompoundBorder;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * 设置物品栏内容包 https://wiki.vg/Protocol#Set_Container_Slot
@@ -64,7 +71,23 @@ public class PacketSetContainerSlot implements PacketOut {
         msg.writeBoolean(slot.hasItem);
         msg.writeVarInt(slot.itemID);
         msg.writeByte(slot.count);
-        msg.writeBytes(slot.nbt);
+
+       // msg.writeBytes(slot.nbt);
+        msg.writeCompoundTag(
+                CompoundBinaryTag
+                        .builder()
+                        .put(
+                                "display",
+                                CompoundBinaryTag
+                                        .builder()
+                                        .putString(
+                                                "Name",
+                                                JsonWriter.string(
+                                                        Map.of("text","我是纸")
+                                                )
+                                        ).build()
+                        ).build()
+        );
     }
 
     public Slot getSlot() {
