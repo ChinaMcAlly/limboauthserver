@@ -18,6 +18,8 @@
 package ru.nanit.limbo.connection;
 
 import cn.moonmc.limbo.Player;
+import cn.moonmc.limbo.eventWork.EventManager;
+import cn.moonmc.limbo.eventWork.event.player.PlayerLoginEvent;
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
@@ -129,7 +131,6 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
             disconnectLogin("You need to connect with Velocity");
             return;
         }
-
         writePacket(PacketSnapshots.PACKET_LOGIN_SUCCESS);
         updateState(State.PLAY);
 
@@ -162,6 +163,8 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
             writePacket(PacketSnapshots.PACKET_HEADER_AND_FOOTER);
 
         sendKeepAlive();
+        EventManager.call(new PlayerLoginEvent(this.player));
+
     }
 
     public void disconnectLogin(String reason) {

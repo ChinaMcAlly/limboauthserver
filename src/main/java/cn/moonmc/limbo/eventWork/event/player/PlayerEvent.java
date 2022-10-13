@@ -2,6 +2,7 @@ package cn.moonmc.limbo.eventWork.event.player;
 
 import cn.moonmc.limbo.Player;
 import cn.moonmc.limbo.eventWork.event.Event;
+import lombok.Data;
 import lombok.Getter;
 
 /**

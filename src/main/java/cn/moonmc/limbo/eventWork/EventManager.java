@@ -36,8 +36,8 @@ public class EventManager {
                 Method method = lister.getClass().getMethod("listen",event.getClass());
                 method.setAccessible(true);
                 method.invoke(lister,event);
-            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                throw new RuntimeException(e);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
