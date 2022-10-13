@@ -10,10 +10,19 @@ import ru.nanit.limbo.protocol.registry.Version;
  * */
 public class PacketSetContainerProperty  implements PacketOut {
 
+    /**
+     * 要设置的窗口id  -1设置玩家鼠标 -2设置玩家背包 其他窗口使用PacketOpenWindow的id
+     * */
     int windowID = 56;
 
+    /**
+     * 设置项目
+     * */
     short property = 0;
 
+    /**
+     * 设置值
+     * */
     short value = 0;
 
 
@@ -23,39 +32,5 @@ public class PacketSetContainerProperty  implements PacketOut {
         msg.writeShort(property);
         msg.writeShort(value);
 
-    }
-
-    public int getWindowID() {
-        return windowID;
-    }
-
-    /**
-     * 要设置的窗口id  -1设置玩家鼠标 -2设置玩家背包 其他窗口使用PacketOpenWindow的id
-     * */
-    public void setWindowID(int windowID) {
-        this.windowID = windowID;
-    }
-
-    public short getProperty() {
-        return property;
-    }
-
-
-    /**
-     * 设置项目
-     * */
-    public void setProperty(short property) {
-        this.property = property;
-    }
-
-    public short getValue() {
-        return value;
-    }
-
-    /**
-     * 设置值
-     * */
-    public void setValue(short value) {
-        this.value = value;
     }
 }

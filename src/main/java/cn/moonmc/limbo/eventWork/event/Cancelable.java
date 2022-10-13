@@ -5,4 +5,7 @@ package cn.moonmc.limbo.eventWork.event;
  * @author jja8
  * */
 public interface Cancelable extends Event{
+    boolean isCancel();
+
+    void setCancel(boolean cancel);
 }

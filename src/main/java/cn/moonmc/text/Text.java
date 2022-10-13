@@ -6,6 +6,10 @@ import cn.moonmc.limbo.eventWork.event.player.*;
 import cn.moonmc.limbo.packets.out.PacketOpenWindow;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
 import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
+import com.grack.nanojson.JsonWriter;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
+
+import java.util.Map;
 
 /**
  * 一个测试类
@@ -31,7 +35,19 @@ public class Text {
                 pa.getSlot().setCount(1);
                 pa.getSlot().setHasItem(true);
                 pa.getSlot().setItemID(829);
-                pa.getSlot().setNbt(new byte[]{0});
+                pa.getSlot().setNbt(CompoundBinaryTag
+                        .builder()
+                        .put(
+                                "display",
+                                CompoundBinaryTag
+                                        .builder()
+                                        .putString(
+                                                "Name",
+                                                JsonWriter.string(
+                                                        Map.of("text","我是纸")
+                                                )
+                                        ).build()
+                        ).build());
                event.getPlayer().getClientConnection().sendPacket(pa);
 
 
