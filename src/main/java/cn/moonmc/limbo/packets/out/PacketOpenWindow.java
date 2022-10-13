@@ -1,4 +1,4 @@
-package cn.moonmc.jja8.limbo.packets.out;
+package cn.moonmc.limbo.packets.out;
 
 import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.protocol.ByteMessage;
@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * 打开界面包
+ * @author jja8
  * */
 public class PacketOpenWindow implements PacketOut {
     int windowID = 56;

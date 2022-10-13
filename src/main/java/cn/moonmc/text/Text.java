@@ -1,12 +1,16 @@
-package cn.moonmc.jja8.text;
+package cn.moonmc.text;
 
-import cn.moonmc.jja8.limbo.eventWork.EventManager;
-import cn.moonmc.jja8.limbo.eventWork.Lister;
-import cn.moonmc.jja8.limbo.eventWork.event.player.*;
-import cn.moonmc.jja8.limbo.packets.out.PacketOpenWindow;
-import cn.moonmc.jja8.limbo.packets.out.PacketSetContainerProperty;
-import cn.moonmc.jja8.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.limbo.eventWork.EventManager;
+import cn.moonmc.limbo.eventWork.Lister;
+import cn.moonmc.limbo.eventWork.event.player.*;
+import cn.moonmc.limbo.packets.out.PacketOpenWindow;
+import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
+import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
 
+/**
+ * 一个测试类
+ * @author jja8
+ * */
 public class Text {
 
     public static void main(){

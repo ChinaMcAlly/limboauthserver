@@ -1,4 +1,4 @@
-package cn.moonmc.jja8.limbo.packets.out;
+package cn.moonmc.limbo.packets.out;
 
 import com.grack.nanojson.JsonWriter;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * 设置物品栏内容包 https://wiki.vg/Protocol#Set_Container_Slot
+ * @author jja8
  * */
 public class PacketSetContainerSlot implements PacketOut {
 

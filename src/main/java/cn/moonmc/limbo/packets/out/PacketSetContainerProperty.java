@@ -1,4 +1,4 @@
-package cn.moonmc.jja8.limbo.packets.out;
+package cn.moonmc.limbo.packets.out;
 
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
@@ -6,6 +6,7 @@ import ru.nanit.limbo.protocol.registry.Version;
 
 /**
  * 更新属性包 https://wiki.vg/Protocol#Set_Container_Property
+ * @author jja8
  * */
 public class PacketSetContainerProperty  implements PacketOut {
 

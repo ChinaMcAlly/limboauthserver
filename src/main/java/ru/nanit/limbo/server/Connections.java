@@ -17,9 +17,9 @@
 
 package ru.nanit.limbo.server;
 
-import cn.moonmc.jja8.limbo.eventWork.EventManager;
-import cn.moonmc.jja8.limbo.eventWork.event.player.PlayerJoinEvent;
-import cn.moonmc.jja8.limbo.eventWork.event.player.PlayerQuitEvent;
+import cn.moonmc.limbo.eventWork.EventManager;
+import cn.moonmc.limbo.eventWork.event.player.PlayerJoinEvent;
+import cn.moonmc.limbo.eventWork.event.player.PlayerQuitEvent;
 import ru.nanit.limbo.connection.ClientConnection;
 
 import java.util.Collection;

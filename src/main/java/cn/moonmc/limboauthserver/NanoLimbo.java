@@ -17,7 +17,7 @@
 
 package cn.moonmc.limboauthserver;
 
-import cn.moonmc.jja8.text.Text;
+import cn.moonmc.text.Text;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

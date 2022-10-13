@@ -1,16 +1,20 @@
-package cn.moonmc.jja8.limbo.packets;
+package cn.moonmc.limbo.packets;
 
 
-import cn.moonmc.jja8.limbo.packets.in.PacketPlayerChatMessage;
-import cn.moonmc.jja8.limbo.packets.in.PacketPlayerCommand;
-import cn.moonmc.jja8.limbo.packets.in.PacketRenameItem;
-import cn.moonmc.jja8.limbo.packets.out.PacketOpenWindow;
-import cn.moonmc.jja8.limbo.packets.out.PacketSetContainerProperty;
-import cn.moonmc.jja8.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.limbo.packets.in.PacketPlayerChatMessage;
+import cn.moonmc.limbo.packets.in.PacketPlayerCommand;
+import cn.moonmc.limbo.packets.in.PacketRenameItem;
+import cn.moonmc.limbo.packets.out.PacketOpenWindow;
+import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
+import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
 import ru.nanit.limbo.protocol.registry.State;
 
 import static ru.nanit.limbo.protocol.registry.Version.V1_19_1;
 
+/**
+ * 包注册类
+ * @author jja8
+ * */
 public class PackReg {
     public static void reg(State.ProtocolMappings serverBound, State.ProtocolMappings clientBound) {
         //聊天消息包

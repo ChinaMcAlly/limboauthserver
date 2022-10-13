@@ -1,4 +1,4 @@
-package cn.moonmc.jja8.limbo;
+package cn.moonmc.limbo;
 
 import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.connection.ClientConnection;
@@ -9,6 +9,10 @@ import ru.nanit.limbo.server.data.BossBar;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * 代表一个玩家
+ * @author jja8
+ * */
 public class Player {
     private final ClientConnection clientConnection;
     public Player(ClientConnection clientConnection) {

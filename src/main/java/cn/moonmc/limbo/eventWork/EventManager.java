@@ -1,6 +1,6 @@
-package cn.moonmc.jja8.limbo.eventWork;
+package cn.moonmc.limbo.eventWork;
 
-import cn.moonmc.jja8.limbo.eventWork.event.Event;
+import cn.moonmc.limbo.eventWork.event.Event;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 事件管理器
+ * @author jja8
+ * */
 public class EventManager {
     static Map<Class<? extends Event>, List<Lister<? extends Event>>> listerMap = new HashMap<>();
 
