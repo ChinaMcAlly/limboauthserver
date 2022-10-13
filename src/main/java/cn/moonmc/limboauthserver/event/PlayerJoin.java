@@ -1,8 +1,8 @@
 package cn.moonmc.limboauthserver.event;
 
-import cn.jja8.limbo.eventWork.EventManager;
-import cn.jja8.limbo.eventWork.Lister;
-import cn.jja8.limbo.eventWork.event.player.PlayerJoinEvent;
+import cn.moonmc.limbo.eventWork.EventManager;
+import cn.moonmc.limbo.eventWork.Lister;
+import cn.moonmc.limbo.eventWork.event.player.PlayerJoinEvent;
 import cn.moonmc.limboauthserver.entity.User;
 import cn.moonmc.limboauthserver.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
