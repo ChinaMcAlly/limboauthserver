@@ -1,12 +1,12 @@
-package cn.jja8.limbo.packets;
+package cn.moonmc.jja8.limbo.packets;
 
 
-import cn.jja8.limbo.packets.in.PacketPlayerChatMessage;
-import cn.jja8.limbo.packets.in.PacketPlayerCommand;
-import cn.jja8.limbo.packets.in.PacketRenameItem;
-import cn.jja8.limbo.packets.out.PacketOpenWindow;
-import cn.jja8.limbo.packets.out.PacketSetContainerProperty;
-import cn.jja8.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.jja8.limbo.packets.in.PacketPlayerChatMessage;
+import cn.moonmc.jja8.limbo.packets.in.PacketPlayerCommand;
+import cn.moonmc.jja8.limbo.packets.in.PacketRenameItem;
+import cn.moonmc.jja8.limbo.packets.out.PacketOpenWindow;
+import cn.moonmc.jja8.limbo.packets.out.PacketSetContainerProperty;
+import cn.moonmc.jja8.limbo.packets.out.PacketSetContainerSlot;
 import ru.nanit.limbo.protocol.registry.State;
 
 import static ru.nanit.limbo.protocol.registry.Version.V1_19_1;

@@ -17,7 +17,7 @@
 
 package ru.nanit.limbo.protocol.registry;
 
-import cn.jja8.limbo.packets.PackReg;
+import cn.moonmc.jja8.limbo.packets.PackReg;
 import ru.nanit.limbo.protocol.Packet;
 import ru.nanit.limbo.protocol.packets.PacketHandshake;
 import ru.nanit.limbo.protocol.packets.login.*;

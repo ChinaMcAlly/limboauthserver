@@ -1,4 +1,4 @@
-package cn.jja8.limbo.packets.out;
+package cn.moonmc.jja8.limbo.packets.out;
 
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;

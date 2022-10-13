@@ -1,4 +1,4 @@
-package cn.jja8.limbo;
+package cn.moonmc.jja8.limbo;
 
 import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.connection.ClientConnection;

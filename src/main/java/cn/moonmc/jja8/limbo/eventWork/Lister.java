@@ -1,6 +1,6 @@
-package cn.jja8.limbo.eventWork;
+package cn.moonmc.jja8.limbo.eventWork;
 
-import cn.jja8.limbo.eventWork.event.Event;
+import cn.moonmc.jja8.limbo.eventWork.event.Event;
 
 public abstract class Lister<T extends Event>{
      Class<T> eventClass;
