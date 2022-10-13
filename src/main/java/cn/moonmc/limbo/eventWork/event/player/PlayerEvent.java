@@ -1,10 +1,11 @@
-package cn.jja8.limbo.eventWork.event.player;
+package cn.moonmc.limbo.eventWork.event.player;
 
-import cn.jja8.limbo.Player;
-import cn.jja8.limbo.eventWork.event.Event;
+import cn.moonmc.limbo.Player;
+import cn.moonmc.limbo.eventWork.event.Event;
 
 /**
  * 玩家事件
+ * @author jja8
  * */
 public abstract class PlayerEvent implements Event {
     Player player;

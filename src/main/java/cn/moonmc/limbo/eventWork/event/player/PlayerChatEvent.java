@@ -1,9 +1,10 @@
-package cn.jja8.limbo.eventWork.event.player;
+package cn.moonmc.limbo.eventWork.event.player;
 
-import cn.jja8.limbo.Player;
+import cn.moonmc.limbo.Player;
 
 /**
  * 玩家聊天事件
+ * @author jja8
  * */
 public class PlayerChatEvent extends PlayerEvent {
     String chat;

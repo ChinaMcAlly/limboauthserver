@@ -17,7 +17,7 @@
 
 package ru.nanit.limbo.connection;
 
-import cn.jja8.limbo.Player;
+import cn.moonmc.limbo.Player;
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;

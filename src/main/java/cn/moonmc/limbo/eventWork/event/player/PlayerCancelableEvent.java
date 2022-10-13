@@ -1,11 +1,13 @@
-package cn.jja8.limbo.eventWork.event.player;
+package cn.moonmc.limbo.eventWork.event.player;
 
-import cn.jja8.limbo.Player;
+import cn.moonmc.limbo.Player;
+import cn.moonmc.limbo.eventWork.event.Cancelable;
 
 /**
- * 玩家事件
+ * 玩家可取消事件
+ * @author jja8
  * */
-public abstract class PlayerCancelableEvent extends PlayerEvent {
+public abstract class PlayerCancelableEvent extends PlayerEvent implements Cancelable {
    boolean isCancel = false;
 
     public PlayerCancelableEvent(Player player) {

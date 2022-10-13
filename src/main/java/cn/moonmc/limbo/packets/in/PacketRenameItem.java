@@ -1,7 +1,7 @@
-package cn.jja8.limbo.packets.in;
+package cn.moonmc.limbo.packets.in;
 
-import cn.jja8.limbo.eventWork.EventManager;
-import cn.jja8.limbo.eventWork.event.player.PlayerRenameItem;
+import cn.moonmc.limbo.eventWork.EventManager;
+import cn.moonmc.limbo.eventWork.event.player.PlayerRenameItem;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketIn;
@@ -10,6 +10,7 @@ import ru.nanit.limbo.server.LimboServer;
 
 /**
  * 物品重命名包，铁砧每次修改物品名称都会发送给服务器
+ * @author jja8
  * */
 public class PacketRenameItem  implements PacketIn {
     String name;

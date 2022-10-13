@@ -1,6 +1,7 @@
-package cn.jja8.limbo.packets.out;
+package cn.moonmc.limbo.packets.out;
 
 import com.grack.nanojson.JsonWriter;
+import lombok.Data;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
@@ -9,13 +10,28 @@ import java.util.Map;
 
 /**
  * 打开界面包
+ * @author jja8
  * */
+@Data
 public class PacketOpenWindow implements PacketOut {
+    /**
+     * 每个windowID都不能相同，如果相同会认为是同一个window
+     * */
     int windowID = 56;
 
+    /**
+     * window类型
+     * */
     WindowsType windowsType = WindowsType.generic_9x3;
+
+    /**
+     * window标题
+     * */
     String title = "null";
 
+    /**
+     * 格子数量
+     * */
     int slots = 0; //格子数量
 
     @Override
@@ -25,37 +41,6 @@ public class PacketOpenWindow implements PacketOut {
         msg.writeString(JsonWriter.string(Map.of("text",title)));
     }
 
-    public WindowsType getWindowsType() {
-        return windowsType;
-    }
-
-    public void setWindowsType(WindowsType windowsType) {
-        this.windowsType = windowsType;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getSlots() {
-        return slots;
-    }
-
-    public void setSlots(int slots) {
-        this.slots = slots;
-    }
-
-    public int getWindowID() {
-        return windowID;
-    }
-
-    public void setWindowID(int windowID) {
-        this.windowID = windowID;
-    }
 
     public enum WindowsType{
         //参考 https://wiki.vg/Inventory
