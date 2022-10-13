@@ -3,7 +3,6 @@ package cn.moonmc.limboauthserver.mapper;
 import cn.moonmc.limboauthserver.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
@@ -22,6 +21,6 @@ public interface UserMapper {
      * @param uuid 玩家UUID
      * @return 用户类
      */
-    @Select("SELECT * FROM `users` WHERE uuid=#{uuid}")
+    @Select("SELECT `uuid`,`username`,`password`,`phone`,`status` FROM `users` WHERE uuid=#{uuid}")
     User selectUser(String uuid);
 }
