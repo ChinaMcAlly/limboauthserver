@@ -17,7 +17,9 @@
 
 package cn.moonmc.limboauthserver;
 
+import cn.jja8.limbo.Player;
 import cn.jja8.text.Text;
+import cn.moonmc.limboauthserver.event.PlayerJoin;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
