@@ -1,6 +1,4 @@
-package cn.moonmc.limbo.eventWork;
-
-import cn.moonmc.limbo.eventWork.event.Event;
+package cn.moonmc.limbo.works.event;
 
 /**
  * 事件监听器的抽象类

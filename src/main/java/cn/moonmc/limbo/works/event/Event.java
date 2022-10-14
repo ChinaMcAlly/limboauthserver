@@ -1,4 +1,4 @@
-package cn.moonmc.limbo.eventWork.event;
+package cn.moonmc.limbo.works.event;
 
 /**
  * 所有事件的父类

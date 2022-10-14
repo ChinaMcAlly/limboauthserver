@@ -1,4 +1,4 @@
-package ru.nanit.limbo.protocol.packets.play;
+package cn.moonmc.limbo.packets.out;
 
 import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.protocol.ByteMessage;

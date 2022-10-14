@@ -4,16 +4,18 @@ package cn.moonmc.limbo.packets;
 import cn.moonmc.limbo.packets.in.PacketPlayerChatMessage;
 import cn.moonmc.limbo.packets.in.PacketPlayerCommand;
 import cn.moonmc.limbo.packets.in.PacketRenameItem;
-import cn.moonmc.limbo.packets.out.PacketOpenWindow;
+import cn.moonmc.limbo.packets.out.PacketOpenMenu;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
 import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.limbo.packets.out.PlayDisconnect;
 import ru.nanit.limbo.protocol.registry.State;
+import ru.nanit.limbo.protocol.registry.Version;
 
 import static ru.nanit.limbo.protocol.registry.Version.V1_19_1;
 
 /**
  * 包注册类
- * @author jja8
+ * @author jja8 CNLuminous
  * */
 public class PackReg {
     public static void reg(State.ProtocolMappings serverBound, State.ProtocolMappings clientBound) {
@@ -24,7 +26,7 @@ public class PackReg {
         serverBound.register(PacketPlayerCommand::new,
                 new State.Mapping(0x04,V1_19_1,V1_19_1));
         //打开窗口包
-        clientBound.register(PacketOpenWindow::new,
+        clientBound.register(PacketOpenMenu::new,
                 new State.Mapping(0x2D,V1_19_1,V1_19_1));
         clientBound.register(PacketSetContainerSlot::new,
                 new State.Mapping(0x13,V1_19_1,V1_19_1));
@@ -33,5 +35,9 @@ public class PackReg {
 
         serverBound.register(PacketRenameItem::new,
                 new State.Mapping(0x23,V1_19_1,V1_19_1));
+
+        clientBound.register(PlayDisconnect::new,
+                new State.Mapping(0x19, Version.getMin(), Version.getMax())
+        );
     }
 }

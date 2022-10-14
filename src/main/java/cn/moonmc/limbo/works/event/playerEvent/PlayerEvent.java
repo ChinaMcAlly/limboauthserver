@@ -1,8 +1,7 @@
-package cn.moonmc.limbo.eventWork.event.player;
+package cn.moonmc.limbo.works.event.playerEvent;
 
 import cn.moonmc.limbo.Player;
-import cn.moonmc.limbo.eventWork.event.Event;
-import lombok.Data;
+import cn.moonmc.limbo.works.event.Event;
 import lombok.Getter;
 
 /**

@@ -13,7 +13,7 @@ import java.util.Map;
  * @author jja8
  * */
 @Data
-public class PacketOpenWindow implements PacketOut {
+public class PacketOpenMenu implements PacketOut {
     /**
      * 每个windowID都不能相同，如果相同会认为是同一个window
      * */

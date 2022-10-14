@@ -1,8 +1,5 @@
-package cn.moonmc.limbo.eventWork;
+package cn.moonmc.limbo.works.event;
 
-import cn.moonmc.limbo.eventWork.event.Event;
-
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;

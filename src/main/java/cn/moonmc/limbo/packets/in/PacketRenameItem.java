@@ -1,7 +1,7 @@
 package cn.moonmc.limbo.packets.in;
 
-import cn.moonmc.limbo.eventWork.EventManager;
-import cn.moonmc.limbo.eventWork.event.player.PlayerRenameItem;
+import cn.moonmc.limbo.works.event.EventManager;
+import cn.moonmc.limbo.works.event.playerEvent.PlayerRenameItem;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketIn;

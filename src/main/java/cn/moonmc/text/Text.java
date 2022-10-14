@@ -1,9 +1,9 @@
 package cn.moonmc.text;
 
-import cn.moonmc.limbo.eventWork.EventManager;
-import cn.moonmc.limbo.eventWork.Lister;
-import cn.moonmc.limbo.eventWork.event.player.*;
-import cn.moonmc.limbo.packets.out.PacketOpenWindow;
+import cn.moonmc.limbo.works.event.EventManager;
+import cn.moonmc.limbo.works.event.Lister;
+import cn.moonmc.limbo.works.event.playerEvent.*;
+import cn.moonmc.limbo.packets.out.PacketOpenMenu;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
 import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
 import com.grack.nanojson.JsonWriter;
@@ -23,12 +23,12 @@ public class Text {
             public void listen(PlayerChatEvent event) {
                 System.out.println(event.getPlayer().getName() + ":" + event.getChat());
 
-                PacketOpenWindow packetOpenWindow = new PacketOpenWindow();
-                packetOpenWindow.setWindowsType(PacketOpenWindow.WindowsType.anvil);
-                packetOpenWindow.setSlots(3);
-                packetOpenWindow.setTitle(event.getChat());
+                PacketOpenMenu packetOpenMenu = new PacketOpenMenu();
+                packetOpenMenu.setWindowsType(PacketOpenMenu.WindowsType.anvil);
+                packetOpenMenu.setSlots(3);
+                packetOpenMenu.setTitle(event.getChat());
 
-                event.getPlayer().getClientConnection().sendPacket(packetOpenWindow);
+                event.getPlayer().getClientConnection().sendPacket(packetOpenMenu);
 
                 PacketSetContainerSlot pa = new PacketSetContainerSlot();
                 pa.setSlotID((short) 0);
@@ -68,9 +68,9 @@ public class Text {
             }
         });
 
-        EventManager.regLister(new Lister<>(PlayerJoinEvent.class) {
+        EventManager.regLister(new Lister<>(PlayerConnectEvent.class) {
             @Override
-            public void listen(PlayerJoinEvent event) {
+            public void listen(PlayerConnectEvent event) {
                 System.out.println(event.getPlayer().getName() + "进入游戏");
             }
         });

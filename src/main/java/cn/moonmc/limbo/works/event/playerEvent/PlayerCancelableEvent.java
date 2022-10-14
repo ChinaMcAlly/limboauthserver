@@ -1,7 +1,7 @@
-package cn.moonmc.limbo.eventWork.event.player;
+package cn.moonmc.limbo.works.event.playerEvent;
 
 import cn.moonmc.limbo.Player;
-import cn.moonmc.limbo.eventWork.event.Cancelable;
+import cn.moonmc.limbo.works.event.Cancelable;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -18,8 +18,8 @@
 package ru.nanit.limbo.connection;
 
 import cn.moonmc.limbo.Player;
-import cn.moonmc.limbo.eventWork.EventManager;
-import cn.moonmc.limbo.eventWork.event.player.PlayerLoginEvent;
+import cn.moonmc.limbo.works.event.EventManager;
+import cn.moonmc.limbo.works.event.playerEvent.PlayerJoinEvent;
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
@@ -35,7 +35,6 @@ import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.Packet;
 import ru.nanit.limbo.protocol.packets.login.PacketDisconnect;
 import ru.nanit.limbo.protocol.packets.play.PacketKeepAlive;
-import ru.nanit.limbo.protocol.packets.play.PlayDisconnect;
 import ru.nanit.limbo.protocol.registry.State;
 import ru.nanit.limbo.protocol.registry.Version;
 import ru.nanit.limbo.server.LimboServer;
@@ -164,7 +163,7 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
             writePacket(PacketSnapshots.PACKET_HEADER_AND_FOOTER);
 
         sendKeepAlive();
-        EventManager.call(new PlayerLoginEvent(this.player));
+        EventManager.call(new PlayerJoinEvent(this.player));
 
     }
 
