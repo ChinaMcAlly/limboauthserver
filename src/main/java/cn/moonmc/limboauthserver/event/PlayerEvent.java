@@ -8,6 +8,7 @@ import cn.moonmc.limbo.eventWork.event.player.PlayerRenameItem;
 import cn.moonmc.limbo.packets.out.PacketOpenWindow;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
 import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.limboauthserver.AuthService;
 import cn.moonmc.limboauthserver.entity.User;
 import cn.moonmc.limboauthserver.mapper.UserMapper;
 import com.grack.nanojson.JsonWriter;
@@ -17,9 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import ru.nanit.limbo.protocol.packets.login.PacketDisconnect;
-import ru.nanit.limbo.protocol.packets.play.PacketChatMessage;
-import ru.nanit.limbo.util.Colors;
 
 import java.util.Map;
 
@@ -30,24 +28,22 @@ import java.util.Map;
 @Component
 @Slf4j
 public class PlayerEvent implements ApplicationRunner {
-    private UserMapper userMapper;
     @Override
     public void run(ApplicationArguments args) throws Exception {
         EventManager.regLister(new Lister<>(PlayerJoinEvent.class) {
             @Override
             public void listen(PlayerJoinEvent event) {
                 //初始化用户数据
-                User user = userMapper.selectUser(event.getPlayer().getUUID().toString());
+                User user = AuthService.selectUser(event.getPlayer().getUUID().toString());
                 if (user==null){
                     user = new User(event.getPlayer().getUUID().toString(),event.getPlayer().getName(),null,null,"0");
-                    userMapper.createUser(user);
+                    AuthService.register(user);
                 }
             }
         });
         EventManager.regLister(new Lister<>(PlayerLoginEvent.class){
             @Override
             public void listen(PlayerLoginEvent event) {
-                System.out.println(111);
                 //打开登录GUI
                 PacketOpenWindow packetOpenWindow = new PacketOpenWindow();
                 packetOpenWindow.setWindowsType(PacketOpenWindow.WindowsType.anvil);
@@ -83,18 +79,12 @@ public class PlayerEvent implements ApplicationRunner {
                 //玩家退出登录操作
                 if (">q".equals(event.getName()) || "q".equals(event.getName())) {
                     event.getPlayer().disconnect("用户退出登录操作");
-
-
                 }
+
                 event.getPlayer().getClientConnection().sendPacket(new PacketSetContainerProperty());
 
             }
         });
 
-    }
-
-    @Autowired
-    public void autoWired(UserMapper userMapper){
-        this.userMapper = userMapper;
     }
 }
