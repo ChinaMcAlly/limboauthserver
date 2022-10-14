@@ -1,5 +1,6 @@
 package cn.moonmc.limbo.packets.out;
 
+import cn.moonmc.limbo.works.message.JsonText;
 import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
@@ -12,17 +13,17 @@ import java.util.Map;
  * @author CNLuminous
  */
 public class PlayDisconnect implements PacketOut {
-    private final String reason;
-    public PlayDisconnect(String reason) {
+    private final JsonText reason;
+    public PlayDisconnect(JsonText reason) {
         this.reason = reason;
     }
     public PlayDisconnect(){
-        reason = null;
+        reason = new JsonText("null");
     }
 
     @Override
     public void encode(ByteMessage msg, Version version) {
-        msg.writeString(JsonWriter.string(Map.of("text",reason)));
+        msg.writeString(reason.toJsonText());
     }
 
     @Override

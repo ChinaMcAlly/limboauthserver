@@ -8,6 +8,7 @@ import cn.moonmc.limbo.works.event.Lister;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerConnectEvent;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerJoinEvent;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerRenameItem;
+import cn.moonmc.limbo.works.message.JsonText;
 import cn.moonmc.limboauthserver.AuthService;
 import cn.moonmc.limboauthserver.entity.User;
 import com.grack.nanojson.JsonWriter;
@@ -46,7 +47,7 @@ public class PlayerEvent implements ApplicationRunner {
                 PacketOpenMenu packetOpenWindow = new PacketOpenMenu();
                 packetOpenWindow.setWindowsType(PacketOpenMenu.WindowsType.anvil);
                 packetOpenWindow.setSlots(3);
-                packetOpenWindow.setTitle("方块沙盒视角登录系统 | 输入Q退出");
+                packetOpenWindow.setTitle(new JsonText("方块沙盒视角登录系统 | 输入Q退出"));
                 event.getPlayer().getClientConnection().sendPacket(packetOpenWindow);
                 PacketSetContainerSlot pa = new PacketSetContainerSlot();
                 pa.setSlotID((short) 0);
@@ -76,7 +77,7 @@ public class PlayerEvent implements ApplicationRunner {
             public void listen(PlayerRenameItem event) {
                 //玩家退出登录操作
                 if (">q".equals(event.getName()) || "q".equals(event.getName())) {
-                    event.getPlayer().disconnect("用户退出登录操作");
+                    event.getPlayer().disconnect(new JsonText("用户退出登录操作"));
                 }
 
                 event.getPlayer().getClientConnection().sendPacket(new PacketSetContainerProperty());

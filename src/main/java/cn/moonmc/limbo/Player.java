@@ -1,6 +1,7 @@
 package cn.moonmc.limbo;
 
 import cn.moonmc.limbo.packets.out.PlayDisconnect;
+import cn.moonmc.limbo.works.message.JsonText;
 import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
@@ -42,13 +43,13 @@ public class Player {
      * 向玩家发送Title
      * @author jja8
      * */
-    public void sendTitle(String title,String subtitle,int in,int stay,int out){
+    public void sendTitle(JsonText title, JsonText subtitle, int in, int stay, int out){
         PacketTitleSetTitle packetTitle = new PacketTitleSetTitle();
         PacketTitleSetSubTitle packetSubtitle = new PacketTitleSetSubTitle();
         PacketTitleTimes packetTimes = new PacketTitleTimes();
 
-        packetTitle.setTitle(JsonWriter.string(Map.of("text",title)));
-        packetSubtitle.setSubtitle(JsonWriter.string(Map.of("text",subtitle)));
+        packetTitle.setTitle(title.toJsonText());
+        packetSubtitle.setSubtitle(subtitle.toJsonText());
         packetTimes.setFadeIn(in);
         packetTimes.setStay(stay);
         packetTimes.setFadeOut(out);
@@ -66,10 +67,10 @@ public class Player {
      * 向玩家发送boos血条
      * @author jja8
      * */
-    public void sendBoosBar(String text, float health, BossBar.Color color, BossBar.Division division,UUID uuid){
+    public void sendBoosBar(JsonText text, float health, BossBar.Color color, BossBar.Division division,UUID uuid){
         PacketBossBar bossBarPaket = new PacketBossBar();
         BossBar bossBar = new BossBar();
-        bossBar.setText(JsonWriter.string(Map.of("text",text)));
+        bossBar.setText(text.toJsonText());
         bossBar.setHealth(health);
         bossBar.setColor(color);
         bossBar.setDivision(division);
@@ -83,9 +84,9 @@ public class Player {
      * 向玩家发送消息
      * @author jja8
      * */
-    public void sendMessage(PacketChatMessage.PositionLegacy type,String message){
+    public void sendMessage(PacketChatMessage.PositionLegacy type,JsonText message){
         PacketChatMessage joinMessage = new PacketChatMessage();
-        joinMessage.setJsonData(JsonWriter.string(Map.of("text",message)));
+        joinMessage.setJsonData(message.toJsonText());
         joinMessage.setPosition(type);
         joinMessage.setSender(UUID.randomUUID());
         clientConnection.sendPacket(PacketSnapshot.of(joinMessage));
@@ -96,7 +97,7 @@ public class Player {
      * @author jja8
      * @param reason 原因
      */
-    public void disconnect(String reason){
+    public void disconnect(JsonText reason){
         clientConnection.sendPacketAndClose(new PlayDisconnect(reason));
     }
 }

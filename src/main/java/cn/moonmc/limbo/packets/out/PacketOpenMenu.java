@@ -1,5 +1,6 @@
 package cn.moonmc.limbo.packets.out;
 
+import cn.moonmc.limbo.works.message.JsonText;
 import com.grack.nanojson.JsonWriter;
 import lombok.Data;
 import ru.nanit.limbo.protocol.ByteMessage;
@@ -27,7 +28,7 @@ public class PacketOpenMenu implements PacketOut {
     /**
      * window标题
      * */
-    String title = "null";
+    JsonText title = new JsonText("null");
 
     /**
      * 格子数量
@@ -38,7 +39,7 @@ public class PacketOpenMenu implements PacketOut {
     public void encode(ByteMessage msg, Version version) {
         msg.writeVarInt(windowID);
         msg.writeVarInt(windowsType.ID);
-        msg.writeString(JsonWriter.string(Map.of("text",title)));
+        msg.writeString(title.toJsonText());
     }
 
 
