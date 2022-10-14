@@ -3,6 +3,7 @@ package cn.moonmc.limbo.works.menu;
 import cn.moonmc.limbo.Player;
 import cn.moonmc.limbo.works.event.EventManager;
 import cn.moonmc.limbo.works.event.Lister;
+import cn.moonmc.limbo.works.event.playerEvent.PlayerClickContainer;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerCloseContainer;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerQuitEvent;
 import org.springframework.boot.ApplicationArguments;
@@ -42,6 +43,15 @@ public class MenuManager implements ApplicationRunner {
                 }
             }
         });
+        EventManager.regLister(new Lister<>(PlayerClickContainer.class) {
+            @Override
+            public void listen(PlayerClickContainer event) {
+                Control control = playerControlMap.get(event.getPlayer());
+                if (control!=null){
+                    control.beClick(event.getPlayer());
+                }
+            }
+        });
         //实现通知
     }
 
@@ -59,7 +69,7 @@ public class MenuManager implements ApplicationRunner {
         /**
          * 被点击时通知
          * */
-        protected void beClick(){};
+        protected void beClick(Player player){};
 
         //用来调用
         /**

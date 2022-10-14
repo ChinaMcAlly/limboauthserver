@@ -1,10 +1,7 @@
 package cn.moonmc.limbo.packets;
 
 
-import cn.moonmc.limbo.packets.in.PacketCloseContainer;
-import cn.moonmc.limbo.packets.in.PacketPlayerChatMessage;
-import cn.moonmc.limbo.packets.in.PacketPlayerCommand;
-import cn.moonmc.limbo.packets.in.PacketRenameItem;
+import cn.moonmc.limbo.packets.in.*;
 import cn.moonmc.limbo.packets.out.PacketOpenMenu;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
 import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
@@ -42,6 +39,8 @@ public class PackReg {
         );
 
         serverBound.register(PacketCloseContainer::new,
-                new State.Mapping(0x10,V1_19_1,V1_19_1));
+                new State.Mapping(0x0C,V1_19_1,V1_19_1));
+        serverBound.register(PacketClickContainer::new,
+                new State.Mapping(0x0B,V1_19_1,V1_19_1));
     }
 }

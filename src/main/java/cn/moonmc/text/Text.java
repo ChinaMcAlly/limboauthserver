@@ -6,6 +6,11 @@ import cn.moonmc.limbo.works.event.playerEvent.*;
 import cn.moonmc.limbo.packets.out.PacketOpenMenu;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
 import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.limbo.works.menu.AnvilMenu;
+import cn.moonmc.limbo.works.menu.Item;
+import cn.moonmc.limbo.works.menu.ItemNBTs;
+import cn.moonmc.limbo.works.menu.ItemType;
+import cn.moonmc.limbo.works.message.JsonText;
 import com.grack.nanojson.JsonWriter;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 
@@ -23,32 +28,17 @@ public class Text {
             public void listen(PlayerChatEvent event) {
                 System.out.println(event.getPlayer().getName() + ":" + event.getChat());
 
-                PacketOpenMenu packetOpenMenu = new PacketOpenMenu();
-                packetOpenMenu.setWindowsType(PacketOpenMenu.WindowsType.anvil);
-                packetOpenMenu.setSlots(3);
-                packetOpenMenu.setTitle(event.getChat());
-
-                event.getPlayer().getClientConnection().sendPacket(packetOpenMenu);
-
-                PacketSetContainerSlot pa = new PacketSetContainerSlot();
-                pa.setSlotID((short) 0);
-                pa.getSlot().setCount(1);
-                pa.getSlot().setHasItem(true);
-                pa.getSlot().setItemID(829);
-                pa.getSlot().setNbt(CompoundBinaryTag
-                        .builder()
-                        .put(
-                                "display",
-                                CompoundBinaryTag
-                                        .builder()
-                                        .putString(
-                                                "Name",
-                                                JsonWriter.string(
-                                                        Map.of("text","我是纸")
-                                                )
-                                        ).build()
-                        ).build());
-               event.getPlayer().getClientConnection().sendPacket(pa);
+                AnvilMenu anvilMenu = new AnvilMenu(new JsonText(event.getChat()));
+                Item item = new Item();
+                item.setItemID(ItemType.paper);
+                item.setCount(10);
+                ItemNBTs itemNBTs = new ItemNBTs();
+                itemNBTs.setDisplayName(new JsonText("哈哈哈"));
+                item.setItemNBTs(itemNBTs);
+                anvilMenu.setIn1(item);
+                anvilMenu.setIn2(item);
+                anvilMenu.setOut(item);
+                event.getPlayer().openMenu(anvilMenu);
 
 
             }

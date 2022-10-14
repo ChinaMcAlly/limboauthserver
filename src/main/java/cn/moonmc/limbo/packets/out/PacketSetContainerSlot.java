@@ -32,6 +32,11 @@ public class PacketSetContainerSlot implements PacketOut {
     short slotID = 0;
 
     /**
+     * 目前来说没什么用
+     * */
+    int stateID = 0;
+
+    /**
      * 设置格子内容
      * */
     Slot slot = new Slot();
@@ -39,8 +44,8 @@ public class PacketSetContainerSlot implements PacketOut {
     @Override
     public void encode(ByteMessage msg, Version version) {
         msg.writeByte(windowID);//
-        msg.writeVarInt(0);
-        msg.writeShort(0);
+        msg.writeVarInt(stateID);
+        msg.writeShort(slotID);
 
         //物品
         msg.writeBoolean(slot.hasItem);

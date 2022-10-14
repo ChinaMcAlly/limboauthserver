@@ -15,7 +15,7 @@ import java.util.Random;
 public class AnvilMenu extends Menu {
     @Getter
     JsonText title;
-    int windowID = new Random().nextInt(0,255);
+    int windowID = new Random().nextInt(0,127);
 
     @Getter
     Item in1;

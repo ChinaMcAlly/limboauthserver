@@ -3,11 +3,10 @@ package cn.moonmc.limboauthserver.event;
 import cn.moonmc.limbo.packets.out.PacketOpenMenu;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
 import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.limbo.works.event.Event;
 import cn.moonmc.limbo.works.event.EventManager;
 import cn.moonmc.limbo.works.event.Lister;
-import cn.moonmc.limbo.works.event.playerEvent.PlayerConnectEvent;
-import cn.moonmc.limbo.works.event.playerEvent.PlayerJoinEvent;
-import cn.moonmc.limbo.works.event.playerEvent.PlayerRenameItem;
+import cn.moonmc.limbo.works.event.playerEvent.*;
 import cn.moonmc.limbo.works.message.JsonText;
 import cn.moonmc.limboauthserver.AuthService;
 import cn.moonmc.limboauthserver.entity.User;
@@ -29,6 +28,20 @@ import java.util.Map;
 public class PlayerEvent implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        EventManager.regLister(new Lister<>(PlayerClickContainer.class) {
+            @Override
+            public void listen(PlayerClickContainer event) {
+                System.out.println(event.getPlayer().getName()+"点击了"+event.getSlot());
+            }
+        });
+
+        EventManager.regLister(new Lister<>(PlayerCloseContainer.class) {
+            @Override
+            public void listen(PlayerCloseContainer event) {
+                System.out.println(event.getPlayer().getName()+"关闭了"+event.getWindowID());
+            }
+        });
         EventManager.regLister(new Lister<>(PlayerConnectEvent.class) {
             @Override
             public void listen(PlayerConnectEvent event) {
