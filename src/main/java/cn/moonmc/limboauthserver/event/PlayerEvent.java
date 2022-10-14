@@ -31,7 +31,6 @@ import java.util.Map;
 @Slf4j
 public class PlayerEvent implements ApplicationRunner {
     private UserMapper userMapper;
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
         EventManager.regLister(new Lister<>(PlayerJoinEvent.class) {
@@ -83,6 +82,7 @@ public class PlayerEvent implements ApplicationRunner {
             public void listen(PlayerRenameItem event) {
                 //玩家退出登录操作
                 if (">q".equals(event.getName()) || "q".equals(event.getName())) {
+                    event.getPlayer().disconnect("用户退出登录操作");
 
 
                 }

@@ -35,6 +35,7 @@ import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.Packet;
 import ru.nanit.limbo.protocol.packets.login.PacketDisconnect;
 import ru.nanit.limbo.protocol.packets.play.PacketKeepAlive;
+import ru.nanit.limbo.protocol.packets.play.PlayDisconnect;
 import ru.nanit.limbo.protocol.registry.State;
 import ru.nanit.limbo.protocol.registry.Version;
 import ru.nanit.limbo.server.LimboServer;
@@ -174,7 +175,6 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
             sendPacketAndClose(disconnect);
         }
     }
-
     public void writeTitle() {
         if (clientVersion.moreOrEqual(Version.V1_17)) {
             writePacket(PacketSnapshots.PACKET_TITLE_TITLE);

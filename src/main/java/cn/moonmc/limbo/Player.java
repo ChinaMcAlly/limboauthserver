@@ -4,6 +4,7 @@ import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
 import ru.nanit.limbo.protocol.packets.play.*;
+import ru.nanit.limbo.protocol.registry.State;
 import ru.nanit.limbo.server.data.BossBar;
 
 import java.util.Map;
@@ -87,4 +88,11 @@ public class Player {
         clientConnection.sendPacket(PacketSnapshot.of(joinMessage));
     }
 
+    /**
+     * 将玩家踢出服务器
+     * @param reason 原因
+     */
+    public void disconnect(String reason){
+        clientConnection.sendPacketAndClose(new PlayDisconnect(reason));
+    }
 }

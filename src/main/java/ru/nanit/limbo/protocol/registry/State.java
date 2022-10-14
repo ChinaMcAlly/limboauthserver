@@ -240,6 +240,10 @@ public enum State {
                     map(0x60, V1_19, V1_19),
                     map(0x63, V1_19_1, V1_19_1)
             );
+            clientBound.register(PlayDisconnect::new,
+                    map(0x19, Version.getMin(), Version.getMax())
+            );
+
         }
     };
 
