@@ -3,12 +3,14 @@ package cn.moonmc.limboauthserver;
 import cn.moonmc.limboauthserver.entity.User;
 import cn.moonmc.limboauthserver.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
  * @author CNLuminous
  */
 @Component
+@Order(1)
 public class AuthService {
     private static UserMapper userMapper;
 

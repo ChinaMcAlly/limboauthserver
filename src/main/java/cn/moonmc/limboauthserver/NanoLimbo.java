@@ -20,11 +20,13 @@ package cn.moonmc.limboauthserver;
 import cn.moonmc.text.Text;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import ru.nanit.limbo.server.LimboServer;
 import ru.nanit.limbo.server.Logger;
 
 @Component
+@Order(0)
 public final class NanoLimbo implements ApplicationRunner {
 
     @Override
