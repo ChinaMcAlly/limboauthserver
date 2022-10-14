@@ -1,6 +1,7 @@
 package cn.moonmc.limbo.packets;
 
 
+import cn.moonmc.limbo.packets.in.PacketCloseContainer;
 import cn.moonmc.limbo.packets.in.PacketPlayerChatMessage;
 import cn.moonmc.limbo.packets.in.PacketPlayerCommand;
 import cn.moonmc.limbo.packets.in.PacketRenameItem;
@@ -39,5 +40,8 @@ public class PackReg {
         clientBound.register(PlayDisconnect::new,
                 new State.Mapping(0x19, Version.getMin(), Version.getMax())
         );
+
+        serverBound.register(PacketCloseContainer::new,
+                new State.Mapping(0x10,V1_19_1,V1_19_1));
     }
 }

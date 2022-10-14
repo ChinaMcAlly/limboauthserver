@@ -1,6 +1,8 @@
 package cn.moonmc.limbo;
 
 import cn.moonmc.limbo.packets.out.PlayDisconnect;
+import cn.moonmc.limbo.works.menu.Menu;
+import cn.moonmc.limbo.works.menu.MenuManager;
 import cn.moonmc.limbo.works.message.JsonText;
 import com.grack.nanojson.JsonWriter;
 import ru.nanit.limbo.connection.ClientConnection;
@@ -94,10 +96,16 @@ public class Player {
 
     /**
      * 将玩家踢出服务器
-     * @author jja8
      * @param reason 原因
      */
     public void disconnect(JsonText reason){
         clientConnection.sendPacketAndClose(new PlayDisconnect(reason));
+    }
+
+    /**
+     * 给玩家打开菜单
+     * */
+    public void openMenu(Menu menu){
+        MenuManager.openMenu(menu,this);
     }
 }
