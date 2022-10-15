@@ -123,7 +123,7 @@ public class PlayerJoinFunction implements ApplicationRunner {
                                     user.setPassword(password[0]);
                                     AuthService.update(user);
                                     //进入验证手机号流程
-                                    verifyPassword(player,user);
+                                    verifyPhone(player,user);
                                 }
                             }
                         });
@@ -132,7 +132,7 @@ public class PlayerJoinFunction implements ApplicationRunner {
             });
         }else {//有密码就进入登录流程
             final String[] password = new String[1];
-            AnvilInventory anvilInventory = new AnvilInventory(new JsonText("为"+player.getName()+"创建密码 | 请输入密码"));
+            AnvilInventory anvilInventory = new AnvilInventory(new JsonText("登录 | 请输入密码"));
             Item item = new Item();
             item.setItemID(ItemType.paper);
             ItemNBTs itemNBTs = new ItemNBTs();
@@ -176,6 +176,12 @@ public class PlayerJoinFunction implements ApplicationRunner {
 
     //第二个流程验证手机号
     public void verifyPhone(Player player, User user){
+        if (user.getPhone()==null){
+            //绑定手机号流程
+        }else {
+            //player.关闭当前界面() //这个方法忘记写了
+            player.sendTitle(new JsonText("登录成功！"),new JsonText("马上有选择服务器菜单打开,其实还没写awa。"),1,100,1);
+        }
 
     }
 

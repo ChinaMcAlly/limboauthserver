@@ -98,7 +98,12 @@ public class InventoryManager {
             nastControl.beClose(player);
         }
         playerControlMap.put(player,control);
-        control.show(player);
+        try {
+            control.show(player);
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+        control.openPlayers.add(player);
     }
 
     /**

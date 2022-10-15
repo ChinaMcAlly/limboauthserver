@@ -20,7 +20,7 @@ public class Item {
             slot.setHasItem(false);
             return slot;
         }
-        slot.setItemID(slot.getItemID());
+        slot.setItemID(itemID.id);
         slot.setCount(count);
         if (itemNBTs==null){
             slot.setNbt(CompoundBinaryTag.builder().build());

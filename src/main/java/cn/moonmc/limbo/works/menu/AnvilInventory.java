@@ -53,7 +53,7 @@ public class AnvilInventory extends ShowInventory {
 
     public void setOut(Item out) {
         this.out = out;
-        getOpenPlayers().forEachRemaining(player -> sendSlotUp(2,in2,player));
+        getOpenPlayers().forEachRemaining(player -> sendSlotUp(2,out,player));
     }
 
     /**
