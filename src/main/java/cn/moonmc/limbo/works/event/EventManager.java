@@ -33,7 +33,7 @@ public class EventManager {
                 Method method = lister.getClass().getMethod("listen",event.getClass());
                 method.setAccessible(true);
                 method.invoke(lister,event);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
         }

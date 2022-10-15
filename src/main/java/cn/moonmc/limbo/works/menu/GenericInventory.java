@@ -6,7 +6,6 @@ import cn.moonmc.limbo.works.message.JsonText;
 import lombok.Getter;
 
 import java.util.Random;
-import java.util.function.Consumer;
 
 /**
  * 代表一个箱子库存
