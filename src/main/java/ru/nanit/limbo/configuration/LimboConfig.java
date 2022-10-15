@@ -49,6 +49,7 @@ public final class LimboConfig {
     private Location spawnPosition;
     private int gameMode;
 
+    private boolean online;
     private boolean useBrandName;
     private boolean useJoinMessage;
     private boolean useBossBar;
@@ -98,6 +99,7 @@ public final class LimboConfig {
         }
         spawnPosition = conf.node("spawnPosition").get(Location.class);
         gameMode = conf.node("gameMode").getInt();
+        online = conf.node("online","true").getBoolean();
         useBrandName = conf.node("brandName", "enable").getBoolean();
         useJoinMessage = conf.node("joinMessage", "enable").getBoolean();
         useBossBar = conf.node("bossBar", "enable").getBoolean();
@@ -197,6 +199,10 @@ public final class LimboConfig {
 
     public boolean isUseBrandName() {
         return useBrandName;
+    }
+
+    public boolean isOnline() {
+        return online;
     }
 
     public boolean isUseJoinMessage() {

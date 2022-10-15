@@ -5,6 +5,7 @@ import cn.moonmc.limbo.works.menu.InventoryManager;
 import cn.moonmc.limbo.works.menu.PlayerInventory;
 import cn.moonmc.limbo.works.menu.ShowInventory;
 import cn.moonmc.limbo.works.message.JsonText;
+import cn.moonmc.limboauthserver.entity.User;
 import lombok.Getter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
@@ -45,6 +46,13 @@ public class Player {
      * */
     public UUID getUUID(){
         return clientConnection.getUuid();
+    }
+
+    /**
+     * 获取玩家User对象
+     */
+    public User getUser(){
+        return clientConnection.getUser();
     }
 
     /**

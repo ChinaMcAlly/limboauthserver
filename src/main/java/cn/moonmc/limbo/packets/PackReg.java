@@ -33,7 +33,6 @@ public class PackReg {
 
         serverBound.register(PacketRenameItem::new,
                 new State.Mapping(0x23,V1_19_1,V1_19_1));
-
         clientBound.register(PlayDisconnect::new,
                 new State.Mapping(0x19, Version.getMin(), Version.getMax())
         );

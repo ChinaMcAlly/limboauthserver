@@ -8,13 +8,13 @@ import cn.moonmc.limbo.works.event.EventManager;
 import cn.moonmc.limbo.works.event.Lister;
 import cn.moonmc.limbo.works.event.playerEvent.*;
 import cn.moonmc.limbo.works.message.JsonText;
-import cn.moonmc.limboauthserver.AuthService;
 import cn.moonmc.limboauthserver.entity.User;
 import com.grack.nanojson.JsonWriter;
 import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -25,6 +25,7 @@ import java.util.Map;
 
 @Component
 @Slf4j
+@Order(1)
 public class PlayerEvent implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {

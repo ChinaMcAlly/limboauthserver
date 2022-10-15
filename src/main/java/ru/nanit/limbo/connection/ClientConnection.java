@@ -20,6 +20,8 @@ package ru.nanit.limbo.connection;
 import cn.moonmc.limbo.Player;
 import cn.moonmc.limbo.works.event.EventManager;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerJoinEvent;
+import cn.moonmc.limboauthserver.entity.User;
+import cn.moonmc.limboauthserver.utils.AuthService;
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
@@ -61,6 +63,7 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
     private final PacketEncoder encoder;
 
     private State state;
+    private User user;
     private Version clientVersion;
     private SocketAddress address;
 
@@ -79,7 +82,9 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
     public Player getPlayer() {
         return player;
     }
-
+    public User getUser(){
+        return user;
+    }
     public UUID getUuid() {
         return gameProfile.getUuid();
     }
@@ -133,7 +138,6 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
         }
         writePacket(PacketSnapshots.PACKET_LOGIN_SUCCESS);
         updateState(State.PLAY);
-
         server.getConnections().addConnection(this);
 
         writePacket(PacketSnapshots.PACKET_JOIN_GAME);
@@ -161,6 +165,14 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
 
         if (PacketSnapshots.PACKET_HEADER_AND_FOOTER != null)
             writePacket(PacketSnapshots.PACKET_HEADER_AND_FOOTER);
+
+
+        User user = AuthService.selectUser(getUuid().toString());
+        if (user==null){
+            user = new User(player);
+            AuthService.register(user);
+        }
+        this.user = user;
 
         sendKeepAlive();
         EventManager.call(new PlayerJoinEvent(this.player));

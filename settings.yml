@@ -11,6 +11,9 @@ bind:
 # 设置为 -1 不限制玩家数量
 maxPlayers: 100
 
+#服务器是否为正版模式
+online: true
+
 # 服务器列表中显示的信息
 ping:
   description: '{"text": "&9NanoLimbo"}'

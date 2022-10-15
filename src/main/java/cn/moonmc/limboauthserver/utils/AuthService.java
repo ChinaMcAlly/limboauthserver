@@ -1,4 +1,4 @@
-package cn.moonmc.limboauthserver;
+package cn.moonmc.limboauthserver.utils;
 
 import cn.moonmc.limboauthserver.entity.User;
 import cn.moonmc.limboauthserver.mapper.UserMapper;

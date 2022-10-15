@@ -22,17 +22,20 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import ru.nanit.limbo.configuration.LimboConfig;
 import ru.nanit.limbo.server.LimboServer;
 import ru.nanit.limbo.server.Logger;
 
 @Component
 @Order(0)
 public final class NanoLimbo implements ApplicationRunner {
-
+    public static LimboConfig config;
     @Override
     public void run(ApplicationArguments args) throws Exception {
         try {
-            new LimboServer().start();
+            LimboServer server = new LimboServer();
+            server.start();
+            config = server.getConfig();
         } catch (Exception e) {
             Logger.error("Cannot start server: "+e);
         }

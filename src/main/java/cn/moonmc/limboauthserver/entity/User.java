@@ -1,5 +1,6 @@
 package cn.moonmc.limboauthserver.entity;
 
+import cn.moonmc.limbo.Player;
 import lombok.Data;
 
 /**
@@ -19,6 +20,15 @@ public class User {
         this.password = password;
         this.phone = phone;
         this.status = status;
+    }
+    public User(Player player){
+        this.uuid = player.getUUID().toString();
+        this.username = player.getName();
+        this.password = null;
+        this.phone = null;
+        this.status = "0";
+
+
     }
 
     @Override
