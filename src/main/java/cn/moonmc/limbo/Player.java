@@ -49,13 +49,6 @@ public class Player {
     }
 
     /**
-     * 获取玩家User对象
-     */
-    public User getUser(){
-        return clientConnection.getUser();
-    }
-
-    /**
      * 向玩家发送Title
      * @author jja8
      * */
