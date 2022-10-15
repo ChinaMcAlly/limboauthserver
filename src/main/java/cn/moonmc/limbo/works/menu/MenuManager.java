@@ -48,7 +48,7 @@ public class MenuManager implements ApplicationRunner {
             public void listen(PlayerClickContainer event) {
                 Control control = playerControlMap.get(event.getPlayer());
                 if (control!=null){
-                    control.beClick(event.getPlayer());
+                    control.beClick(event);
                 }
             }
         });
@@ -69,7 +69,7 @@ public class MenuManager implements ApplicationRunner {
         /**
          * 被点击时通知
          * */
-        protected void beClick(Player player){};
+        protected void beClick(PlayerClickContainer player){};
 
         //用来调用
         /**
