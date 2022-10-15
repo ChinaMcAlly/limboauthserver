@@ -1,16 +1,16 @@
 package cn.moonmc.limbo;
 
 import cn.moonmc.limbo.packets.out.PlayDisconnect;
-import cn.moonmc.limbo.works.menu.Menu;
-import cn.moonmc.limbo.works.menu.MenuManager;
+import cn.moonmc.limbo.works.menu.InventoryManager;
+import cn.moonmc.limbo.works.menu.PlayerInventory;
+import cn.moonmc.limbo.works.menu.ShowInventory;
 import cn.moonmc.limbo.works.message.JsonText;
-import com.grack.nanojson.JsonWriter;
+import lombok.Getter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
 import ru.nanit.limbo.protocol.packets.play.*;
 import ru.nanit.limbo.server.data.BossBar;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -19,6 +19,12 @@ import java.util.UUID;
  * */
 public class Player {
     private final ClientConnection clientConnection;
+
+    /**
+     * 获取玩家的物品栏
+     * */
+    @Getter
+    private final PlayerInventory playerInventory = new PlayerInventory(this);
     public Player(ClientConnection clientConnection) {
         this.clientConnection = clientConnection;
     }
@@ -103,9 +109,20 @@ public class Player {
     }
 
     /**
-     * 给玩家打开菜单
+     * 给玩家打开界面
      * */
-    public void openMenu(Menu menu){
-        MenuManager.openMenu(menu,this);
+    public void openInventory(ShowInventory inventory){
+        InventoryManager.openInventory(inventory,this);
+    }
+
+    /**
+     * 获取玩家正在查看的界面
+     * */
+    public ShowInventory lookingInventory(){
+        try {
+            return (ShowInventory) InventoryManager.lookingInventory(this);
+        }catch (ClassCastException classCastException){
+            return null;
+        }
     }
 }

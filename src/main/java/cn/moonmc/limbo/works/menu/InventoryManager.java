@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * 菜单管理器，用于管理菜单。主要负责通知点击事件和关闭事件
+ * 一个库存管理器。主要负责通知点击事件和关闭事件
  * @author jja8
  * */
 @Component
 @Order(1)
-public class MenuManager implements ApplicationRunner {
+public class InventoryManager implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         //注册监听器
@@ -56,7 +56,7 @@ public class MenuManager implements ApplicationRunner {
     }
 
     abstract static class Control{
-        private List<Player> openPlayers = new ArrayList<>();
+        private final List<Player> openPlayers = new ArrayList<>();
         //需要实现或者用来实现
         /**
          * 给玩家打开界面
@@ -69,7 +69,7 @@ public class MenuManager implements ApplicationRunner {
         /**
          * 被点击时通知
          * */
-        protected void beClick(PlayerClickContainer player){};
+        protected void beClick(PlayerClickContainer event){};
 
         //用来调用
         /**
@@ -86,7 +86,7 @@ public class MenuManager implements ApplicationRunner {
     /**
      * 当窗口被打开时传递进来注册打开状态,才能监听点击事件和关闭事件
      * */
-    public static void openMenu(Control control, Player player){
+    public static void openInventory(Control control, Player player){
         Control nastControl = playerControlMap.remove(player);
         if (nastControl!=null){
             nastControl.openPlayers.remove(player);
@@ -94,6 +94,13 @@ public class MenuManager implements ApplicationRunner {
         }
         playerControlMap.put(player,control);
         control.show(player);
+    }
+
+    /**
+     * 获取玩家正在查看的界面
+     * */
+    public static Control lookingInventory(Player player){
+        return playerControlMap.get(player);
     }
 
 }

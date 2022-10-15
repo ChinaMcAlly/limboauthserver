@@ -3,18 +3,12 @@ package cn.moonmc.text;
 import cn.moonmc.limbo.works.event.EventManager;
 import cn.moonmc.limbo.works.event.Lister;
 import cn.moonmc.limbo.works.event.playerEvent.*;
-import cn.moonmc.limbo.packets.out.PacketOpenMenu;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
-import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
-import cn.moonmc.limbo.works.menu.AnvilMenu;
+import cn.moonmc.limbo.works.menu.AnvilInventory;
 import cn.moonmc.limbo.works.menu.Item;
 import cn.moonmc.limbo.works.menu.ItemNBTs;
 import cn.moonmc.limbo.works.menu.ItemType;
 import cn.moonmc.limbo.works.message.JsonText;
-import com.grack.nanojson.JsonWriter;
-import net.kyori.adventure.nbt.CompoundBinaryTag;
-
-import java.util.Map;
 
 /**
  * 一个测试类
@@ -28,7 +22,7 @@ public class Text {
             public void listen(PlayerChatEvent event) {
                 System.out.println(event.getPlayer().getName() + ":" + event.getChat());
 
-                AnvilMenu anvilMenu = new AnvilMenu(new JsonText(event.getChat()));
+                AnvilInventory anvilMenu = new AnvilInventory(new JsonText(event.getChat()));
                 Item item = new Item();
                 item.setItemID(ItemType.paper);
                 item.setCount(10);
@@ -38,7 +32,8 @@ public class Text {
                 anvilMenu.setIn1(item);
                 anvilMenu.setIn2(item);
                 anvilMenu.setOut(item);
-                event.getPlayer().openMenu(anvilMenu);
+                anvilMenu.setRepairCost((short) 0);
+                event.getPlayer().openInventory(anvilMenu);
 
 
             }

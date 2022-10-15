@@ -1,5 +1,6 @@
 package cn.moonmc.limbo.packets.out;
 
+import lombok.Data;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
@@ -8,6 +9,7 @@ import ru.nanit.limbo.protocol.registry.Version;
  * 更新属性包 https://wiki.vg/Protocol#Set_Container_Property
  * @author jja8
  * */
+@Data
 public class PacketSetContainerProperty  implements PacketOut {
 
     /**
