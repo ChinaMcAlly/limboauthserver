@@ -6,6 +6,7 @@ import cn.moonmc.limbo.works.message.JsonText;
 import lombok.Getter;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 /**
  * 代表一个箱子库存
@@ -61,7 +62,7 @@ public class GenericInventory extends ShowInventory{
         if (slot>0&&slot<itmes.length){
             itmes[slot] = item;
             //更新玩家格子
-            没写完
+           getOpenPlayers().forEachRemaining(player -> sendSlot(slot,item,player));
         }else {
             throw new Error("物品位置超出容器范围！");
         }
