@@ -3,12 +3,12 @@ package cn.moonmc.limbo.works.menu;
 import cn.moonmc.limbo.Player;
 import cn.moonmc.limbo.packets.out.PacketOpenMenu;
 import cn.moonmc.limbo.packets.out.PacketSetContainerProperty;
-import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
+import cn.moonmc.limbo.works.event.Lister;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerClickContainer;
+import cn.moonmc.limbo.works.event.playerEvent.PlayerRenameItem;
 import cn.moonmc.limbo.works.message.JsonText;
 import lombok.Getter;
-
-import java.util.Random;
+import lombok.Setter;
 
 /**
  * 一个铁砧界面，玩家拿走物品或放上物品in1，in2并不会更新哈。因为反正也用不着awa
@@ -17,7 +17,6 @@ import java.util.Random;
 public class AnvilInventory extends ShowInventory {
     @Getter
     JsonText title;
-    int windowID = new Random().nextInt(0,127);
 
     @Getter
     Item in1;
@@ -25,6 +24,12 @@ public class AnvilInventory extends ShowInventory {
     Item in2;
     @Getter
     Item out;
+
+    /**
+     * 重命名事件监听器，当玩家在此界面重命名时传递事件
+     * */
+    @Getter @Setter
+    Lister<PlayerRenameItem> renameItemLister;
 
     /**
      * 维修成本
@@ -38,17 +43,17 @@ public class AnvilInventory extends ShowInventory {
 
     public void setIn1(Item in1) {
         this.in1 = in1;
-        getOpenPlayers().forEachRemaining(player -> sendSlot(0,in1,player));
+        getOpenPlayers().forEachRemaining(player -> sendSlotUp(0,in1,player));
     }
 
     public void setIn2(Item in2) {
         this.in2 = in2;
-        getOpenPlayers().forEachRemaining(player -> sendSlot(1,in2,player));
+        getOpenPlayers().forEachRemaining(player -> sendSlotUp(1,in2,player));
     }
 
     public void setOut(Item out) {
         this.out = out;
-        getOpenPlayers().forEachRemaining(player -> sendSlot(2,in2,player));
+        getOpenPlayers().forEachRemaining(player -> sendSlotUp(2,in2,player));
     }
 
     /**
@@ -67,28 +72,39 @@ public class AnvilInventory extends ShowInventory {
         packetOpenMenu.setWindowsType(PacketOpenMenu.WindowsType.anvil);
         packetOpenMenu.setWindowID(windowID);
         player.getClientConnection().sendPacket(packetOpenMenu);
-        sendSlot(0,in1,player);
-        sendSlot(1,in2,player);
-        sendSlot(2,out,player);
+        sendSlotUp(0,in1,player);
+        sendSlotUp(1,in2,player);
+        sendSlotUp(2,out,player);
     }
 
     @Override
     protected void beClick(PlayerClickContainer event) {
+        //先更新物品和维修等级再调用父类触发监听器
         switch (event.getSlot()) {
-            case 0, 1 -> sendRepairCost(event.getPlayer());
+            case 0, 1 -> sendSlotAndRepairCost(2,out,event.getPlayer());
+        }
+        super.beClick(event);
+    }
+
+    public void renameItem(PlayerRenameItem event) {
+        sendSlotAndRepairCost(2,out,event.getPlayer());
+        if (renameItemLister!=null){
+            renameItemLister.listen(event);
         }
     }
 
     /**
-     * 发送物品更新
+     * 发送物品更新和维修等级
      * */
-    private void sendSlot(int slot,Item item,Player player){
+    private void sendSlotAndRepairCost(int slot,Item item,Player player){
+        sendSlotUp(slot,item,player);
+        sendRepairCost(player);
+    }
+
+
+    protected void sendSlotUp(int slot,Item item, Player player) {
         if (item!=null){
-            PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
-            packetSetContainerSlot.setWindowID(windowID);
-            packetSetContainerSlot.setSlotID((short) slot);
-            packetSetContainerSlot.setSlot(item.createSlot());
-            player.getClientConnection().sendPacket(packetSetContainerSlot);
+            super.sendSlot(slot, item, player);
             //每次更新都需要发送维修成本
             sendRepairCost(player);
         }
@@ -104,4 +120,6 @@ public class AnvilInventory extends ShowInventory {
         packetSetContainerProperty.setValue(repairCost);
         player.getClientConnection().sendPacket(packetSetContainerProperty);
     }
+
+
 }

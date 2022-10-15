@@ -4,6 +4,10 @@ import cn.moonmc.limbo.packets.out.PacketSetContainerSlot;
 import lombok.Data;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 
+/**
+ * 代表一个物品
+ * @author jja8
+ * */
 @Data
 public class Item {
     ItemType itemID;

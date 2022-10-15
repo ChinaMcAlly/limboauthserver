@@ -6,10 +6,7 @@ import cn.moonmc.limbo.works.event.Lister;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerClickContainer;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerCloseContainer;
 import cn.moonmc.limbo.works.event.playerEvent.PlayerQuitEvent;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
+import cn.moonmc.limbo.works.event.playerEvent.PlayerRenameItem;
 
 import java.util.*;
 
@@ -17,11 +14,8 @@ import java.util.*;
  * 一个库存管理器。主要负责通知点击事件和关闭事件
  * @author jja8
  * */
-@Component
-@Order(1)
-public class InventoryManager implements ApplicationRunner {
-    @Override
-    public void run(ApplicationArguments args) {
+public class InventoryManager {
+    public static void run(){
         //注册监听器
         EventManager.regLister(new Lister<>(PlayerQuitEvent.class) {
             @Override
@@ -49,6 +43,17 @@ public class InventoryManager implements ApplicationRunner {
                 Control control = playerControlMap.get(event.getPlayer());
                 if (control!=null){
                     control.beClick(event);
+                }
+            }
+        });
+
+        //通知铁砧改变名字
+        EventManager.regLister(new Lister<>(PlayerRenameItem.class) {
+            @Override
+            public void listen(PlayerRenameItem event) {
+                Control control = playerControlMap.get(event.getPlayer());
+                if (control instanceof AnvilInventory anvilInventory) {
+                    anvilInventory.renameItem(event);
                 }
             }
         });

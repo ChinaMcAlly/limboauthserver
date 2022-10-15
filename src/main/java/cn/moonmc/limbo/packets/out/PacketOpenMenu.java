@@ -1,16 +1,13 @@
 package cn.moonmc.limbo.packets.out;
 
 import cn.moonmc.limbo.works.message.JsonText;
-import com.grack.nanojson.JsonWriter;
 import lombok.Data;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
 
-import java.util.Map;
-
 /**
- * 打开界面包
+ * 打开界面包 https://wiki.vg/Protocol#Open_Screen
  * @author jja8
  * */
 @Data
@@ -23,7 +20,7 @@ public class PacketOpenMenu implements PacketOut {
     /**
      * window类型
      * */
-    WindowsType windowsType = WindowsType.generic_9x3;
+    int windowsTypeID = WindowsType.generic_9x3.ID;
 
     /**
      * window标题
@@ -35,10 +32,14 @@ public class PacketOpenMenu implements PacketOut {
      * */
     int slots = 0; //格子数量
 
+    public void setWindowsType(WindowsType windowsType){
+        windowsTypeID=windowsType.ID;
+    }
+
     @Override
     public void encode(ByteMessage msg, Version version) {
         msg.writeVarInt(windowID);
-        msg.writeVarInt(windowsType.ID);
+        msg.writeVarInt(windowsTypeID);
         msg.writeString(title.toJsonText());
     }
 

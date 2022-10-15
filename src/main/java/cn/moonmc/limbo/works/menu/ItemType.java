@@ -4,6 +4,7 @@ import lombok.Getter;
 
 /**
  * 物品类型，这玩意没对照表。一个一个试吧awa
+ * @author jja8
  * */
 public enum ItemType {
     paper(829),
