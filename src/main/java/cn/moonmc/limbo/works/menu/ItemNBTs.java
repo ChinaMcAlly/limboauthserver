@@ -18,6 +18,16 @@ public class ItemNBTs {
     JsonText displayName;
     List<JsonText> lore;
 
+    public ItemNBTs setDisplayName(JsonText displayName) {
+        this.displayName = displayName;
+        return this;
+    }
+
+    public ItemNBTs setLore(List<JsonText> lore) {
+        this.lore = lore;
+        return this;
+    }
+
     public CompoundBinaryTag createNBT() {
         CompoundBinaryTag.@NotNull Builder nbt = CompoundBinaryTag.builder();
         addDisplay(nbt);

@@ -13,11 +13,14 @@ import cn.moonmc.limbo.works.menu.ItemType;
 import cn.moonmc.limbo.works.message.JsonText;
 import cn.moonmc.limboauthserver.entity.User;
 import cn.moonmc.limboauthserver.utils.AuthService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author CNLuminous 2022/10/15
@@ -26,6 +29,62 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Order(1)
 public class PlayerJoinFunction implements ApplicationRunner {
+    /**确定按钮*/
+    @Getter
+    static Item oKButton = new Item()
+            .setItemID(ItemType.paper)
+            .setCount(1)
+            .setItemNBTs(
+                    new ItemNBTs()
+                            .setDisplayName(
+                                    new JsonText("确定")
+                            )
+            );
+
+    /**输入按钮*/
+    @Getter
+    static Item inputButton = new Item()
+            .setItemID(ItemType.paper)
+            .setCount(1)
+            .setItemNBTs(
+                    new ItemNBTs()
+                            .setDisplayName(
+                                    new JsonText(">")
+                            )
+            );
+
+    /**
+     * 错误按钮
+     * @param jsonText 按钮提示的信息，可以null
+     * @param lore 按钮提示的信息，可以null
+     * */
+    public static Item getErrorButton(JsonText jsonText, List<JsonText> lore){
+        Item item = new Item().setCount(1).setItemID(ItemType.stone);
+        if (jsonText==null&&lore==null){
+            return item;
+        }
+        item.setItemNBTs(new ItemNBTs());
+        if (jsonText!=null){
+            item.getItemNBTs().setDisplayName(jsonText);
+        }
+        if (lore!=null){
+            item.getItemNBTs().setLore(lore);
+        }
+        return item;
+    }
+
+    /**
+     * 输入文本处理，服务器获取到的文本和用户实际想输入的文本可能不一致。例如用户输入的是“123456”我们得到的可能是“>123456” 具体情况看 inputButton的名字，此方法用来处理这个。
+     * */
+    public static String inputTextRevert(String inText){
+        if (inText.startsWith(">")){
+           inText = inText.replaceFirst(">","");
+        }
+        return inText;
+    }
+
+
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         EventManager.regLister(new Lister<>(PlayerJoinEvent.class){
@@ -49,25 +108,20 @@ public class PlayerJoinFunction implements ApplicationRunner {
         if (user.getPassword()==null){//如果没有密码就进入创建密码流程
             final String[] password = new String[2];
             AnvilInventory anvilInventory = new AnvilInventory(new JsonText("为"+player.getName()+"创建密码 | 请输入密码"));
-            Item item = new Item();
-            item.setItemID(ItemType.paper);
-            ItemNBTs itemNBTs = new ItemNBTs();
-            itemNBTs.setDisplayName(new JsonText(">"));
-            item.setItemNBTs(itemNBTs);
-            anvilInventory.setIn1(item);
+            anvilInventory.setOut(oKButton);
+            anvilInventory.setIn1(inputButton);
             player.openInventory(anvilInventory);
             //这里注册的监听器会随着界面被关闭失效
             //注册改名监听器
             anvilInventory.setRenameItemLister(new Lister<>(PlayerRenameItem.class) {
                 @Override
                 public void listen(PlayerRenameItem event) {
-                    password[0] = event.getName();
+                    password[0] = inputTextRevert(event.getName());
 
                     //如果有错误提示在修改密码时去掉提示
-                    if (anvilInventory.getOut()!=null){
-                        anvilInventory.setOut(null);
+                    if (anvilInventory.getOut()!=oKButton){
+                        anvilInventory.setOut(oKButton);
                     }
-
                 }
             });
             //注册点击监听器
@@ -76,32 +130,23 @@ public class PlayerJoinFunction implements ApplicationRunner {
                 public void listen(PlayerClickContainer event) {
                     if (event.getSlot()==2) {//如果玩家点击确定，就进入重复密码流程
                         if (password[0]==null||password[0].length()<6){
-                            Item item = new Item();
-                            item.setItemID(ItemType.stone);
-                            ItemNBTs itemNBTs = new ItemNBTs();
-                            itemNBTs.setDisplayName(new JsonText("密码长度必须大于等于6位"));
-                            item.setItemNBTs(itemNBTs);
-                            anvilInventory.setOut(item);
+                            anvilInventory.setOut(getErrorButton(new JsonText("密码长度必须大于等于6位"),null));
                             return;
                         }
 
                         //进入重复密码流程
                         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("为"+player.getName()+"创建密码 | 请再输入一次密码，确保我们得到的是正确的密码"));
-                        Item item = new Item();
-                        item.setItemID(ItemType.paper);
-                        ItemNBTs itemNBTs = new ItemNBTs();
-                        itemNBTs.setDisplayName(new JsonText(">"));
-                        item.setItemNBTs(itemNBTs);
-                        anvilInventory.setIn1(item);
+                        anvilInventory.setOut(oKButton);
+                        anvilInventory.setIn1(inputButton);
                         player.openInventory(anvilInventory);
                         anvilInventory.setRenameItemLister(new Lister<>(PlayerRenameItem.class) {
                             @Override
                             public void listen(PlayerRenameItem event) {
-                                password[1] = event.getName();
+                                password[1] = inputTextRevert(event.getName());
 
                                 //如果有错误提示在修改密码时去掉提示
-                                if (anvilInventory.getOut()!=null){
-                                    anvilInventory.setOut(null);
+                                if (anvilInventory.getOut()!=oKButton){
+                                    anvilInventory.setOut(oKButton);
                                 }
                             }
                         });
@@ -111,12 +156,7 @@ public class PlayerJoinFunction implements ApplicationRunner {
                             public void listen(PlayerClickContainer event) {
                                 if (event.getSlot()==2){//玩家已经输入完成重复密码，开始验证
                                     if (!password[0].equals(password[1])){//提示两次密码不一致
-                                        Item item = new Item();
-                                        item.setItemID(ItemType.stone);
-                                        ItemNBTs itemNBTs = new ItemNBTs();
-                                        itemNBTs.setDisplayName(new JsonText("两次密码不一致！"));
-                                        item.setItemNBTs(itemNBTs);
-                                        anvilInventory.setOut(item);
+                                        anvilInventory.setOut(getErrorButton(new JsonText("两次密码不一致！"),null));
                                         return;
                                     }
                                     //密码一致，将密码写入数据库
@@ -133,23 +173,19 @@ public class PlayerJoinFunction implements ApplicationRunner {
         }else {//有密码就进入登录流程
             final String[] password = new String[1];
             AnvilInventory anvilInventory = new AnvilInventory(new JsonText("登录 | 请输入密码"));
-            Item item = new Item();
-            item.setItemID(ItemType.paper);
-            ItemNBTs itemNBTs = new ItemNBTs();
-            itemNBTs.setDisplayName(new JsonText(">"));
-            item.setItemNBTs(itemNBTs);
-            anvilInventory.setIn1(item);
+            anvilInventory.setOut(oKButton);
+            anvilInventory.setIn1(inputButton);
             player.openInventory(anvilInventory);
             //这里注册的监听器会随着界面被关闭失效
             //注册改名监听器
             anvilInventory.setRenameItemLister(new Lister<>(PlayerRenameItem.class) {
                 @Override
                 public void listen(PlayerRenameItem event) {
-                    password[0] = event.getName();
+                    password[0] = inputTextRevert(event.getName());
 
                     //如果有错误提示在修改密码时去掉提示
-                    if (anvilInventory.getOut()!=null){
-                        anvilInventory.setOut(null);
+                    if (anvilInventory.getOut()!=oKButton){
+                        anvilInventory.setOut(oKButton);
                     }
                 }
             });
@@ -158,12 +194,7 @@ public class PlayerJoinFunction implements ApplicationRunner {
                 @Override
                 public void listen(PlayerClickContainer event) {
                     if (!user.getPassword().equals(password[0])) {//密码不一致，提示玩家重新输入
-                        Item item = new Item();
-                        item.setItemID(ItemType.stone);
-                        ItemNBTs itemNBTs = new ItemNBTs();
-                        itemNBTs.setDisplayName(new JsonText("密码错误，请重新输入！"));
-                        item.setItemNBTs(itemNBTs);
-                        anvilInventory.setOut(item);
+                        anvilInventory.setOut(getErrorButton(new JsonText("密码错误，请重新输入！"),null));
                         return;
                     }
                     //登录成功，进入验证手机号流程

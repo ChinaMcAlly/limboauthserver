@@ -14,6 +14,21 @@ public class Item {
     int count = 1;
     ItemNBTs itemNBTs;
 
+    public Item setItemID(ItemType itemID) {
+        this.itemID = itemID;
+        return this;
+    }
+
+    public Item setCount(int count) {
+        this.count = count;
+        return this;
+    }
+
+    public Item setItemNBTs(ItemNBTs itemNBTs) {
+        this.itemNBTs = itemNBTs;
+        return this;
+    }
+
     public PacketSetContainerSlot.Slot createSlot(){
         PacketSetContainerSlot.Slot slot = new PacketSetContainerSlot.Slot();
         if (itemID==null||count<=0){
