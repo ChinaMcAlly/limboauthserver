@@ -46,9 +46,14 @@ public abstract class ShowInventory extends InventoryManager.Control implements 
      * */
     @Override
     protected void beClick(PlayerClickContainer event) {
-        if (clickLister!=null){
-            clickLister.listen(event);
+        try {
+            if (clickLister!=null){
+                clickLister.listen(event);
+            }
+        }catch (Throwable throwable){
+            throwable.printStackTrace();
         }
+
     }
 
     /**
@@ -56,9 +61,14 @@ public abstract class ShowInventory extends InventoryManager.Control implements 
      * */
     @Override
     protected void beClose(Player player) {
-        if (closeLister!=null){
-            closeLister.listen(new BeClose(player));
+        try {
+            if (closeLister!=null){
+                closeLister.listen(new BeClose(player));
+            }
+        }catch (Throwable throwable){
+            throwable.printStackTrace();
         }
+
     }
 
     /**

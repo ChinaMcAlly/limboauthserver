@@ -26,6 +26,12 @@ public class AnvilInventory extends ShowInventory {
     Item out;
 
     /**
+     * 重命名的名称
+     * */
+    @Getter
+    String reSetName;
+
+    /**
      * 重命名事件监听器，当玩家在此界面重命名时传递事件
      * */
     @Getter @Setter
@@ -79,18 +85,31 @@ public class AnvilInventory extends ShowInventory {
 
     @Override
     protected void beClick(PlayerClickContainer event) {
-        //先更新物品和维修等级再调用父类触发监听器
-        switch (event.getSlot()) {
-            case 0, 1 -> sendSlotAndRepairCost(2,out,event.getPlayer());
-        }
         super.beClick(event);
+        //先触发父类监听器再更新
+        switch (event.getSlot()) {
+            case 0->{
+                reSetName = null; //点击物品0后名字会被清空
+                sendSlotAndRepairCost(2,out,event.getPlayer());
+            }
+            case 1->{
+                sendSlotAndRepairCost(2,out,event.getPlayer());
+            }
+        }
     }
 
+
     public void renameItem(PlayerRenameItem event) {
-        sendSlotAndRepairCost(2,out,event.getPlayer());
-        if (renameItemLister!=null){
-            renameItemLister.listen(event);
+        try {
+            if (renameItemLister!=null){
+                renameItemLister.listen(event);
+            }
+        }catch (Throwable throwable){
+            throwable.printStackTrace();
         }
+        reSetName = event.getName();
+        //先触发监听器再更新
+        sendSlotAndRepairCost(2,out,event.getPlayer());
     }
 
     /**
