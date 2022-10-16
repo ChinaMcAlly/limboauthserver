@@ -8,31 +8,33 @@ import java.util.Map;
 
 /**
  * 事件管理器
+ *
  * @author jja8
- * */
+ */
 public class EventManager {
     static Map<Class<? extends Event>, List<Lister<? extends Event>>> listerMap = new HashMap<>();
 
     /**
      * 注册指定事件的监听器
-     * */
-    public static void regLister(Lister<?> lister){
+     */
+    public static void regLister(Lister<?> lister) {
         List<Lister<? extends Event>> listerList = listerMap.computeIfAbsent(lister.eventClass, k -> new ArrayList<>());
         listerList.add(lister);
     }
+
     /**
      * 通知事件到所有监听器
-     * */
-    public static void call(Event event){
+     */
+    public static void call(Event event) {
         List<Lister<? extends Event>> listerList = listerMap.get(event.getClass());
-        if (listerList==null){
+        if (listerList == null) {
             return;
         }
         for (Lister<? extends Event> lister : listerList) {
             try {
-                Method method = lister.getClass().getMethod("listen",event.getClass());
+                Method method = lister.getClass().getMethod("listen", event.getClass());
                 method.setAccessible(true);
-                method.invoke(lister,event);
+                method.invoke(lister, event);
             } catch (Throwable e) {
                 e.printStackTrace();
             }

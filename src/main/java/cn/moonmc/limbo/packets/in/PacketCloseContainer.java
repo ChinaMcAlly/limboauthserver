@@ -10,19 +10,20 @@ import ru.nanit.limbo.server.LimboServer;
 
 /**
  * 关闭容器包
+ *
  * @author jja8
- * */
+ */
 public class PacketCloseContainer implements PacketIn {
 
-    int windowID;
+    int windowId;
 
     @Override
     public void decode(ByteMessage msg, Version version) {
-        windowID = Byte.toUnsignedInt(msg.readByte());
+        windowId = Byte.toUnsignedInt(msg.readByte());
     }
 
     @Override
     public void handle(ClientConnection conn, LimboServer server) {
-        EventManager.call(new PlayerCloseContainer(conn.getPlayer(),windowID));
+        EventManager.call(new PlayerCloseContainer(conn.getPlayer(), windowId));
     }
 }

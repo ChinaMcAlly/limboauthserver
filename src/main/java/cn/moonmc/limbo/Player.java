@@ -5,7 +5,6 @@ import cn.moonmc.limbo.works.menu.InventoryManager;
 import cn.moonmc.limbo.works.menu.PlayerInventory;
 import cn.moonmc.limbo.works.menu.ShowInventory;
 import cn.moonmc.limbo.works.message.JsonText;
-import cn.moonmc.limboauthserver.entity.User;
 import lombok.Getter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
@@ -16,16 +15,18 @@ import java.util.UUID;
 
 /**
  * 代表一个玩家
+ *
  * @author jja8 CNLuminous
- * */
+ */
 public class Player {
     private final ClientConnection clientConnection;
 
     /**
      * 获取玩家的物品栏
-     * */
+     */
     @Getter
     private final PlayerInventory playerInventory = new PlayerInventory(this);
+
     public Player(ClientConnection clientConnection) {
         this.clientConnection = clientConnection;
     }
@@ -36,23 +37,24 @@ public class Player {
 
     /**
      * 获得玩家名称
-     * */
-    public String getName(){
+     */
+    public String getName() {
         return clientConnection.getUsername();
     }
 
     /**
      * 获得玩家UUID
-     * */
-    public UUID getUUID(){
+     */
+    public UUID getUUID() {
         return clientConnection.getUuid();
     }
 
     /**
      * 向玩家发送Title
+     *
      * @author jja8
-     * */
-    public void sendTitle(JsonText title, JsonText subtitle, int in, int stay, int out){
+     */
+    public void sendTitle(JsonText title, JsonText subtitle, int in, int stay, int out) {
         PacketTitleSetTitle packetTitle = new PacketTitleSetTitle();
         PacketTitleSetSubTitle packetSubtitle = new PacketTitleSetSubTitle();
         PacketTitleTimes packetTimes = new PacketTitleTimes();
@@ -74,9 +76,10 @@ public class Player {
 
     /**
      * 向玩家发送boos血条
+     *
      * @author jja8
-     * */
-    public void sendBoosBar(JsonText text, float health, BossBar.Color color, BossBar.Division division,UUID uuid){
+     */
+    public void sendBoosBar(JsonText text, float health, BossBar.Color color, BossBar.Division division, UUID uuid) {
         PacketBossBar bossBarPaket = new PacketBossBar();
         BossBar bossBar = new BossBar();
         bossBar.setText(text.toJsonText());
@@ -91,9 +94,10 @@ public class Player {
 
     /**
      * 向玩家发送消息
+     *
      * @author jja8
-     * */
-    public void sendMessage(PacketChatMessage.PositionLegacy type,JsonText message){
+     */
+    public void sendMessage(PacketChatMessage.PositionLegacy type, JsonText message) {
         PacketChatMessage joinMessage = new PacketChatMessage();
         joinMessage.setJsonData(message.toJsonText());
         joinMessage.setPosition(type);
@@ -103,26 +107,27 @@ public class Player {
 
     /**
      * 将玩家踢出服务器
+     *
      * @param reason 原因
      */
-    public void disconnect(JsonText reason){
+    public void disconnect(JsonText reason) {
         clientConnection.sendPacketAndClose(new PlayDisconnect(reason));
     }
 
     /**
      * 给玩家打开界面
-     * */
-    public void openInventory(ShowInventory inventory){
-        InventoryManager.openInventory(inventory,this);
+     */
+    public void openInventory(ShowInventory inventory) {
+        InventoryManager.openInventory(inventory, this);
     }
 
     /**
      * 获取玩家正在查看的界面
-     * */
-    public ShowInventory lookingInventory(){
+     */
+    public ShowInventory lookingInventory() {
         try {
             return (ShowInventory) InventoryManager.lookingInventory(this);
-        }catch (ClassCastException classCastException){
+        } catch (ClassCastException classCastException) {
             return null;
         }
     }

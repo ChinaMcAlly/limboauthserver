@@ -11,8 +11,9 @@ import java.util.List;
 
 /**
  * 先就只搞个名称，到时候再加附魔啥的
+ *
  * @author jja8
- * */
+ */
 @Data
 public class ItemNBTs {
     JsonText displayName;
@@ -37,15 +38,15 @@ public class ItemNBTs {
     /**
      * 显示内容
      */
-    protected void addDisplay(CompoundBinaryTag.Builder builder){
+    protected void addDisplay(CompoundBinaryTag.Builder builder) {
         CompoundBinaryTag.@NotNull Builder display = CompoundBinaryTag.builder();
         addDisplayName(display);
         addLore(display);
         builder.put("display", display.build());
     }
 
-    private void addDisplayName(CompoundBinaryTag.Builder display){
-        if (displayName==null){
+    private void addDisplayName(CompoundBinaryTag.Builder display) {
+        if (displayName == null) {
             return;
         }
         display.putString(
@@ -54,14 +55,14 @@ public class ItemNBTs {
         );
     }
 
-    private void addLore(CompoundBinaryTag.Builder display){
-        if (lore==null){
+    private void addLore(CompoundBinaryTag.Builder display) {
+        if (lore == null) {
             return;
         }
         ListBinaryTag.Builder<net.kyori.adventure.nbt.BinaryTag> binaryTagBuilder = ListBinaryTag.builder();
         for (JsonText jsonText : lore) {
             binaryTagBuilder.add(StringBinaryTag.of(jsonText.toJsonText()));
         }
-        display.put("Lore",binaryTagBuilder.build());
+        display.put("Lore", binaryTagBuilder.build());
     }
 }

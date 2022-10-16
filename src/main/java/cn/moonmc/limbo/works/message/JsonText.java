@@ -7,8 +7,9 @@ import java.util.Map;
 
 /**
  * 一个Json文本处理类
+ *
  * @author jja8
- * */
+ */
 public class JsonText {
     @Getter
     String text;
@@ -17,7 +18,7 @@ public class JsonText {
         this.text = text;
     }
 
-    public String toJsonText(){
-        return JsonWriter.string(Map.of("text",text));
+    public String toJsonText() {
+        return JsonWriter.string(Map.of("text", text));
     }
 }

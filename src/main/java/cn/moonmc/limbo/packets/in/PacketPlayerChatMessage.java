@@ -10,18 +10,19 @@ import ru.nanit.limbo.server.LimboServer;
 
 /**
  * 接受玩家聊天包
+ *
  * @author jja8
- * */
+ */
 public class PacketPlayerChatMessage implements PacketIn {
-    String cat;
+    String chatMessage;
 
     @Override
     public void decode(ByteMessage msg, Version version) {
-        cat = msg.readString();
+        chatMessage = msg.readString();
     }
 
     @Override
     public void handle(ClientConnection conn, LimboServer server) {
-        EventManager.call(new PlayerChatEvent(conn.getPlayer(),cat));
+        EventManager.call(new PlayerChatEvent(conn.getPlayer(), chatMessage));
     }
 }

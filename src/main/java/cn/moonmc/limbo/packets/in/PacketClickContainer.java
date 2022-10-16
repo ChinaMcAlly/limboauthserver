@@ -10,37 +10,36 @@ import ru.nanit.limbo.server.LimboServer;
 
 /**
  * 玩家点击物品栏包 https://wiki.vg/Protocol#Click_Container_Button
- * */
+ */
 public class PacketClickContainer implements PacketIn {
     /**
      * windowID
-     * */
-    int windowID;
+     */
+    int windowId;
     /**
      * 目前来说没什么用
-     * */
-    int stateID;
+     */
+    int stateId;
 
     /**
      * 被点击的格子
-     * */
+     */
     short slot;
 
     /**
      * 点击的模式
-     * */
+     */
     int mode;
     /**
      * 点击的按键
-     * */
+     */
     int button;
-
 
 
     @Override
     public void decode(ByteMessage msg, Version version) {
-        windowID = Byte.toUnsignedInt(msg.readByte());
-        stateID= msg.readVarInt();
+        windowId = Byte.toUnsignedInt(msg.readByte());
+        stateId = msg.readVarInt();
         slot = msg.readShort();
         mode = msg.readVarInt();
         button = msg.readVarInt();
@@ -50,6 +49,6 @@ public class PacketClickContainer implements PacketIn {
 
     @Override
     public void handle(ClientConnection conn, LimboServer server) {
-        EventManager.call(new PlayerClickContainer(conn.getPlayer(),slot,windowID));
+        EventManager.call(new PlayerClickContainer(conn.getPlayer(), slot, windowId));
     }
 }

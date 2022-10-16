@@ -17,6 +17,7 @@
 
 package ru.nanit.limbo.configuration;
 
+import lombok.Data;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.ConfigurationOptions;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -37,9 +38,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Data
 public final class LimboConfig {
 
     private final Path root;
+    private String phoneRegexp;
 
     private SocketAddress address;
     private int maxPlayers;
@@ -74,6 +77,16 @@ public final class LimboConfig {
     private int bossGroupSize;
     private int workerGroupSize;
 
+    private String apiKey;
+    private String url;
+    private String serverName;
+
+    private int dayLimit;
+    private int telLimit;
+    private int coolDownTime;
+    private int expiredTime;
+
+
     public LimboConfig(Path root) {
         this.root = root;
     }
@@ -99,7 +112,7 @@ public final class LimboConfig {
         }
         spawnPosition = conf.node("spawnPosition").get(Location.class);
         gameMode = conf.node("gameMode").getInt();
-        online = conf.node("online","true").getBoolean();
+        online = conf.node("online", "true").getBoolean();
         useBrandName = conf.node("brandName", "enable").getBoolean();
         useJoinMessage = conf.node("joinMessage", "enable").getBoolean();
         useBossBar = conf.node("bossBar", "enable").getBoolean();
@@ -107,6 +120,17 @@ public final class LimboConfig {
         usePlayerList = conf.node("playerList", "enable").getBoolean();
         playerListUsername = conf.node("playerList", "username").getString();
         useHeaderAndFooter = conf.node("headerAndFooter", "enable").getBoolean();
+
+        apiKey = conf.node("api", "key").getString();
+        url = conf.node("api", "url").getString();
+        serverName = conf.node("api", "server-name").getString();
+
+        dayLimit = conf.node("auth", "day-limit").getInt();
+        telLimit = conf.node("auth", "tel-limit").getInt();
+        coolDownTime = conf.node("auth", "cool-down-time").getInt();
+        expiredTime = conf.node("auth", "exp-time").getInt();
+
+        phoneRegexp = conf.node("auth", "phone-reg-exp").getString();
 
         if (useBrandName)
             brandName = conf.node("brandName", "content").getString();
@@ -161,107 +185,4 @@ public final class LimboConfig {
                 .build();
     }
 
-    public SocketAddress getAddress() {
-        return address;
-    }
-
-    public int getMaxPlayers() {
-        return maxPlayers;
-    }
-
-    public PingData getPingData() {
-        return pingData;
-    }
-
-    public String getDimensionType() {
-        return dimensionType;
-    }
-
-    public Location getSpawnPosition() {
-        return spawnPosition;
-    }
-
-    public int getGameMode() {
-        return gameMode;
-    }
-
-    public InfoForwarding getInfoForwarding() {
-        return infoForwarding;
-    }
-
-    public long getReadTimeout() {
-        return readTimeout;
-    }
-
-    public int getDebugLevel() {
-        return debugLevel;
-    }
-
-    public boolean isUseBrandName() {
-        return useBrandName;
-    }
-
-    public boolean isOnline() {
-        return online;
-    }
-
-    public boolean isUseJoinMessage() {
-        return useJoinMessage;
-    }
-
-    public boolean isUseBossBar() {
-        return useBossBar;
-    }
-
-    public boolean isUseTitle() {
-        return useTitle;
-    }
-
-    public boolean isUsePlayerList() {
-        return usePlayerList;
-    }
-
-    public boolean isUseHeaderAndFooter() {
-        return useHeaderAndFooter;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public String getJoinMessage() {
-        return joinMessage;
-    }
-
-    public BossBar getBossBar() {
-        return bossBar;
-    }
-
-    public Title getTitle() {
-        return title;
-    }
-
-    public String getPlayerListUsername() {
-        return playerListUsername;
-    }
-
-    public String getPlayerListHeader() {
-        return playerListHeader;
-    }
-
-    public String getPlayerListFooter() {
-        return playerListFooter;
-    }
-
-    public boolean isUseEpoll() {
-        return useEpoll;
-    }
-
-    public int getBossGroupSize() {
-        return bossGroupSize;
-    }
-
-    public int getWorkerGroupSize() {
-        return workerGroupSize;
-    }
 }

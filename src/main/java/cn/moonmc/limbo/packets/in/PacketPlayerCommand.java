@@ -10,8 +10,9 @@ import ru.nanit.limbo.server.LimboServer;
 
 /**
  * 接收玩家命令包
+ *
  * @author jja8
- * */
+ */
 public class PacketPlayerCommand implements PacketIn {
     String command;
 
@@ -22,6 +23,6 @@ public class PacketPlayerCommand implements PacketIn {
 
     @Override
     public void handle(ClientConnection conn, LimboServer server) {
-        EventManager.call(new PlayerCommandEvent(conn.getPlayer(),command));
+        EventManager.call(new PlayerCommandEvent(conn.getPlayer(), command));
     }
 }

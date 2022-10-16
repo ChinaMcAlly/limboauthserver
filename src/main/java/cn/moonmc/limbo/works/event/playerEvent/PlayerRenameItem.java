@@ -5,12 +5,13 @@ import lombok.Getter;
 
 /**
  * 铁砧每次修改物品名称都会触发
+ *
  * @author jja8
- * */
+ */
 public class PlayerRenameItem extends PlayerEvent {
     /**
      * 获取被修改的名称
-     * */
+     */
     @Getter
     String name;
 

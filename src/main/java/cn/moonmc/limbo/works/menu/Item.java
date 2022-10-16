@@ -6,8 +6,9 @@ import net.kyori.adventure.nbt.CompoundBinaryTag;
 
 /**
  * 代表一个物品
+ *
  * @author jja8
- * */
+ */
 @Data
 public class Item {
     ItemType itemID;
@@ -29,17 +30,17 @@ public class Item {
         return this;
     }
 
-    public PacketSetContainerSlot.Slot createSlot(){
+    public PacketSetContainerSlot.Slot createSlot() {
         PacketSetContainerSlot.Slot slot = new PacketSetContainerSlot.Slot();
-        if (itemID==null||count<=0){
+        if (itemID == null || count <= 0) {
             slot.setHasItem(false);
             return slot;
         }
-        slot.setItemID(itemID.id);
+        slot.setItemId(itemID.id);
         slot.setCount(count);
-        if (itemNBTs==null){
+        if (itemNBTs == null) {
             slot.setNbt(CompoundBinaryTag.builder().build());
-        }else {
+        } else {
             slot.setNbt(itemNBTs.createNBT());
         }
         return slot;

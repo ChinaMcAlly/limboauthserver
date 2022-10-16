@@ -10,9 +10,10 @@ import ru.nanit.limbo.server.LimboServer;
 
 /**
  * 物品重命名包，铁砧每次修改物品名称都会发送给服务器
+ *
  * @author jja8
- * */
-public class PacketRenameItem  implements PacketIn {
+ */
+public class PacketRenameItem implements PacketIn {
     String name;
 
     @Override
@@ -22,6 +23,6 @@ public class PacketRenameItem  implements PacketIn {
 
     @Override
     public void handle(ClientConnection conn, LimboServer server) {
-        EventManager.call(new PlayerRenameItem(conn.getPlayer(),name));
+        EventManager.call(new PlayerRenameItem(conn.getPlayer(), name));
     }
 }

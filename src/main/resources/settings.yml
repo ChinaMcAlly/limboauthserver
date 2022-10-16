@@ -14,6 +14,19 @@ maxPlayers: 100
 #服务器是否为正版模式
 online: true
 
+# 与API后端通信的设置项
+api:
+  server-name: ''
+  key: ''
+  url: 'http://localhost:60001'
+
+auth:
+  day-limit: 10
+  tel-limit: 1
+  cool-down-time: 60
+  exp-time: 60
+  phone-reg-exp:
+
 # 服务器列表中显示的信息
 ping:
   description: '{"text": "&9NanoLimbo"}'

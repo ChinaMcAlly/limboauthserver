@@ -5,8 +5,9 @@ import lombok.Getter;
 
 /**
  * 玩家命令事件
+ *
  * @author jja8
- * */
+ */
 public class PlayerCommandEvent extends PlayerEvent {
     @Getter
     String command;

@@ -5,17 +5,18 @@ import lombok.Getter;
 
 /**
  * 玩家聊天事件
+ *
  * @author jja8
- * */
+ */
 public class PlayerChatEvent extends PlayerEvent {
     /**
      * 获取玩家的聊天信息
-     * */
+     */
     @Getter
-    String chat;
+    String messages;
 
-    public PlayerChatEvent(Player player, String chat) {
+    public PlayerChatEvent(Player player, String messages) {
         super(player);
-        this.chat = chat;
+        this.messages = messages;
     }
 }
