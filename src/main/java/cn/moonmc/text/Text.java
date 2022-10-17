@@ -19,27 +19,24 @@ import java.util.List;
 public class Text {
 
     public static void main(){
-        EventManager.regLister(new Lister<>(PlayerChatEvent.class) {
-            @Override
-            public void listen(PlayerChatEvent event) {
-                System.out.println(event.getPlayer().getName() + ":" + event.getChat());
+        EventManager.regLister(PlayerChatEvent.class, event -> {
+            System.out.println(event.getPlayer().getName() + ":" + event.getChat());
 
-                AnvilInventory anvilMenu = new AnvilInventory(new JsonText(event.getChat()));
-                Item item = new Item();
-                item.setItemID(ItemType.paper);
-                item.setCount(10);
-                ItemNBTs itemNBTs = new ItemNBTs();
-                itemNBTs.setDisplayName(new JsonText("哈哈哈"));
-                itemNBTs.setLore(List.of(new JsonText("aaaaa"),new JsonText("bbbbbb")));
-                item.setItemNBTs(itemNBTs);
-                anvilMenu.setIn1(item);
-                anvilMenu.setIn2(item);
-                anvilMenu.setOut(item);
-                anvilMenu.setRepairCost((short) 0);
-                event.getPlayer().openInventory(anvilMenu);
+            AnvilInventory anvilMenu = new AnvilInventory(new JsonText(event.getChat()));
+            Item item = new Item();
+            item.setItemID(ItemType.paper);
+            item.setCount(10);
+            ItemNBTs itemNBTs = new ItemNBTs();
+            itemNBTs.setDisplayName(new JsonText("哈哈哈"));
+            itemNBTs.setLore(List.of(new JsonText("aaaaa"),new JsonText("bbbbbb")));
+            item.setItemNBTs(itemNBTs);
+            anvilMenu.setIn1(item);
+            anvilMenu.setIn2(item);
+            anvilMenu.setOut(item);
+            anvilMenu.setRepairCost((short) 0);
+            event.getPlayer().openInventory(anvilMenu);
 
 
-            }
         });
 //        EventManager.regLister(new Lister<>(PlayerRenameItem.class){
 //            @Override

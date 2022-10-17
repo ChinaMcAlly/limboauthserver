@@ -16,8 +16,8 @@ public class EventManager {
     /**
      * 注册指定事件的监听器
      * */
-    public static void regLister(Lister<?> lister){
-        List<Lister<? extends Event>> listerList = listerMap.computeIfAbsent(lister.eventClass, k -> new ArrayList<>());
+    public static <T extends Event> void regLister(Class<T> t,Lister<T> lister){
+        List<Lister<? extends Event>> listerList = listerMap.computeIfAbsent(t, k -> new ArrayList<>());
         listerList.add(lister);
     }
     /**

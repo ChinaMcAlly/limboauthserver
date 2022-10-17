@@ -17,44 +17,32 @@ import java.util.*;
 public class InventoryManager {
     public static void run(){
         //注册监听器
-        EventManager.regLister(new Lister<>(PlayerQuitEvent.class) {
-            @Override
-            public void listen(PlayerQuitEvent event) {
-                Control control = playerControlMap.remove(event.getPlayer());
-                if (control!=null){
-                    control.openPlayers.remove(event.getPlayer());
-                    control.beClose(event.getPlayer());
-                }
+        EventManager.regLister(PlayerQuitEvent.class, event -> {
+            Control control = playerControlMap.remove(event.getPlayer());
+            if (control!=null){
+                control.openPlayers.remove(event.getPlayer());
+                control.beClose(event.getPlayer());
             }
         });
-        EventManager.regLister(new Lister<>(PlayerCloseContainer.class) {
-            @Override
-            public void listen(PlayerCloseContainer event) {
-                Control control = playerControlMap.remove(event.getPlayer());
-                if (control!=null){
-                    control.openPlayers.remove(event.getPlayer());
-                    control.beClose(event.getPlayer());
-                }
+        EventManager.regLister(PlayerCloseContainer.class, event -> {
+            Control control = playerControlMap.remove(event.getPlayer());
+            if (control!=null){
+                control.openPlayers.remove(event.getPlayer());
+                control.beClose(event.getPlayer());
             }
         });
-        EventManager.regLister(new Lister<>(PlayerClickContainer.class) {
-            @Override
-            public void listen(PlayerClickContainer event) {
-                Control control = playerControlMap.get(event.getPlayer());
-                if (control!=null){
-                    control.beClick(event);
-                }
+        EventManager.regLister(PlayerClickContainer.class, event -> {
+            Control control = playerControlMap.get(event.getPlayer());
+            if (control!=null){
+                control.beClick(event);
             }
         });
 
         //通知铁砧改变名字
-        EventManager.regLister(new Lister<>(PlayerRenameItem.class) {
-            @Override
-            public void listen(PlayerRenameItem event) {
-                Control control = playerControlMap.get(event.getPlayer());
-                if (control instanceof AnvilInventory anvilInventory) {
-                    anvilInventory.renameItem(event);
-                }
+        EventManager.regLister(PlayerRenameItem.class, event -> {
+            Control control = playerControlMap.get(event.getPlayer());
+            if (control instanceof AnvilInventory anvilInventory) {
+                anvilInventory.renameItem(event);
             }
         });
         //实现通知
