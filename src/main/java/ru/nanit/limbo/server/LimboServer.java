@@ -17,6 +17,7 @@
 
 package ru.nanit.limbo.server;
 
+import cn.moonmc.limboAdd.AddServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -27,6 +28,8 @@ import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.ResourceLeakDetector;
+import lombok.Getter;
+import lombok.extern.flogger.Flogger;
 import ru.nanit.limbo.configuration.LimboConfig;
 import ru.nanit.limbo.connection.ClientChannelInitializer;
 import ru.nanit.limbo.connection.ClientConnection;
@@ -51,6 +54,9 @@ public final class LimboServer {
 
     private CommandManager commandManager;
 
+    @Getter
+    private AddServer addServer;
+
     public LimboConfig getConfig() {
         return config;
     }
@@ -71,7 +77,11 @@ public final class LimboServer {
         return commandManager;
     }
 
-    public void start() throws Exception {
+    public LimboServer() throws Exception {
+        start();
+    }
+
+    private void start() throws Exception {
         Logger.info("服务器启动中...");
 
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
@@ -99,6 +109,8 @@ public final class LimboServer {
         commandManager = new CommandManager();
         commandManager.registerAll(this);
         commandManager.start();
+
+        addServer = new AddServer(this);
 
         System.gc();
     }

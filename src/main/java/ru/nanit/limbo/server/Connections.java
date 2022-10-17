@@ -17,9 +17,9 @@
 
 package ru.nanit.limbo.server;
 
-import cn.jja8.limbo.eventWork.EventManager;
-import cn.jja8.limbo.eventWork.event.player.PlayerJoinEvent;
-import cn.jja8.limbo.eventWork.event.player.PlayerQuitEvent;
+import cn.moonmc.limboAdd.works.event.EventManager;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerConnectEvent;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerQuitEvent;
 import ru.nanit.limbo.connection.ClientConnection;
 
 import java.util.Collection;
@@ -48,7 +48,7 @@ public final class Connections {
         connections.put(connection.getUuid(), connection);
         Logger.info("玩家 %s 加入服务器 (%s) [%s]", connection.getUsername(),
                 connection.getAddress(), connection.getClientVersion());
-        EventManager.call(new PlayerJoinEvent(connection.getPlayer()));
+        EventManager.call(new PlayerConnectEvent(connection.getPlayer()));
     }
 
     public void removeConnection(ClientConnection connection) {

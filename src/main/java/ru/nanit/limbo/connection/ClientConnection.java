@@ -17,7 +17,9 @@
 
 package ru.nanit.limbo.connection;
 
-import cn.jja8.limbo.Player;
+import cn.moonmc.limboAdd.works.entity.Player;
+import cn.moonmc.limboAdd.works.event.EventManager;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerJoinEvent;
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
@@ -26,13 +28,15 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import lombok.Getter;
+import lombok.extern.flogger.Flogger;
 import org.jetbrains.annotations.NotNull;
 import ru.nanit.limbo.connection.pipeline.PacketDecoder;
 import ru.nanit.limbo.connection.pipeline.PacketEncoder;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.Packet;
-import ru.nanit.limbo.protocol.packets.login.*;
-import ru.nanit.limbo.protocol.packets.play.*;
+import ru.nanit.limbo.protocol.packets.login.PacketDisconnect;
+import ru.nanit.limbo.protocol.packets.play.PacketKeepAlive;
 import ru.nanit.limbo.protocol.registry.State;
 import ru.nanit.limbo.protocol.registry.Version;
 import ru.nanit.limbo.server.LimboServer;
@@ -50,7 +54,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ClientConnection extends ChannelInboundHandlerAdapter {
 
+    @Getter
     private final Player player;
+    @Getter
     private final LimboServer server;
     private final Channel channel;
     private final GameProfile gameProfile;
@@ -72,10 +78,6 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
         this.address = channel.remoteAddress();
         this.gameProfile = new GameProfile();
         this.player = new Player(this);
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 
     public UUID getUuid() {
@@ -162,6 +164,9 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
             writePacket(PacketSnapshots.PACKET_HEADER_AND_FOOTER);
 
         sendKeepAlive();
+
+        EventManager.call(new PlayerJoinEvent(this.getPlayer()));
+
     }
 
     public void disconnectLogin(String reason) {

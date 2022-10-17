@@ -17,7 +17,7 @@
 
 package ru.nanit.limbo.protocol.registry;
 
-import cn.jja8.limbo.packets.PackReg;
+import cn.moonmc.limboAdd.packets.PackReg;
 import ru.nanit.limbo.protocol.Packet;
 import ru.nanit.limbo.protocol.packets.PacketHandshake;
 import ru.nanit.limbo.protocol.packets.login.*;
@@ -77,7 +77,6 @@ public enum State {
     },
     PLAY(3) {
         {
-            PackReg.reg(serverBound,clientBound);
             //保持连接
             serverBound.register(PacketKeepAlive::new,
                     map(0x00, V1_8, V1_8),
@@ -240,6 +239,8 @@ public enum State {
                     map(0x60, V1_19, V1_19),
                     map(0x63, V1_19_1, V1_19_1)
             );
+            //注册自己的包
+            PackReg.reg(serverBound,clientBound);
         }
     };
 

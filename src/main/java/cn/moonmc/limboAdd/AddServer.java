@@ -15,19 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package ru.nanit.limbo;
+package cn.moonmc.limboAdd;
 
+import cn.moonmc.limboAdd.works.menu.InventoryManager;
+import lombok.Getter;
 import ru.nanit.limbo.server.LimboServer;
-import ru.nanit.limbo.server.Logger;
-
-public final class NanoLimbo {
-
-    public static void main(String[] args) {
-        try {
-            new LimboServer();
-        } catch (Exception e) {
-            Logger.error("Cannot start server: ", e);
-        }
+public final class AddServer {
+    @Getter
+    LimboServer server;
+    @Getter
+    InventoryManager inventoryManager;
+    public AddServer(LimboServer server) {
+        this.server = server;
+        this.inventoryManager = new InventoryManager(this);
     }
-
 }
