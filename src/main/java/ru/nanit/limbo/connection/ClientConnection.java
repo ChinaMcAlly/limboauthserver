@@ -17,9 +17,9 @@
 
 package ru.nanit.limbo.connection;
 
-import cn.moonmc.limbo.Player;
-import cn.moonmc.limbo.works.event.EventManager;
-import cn.moonmc.limbo.works.event.playerEvent.PlayerJoinEvent;
+import cn.moonmc.limboAdd.works.entity.Player;
+import cn.moonmc.limboAdd.works.event.EventManager;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerJoinEvent;
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
