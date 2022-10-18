@@ -36,6 +36,14 @@ public class User {
         this.ip = ip;
     }
 
+    public User(UUID uuid, String name, Password password, long phone, String ip) {
+        this.uuid = uuid;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.ip = ip;
+    }
+
     /**
      * 代表用户的密码
      * */

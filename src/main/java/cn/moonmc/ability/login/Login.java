@@ -2,6 +2,7 @@ package cn.moonmc.ability.login;
 
 import cn.moonmc.ability.AbilityServer;
 import cn.moonmc.ability.login.data.UserManager;
+import cn.moonmc.ability.login.lister.PlayerJoin;
 import cn.moonmc.limboAdd.config.ConfigFile;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -18,6 +19,8 @@ public class Login {
     HikariDataSource dataSource;
     @Getter
     UserManager userManager;
+    @Getter
+    PlayerJoin playerJoin;
     public Login(AbilityServer abilityServer){
         this.abilityServer = abilityServer;
         try {
@@ -29,5 +32,6 @@ public class Login {
             return;
         }
         userManager = new UserManager(this);
+        playerJoin = new PlayerJoin(this);
     }
 }
