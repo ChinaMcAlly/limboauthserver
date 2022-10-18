@@ -21,7 +21,7 @@ public class UserManager {
      * @param uuid uuid不能为空，其他都可空
      * @return 插入成功返回对象，插入失败返回null
      * */
-    public User insert(UUID uuid, String name, User.Password password, long phone, String ip){
+    public User insert(UUID uuid, String name, User.Password password, String phone, String ip){
         if (uuid==null){
             throw new RuntimeException("插入数据时uuid不能为空");
         }
@@ -31,7 +31,7 @@ public class UserManager {
             p.setString(1,uuid.toString());
             p.setString(2,name);
             p.setString(3,password.ciphertext);
-            p.setLong(4,phone);
+            p.setString(4,phone);
             p.setString(5,ip);
             if (p.executeLargeUpdate()>0) {
                 return new User(uuid,name,password.ciphertext,phone,ip);
@@ -52,7 +52,7 @@ public class UserManager {
                 ){
             p.setString(1,user.name);
             p.setString(2,user.password.ciphertext);
-            p.setLong(3,user.phone);
+            p.setString(3,user.phone);
             p.setString(4,user.ip);
             p.setString(5,user.uuid.toString());
             if (p.executeUpdate()>0) {
@@ -79,7 +79,7 @@ public class UserManager {
                         UUID.fromString(r.getString(1)),
                         r.getString(2),
                         r.getString(3),
-                        r.getLong(4),
+                        r.getString(4),
                         r.getString(5)
                 );
             }else {

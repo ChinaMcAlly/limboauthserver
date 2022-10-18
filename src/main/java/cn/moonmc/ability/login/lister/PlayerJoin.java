@@ -5,10 +5,7 @@ import cn.moonmc.ability.login.data.User;
 import cn.moonmc.ability.login.event.LoginSuccessfulEvent;
 import cn.moonmc.limboAdd.works.entity.Player;
 import cn.moonmc.limboAdd.works.event.EventManager;
-import cn.moonmc.limboAdd.works.event.Lister;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerClickContainer;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerJoinEvent;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerRenameItem;
 import cn.moonmc.limboAdd.works.menu.AnvilInventory;
 import cn.moonmc.limboAdd.works.menu.Item;
 import cn.moonmc.limboAdd.works.menu.ItemNBTs;
@@ -85,6 +82,10 @@ public class PlayerJoin {
             //登录成功，关闭界面，通知事件
             player.closeInventory();
             EventManager.call(new LoginSuccessfulEvent(player));
+            //更新name和ip地址
+            user.setName(player.getName());
+            user.setIp(player.getClientConnection().getAddress().toString());
+            login.getUserManager().update(user);
         });
         anvilInventory.setRenameItemLister(event -> {
             anvilInventory.setOut(getOkTime());
@@ -95,4 +96,10 @@ public class PlayerJoin {
     /**
      * 执行注册逻辑
      * */
+    public void reg(Player player){
+
+        User user = new User(player.getUUID(),player.getName(),null,null,player.getClientConnection().getAddress().toString());
+
+
+    }
 }

@@ -22,13 +22,13 @@ public class User {
     /**
      * 手机号
      * */
-    long phone;
+    String phone;
     /**
      * ip地址
      * */
     String ip;
 
-    User(UUID uuid, String name, String ciphertextPassword, long phone, String ip) {
+    User(UUID uuid, String name, String ciphertextPassword, String phone, String ip) {
         this.uuid = uuid;
         this.name = name;
         this.password =ciphertextPassword==null?null:new Password(ciphertextPassword);
@@ -36,7 +36,7 @@ public class User {
         this.ip = ip;
     }
 
-    public User(UUID uuid, String name, Password password, long phone, String ip) {
+    public User(UUID uuid, String name, Password password, String phone, String ip) {
         this.uuid = uuid;
         this.name = name;
         this.password = password;
