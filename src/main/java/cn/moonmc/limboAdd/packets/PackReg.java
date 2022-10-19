@@ -2,10 +2,7 @@ package cn.moonmc.limboAdd.packets;
 
 
 import cn.moonmc.limboAdd.packets.in.*;
-import cn.moonmc.limboAdd.packets.out.PacketOpenMenu;
-import cn.moonmc.limboAdd.packets.out.PacketSetContainerProperty;
-import cn.moonmc.limboAdd.packets.out.PacketSetContainerSlot;
-import cn.moonmc.limboAdd.packets.out.PlayDisconnect;
+import cn.moonmc.limboAdd.packets.out.*;
 import ru.nanit.limbo.protocol.registry.State;
 import ru.nanit.limbo.protocol.registry.Version;
 
@@ -36,10 +33,14 @@ public class PackReg {
         clientBound.register(PlayDisconnect::new,
                 new State.Mapping(0x19, Version.getMin(), Version.getMax())
         );
+        //关闭window包
+        clientBound.register(PlayerCloveInventory::new,
+                new State.Mapping(0x10,Version.getMin(),Version.getMax())
+        );
 
         serverBound.register(PacketCloseContainer::new,
-                new State.Mapping(0x0C,V1_19_1,V1_19_1));
+                new State.Mapping(0xC,Version.getMin(),Version.getMax()));
         serverBound.register(PacketClickContainer::new,
-                new State.Mapping(0x0B,V1_19_1,V1_19_1));
+                new State.Mapping(0xB,Version.getMin(),Version.getMax()));
     }
 }
