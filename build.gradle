@@ -33,6 +33,8 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:5.0.1'
     //mysql jdbc
     implementation 'mysql:mysql-connector-java:8.0.30'
+    //阿里短信api
+    implementation 'com.aliyun:aliyun-java-sdk-core:4.6.2'
 
 }
 
