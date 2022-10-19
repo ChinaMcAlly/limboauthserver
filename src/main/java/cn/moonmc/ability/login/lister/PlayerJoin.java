@@ -80,7 +80,7 @@ public class PlayerJoin {
                 return;
             }
             //登录成功，关闭界面，通知事件
-            player.closeInventory();
+           // player.closeInventory();
             EventManager.call(new LoginSuccessfulEvent(player));
             //更新name和ip地址
             user.setName(player.getName());

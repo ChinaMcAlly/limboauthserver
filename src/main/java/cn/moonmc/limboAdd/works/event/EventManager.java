@@ -30,7 +30,7 @@ public class EventManager {
         }
         for (Lister<? extends Event> lister : listerList) {
             try {
-                Method method = lister.getClass().getMethod("listen",event.getClass());
+                Method method = lister.getClass().getMethod("listen",Event.class);
                 method.setAccessible(true);
                 method.invoke(lister,event);
             } catch (Throwable e) {
