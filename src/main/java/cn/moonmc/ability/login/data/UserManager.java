@@ -18,23 +18,23 @@ public class UserManager {
 
     /**
      * 插入一条用户数据
-     * @param uuid uuid不能为空，其他都可空
+     * uuid不能为空，其他都可空
      * @return 插入成功返回对象，插入失败返回null
      * */
-    public User insert(UUID uuid, String name, User.Password password, String phone, String ip){
-        if (uuid==null){
+    public User insert(User u){
+        if (u.uuid==null){
             throw new RuntimeException("插入数据时uuid不能为空");
         }
         try (
                 PreparedStatement p = login.getDataSource().getConnection().prepareStatement("insert into user(uuid,name,password,phone,ip) values (?,?,?,?,?)");
         ){
-            p.setString(1,uuid.toString());
-            p.setString(2,name);
-            p.setString(3,password.ciphertext);
-            p.setString(4,phone);
-            p.setString(5,ip);
+            p.setString(1,u.uuid.toString());
+            p.setString(2,u.name);
+            p.setString(3,u.password.ciphertext);
+            p.setString(4,u.phone);
+            p.setString(5,u.ip);
             if (p.executeLargeUpdate()>0) {
-                return new User(uuid,name,password.ciphertext,phone,ip);
+                return u;
             }else {
                 return null;
             }

@@ -163,10 +163,8 @@ public class ClientConnection extends ChannelInboundHandlerAdapter {
         if (PacketSnapshots.PACKET_HEADER_AND_FOOTER != null)
             writePacket(PacketSnapshots.PACKET_HEADER_AND_FOOTER);
 
-        sendKeepAlive();
-
         EventManager.call(new PlayerJoinEvent(this.getPlayer()));
-
+        sendKeepAlive();
     }
 
     public void disconnectLogin(String reason) {

@@ -17,6 +17,7 @@
 
 package cn.moonmc.limboAdd;
 
+import cn.moonmc.ability.AbilityServer;
 import cn.moonmc.limboAdd.works.menu.InventoryManager;
 import lombok.Getter;
 import ru.nanit.limbo.server.LimboServer;
@@ -28,5 +29,6 @@ public final class AddServer {
     public AddServer(LimboServer server) {
         this.server = server;
         this.inventoryManager = new InventoryManager(this);
+        new AbilityServer(server);
     }
 }
