@@ -6,7 +6,6 @@ import cn.moonmc.ability.login.event.LoginSuccessfulEvent;
 import cn.moonmc.ability.login.utils.SMSCodeUtils;
 import cn.moonmc.limboAdd.works.entity.Player;
 import cn.moonmc.limboAdd.works.event.EventManager;
-import cn.moonmc.limboAdd.works.event.Lister;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerJoinEvent;
 import cn.moonmc.limboAdd.works.menu.*;
 import cn.moonmc.limboAdd.works.message.JsonText;
@@ -234,11 +233,11 @@ public class PlayerJoin {
                 anvilInventory.setOut(getErrorTime(new JsonText("密码长度必须大于6位！请重新输入。")));
                 return;
             }
-            regPassword(player,user,passwordText);
+            reg1(player,user,passwordText);
         });
         player.openInventory(anvilInventory);
     }
-    private void regPassword(Player player,User user,String passwordText1){
+    private void reg1(Player player, User user, String passwordText1){
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("创建账户 | 请重新输入一次密码确保我们得到的是正确的密码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonText("上一步"))));
@@ -258,12 +257,12 @@ public class PlayerJoin {
                 return;
             }
             user.setPassword(User.Password.plaintextPassword(passwordText2));
-            regPhone(player,user);
+            reg2(player,user);
         });
         player.openInventory(anvilInventory);
     }
 
-    private void regPhone(Player player, User user) {
+    private void reg2(Player player, User user) {
         boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("创建账户 | 请输入手机号。"));
         anvilInventory.setIn1(getInItem());
@@ -294,12 +293,12 @@ public class PlayerJoin {
             anvilInventory.setOut(getErrorTime(new JsonText("正在发送验证码，请稍等..")));
             //发送验证码
             SMSCodeUtils.sendMessage(code,phone, SMSCodeUtils.Type.bind);
-            regPhone1(player,user,phoneText,code);
+            reg3(player,user,phoneText,code);
         });
         player.openInventory(anvilInventory);
     }
 
-    private void regPhone1(Player player, User user,String phone,String verificationCode){
+    private void reg3(Player player, User user, String phone, String verificationCode){
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("创建账户 | 请输入您接收到的手机验证码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
