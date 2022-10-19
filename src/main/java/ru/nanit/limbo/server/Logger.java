@@ -57,11 +57,24 @@ public final class Logger {
 
     public static void print(Level level, Object msg, Throwable t, Object... args) {
         if (debugLevel >= level.getIndex()) {
-            System.out.printf("%s: %s%n", getPrefix(level), String.format(msg.toString(), args));
+            String log = String.format("%s: %s%n", getPrefix(level), String.format(msg.toString(), args));
+            System.out.print(getFormatLogString(log,level.getColor(),1));
             if (t != null) t.printStackTrace();
         }
     }
-
+    /**
+     * @param colour  颜色代号：背景颜色代号(41-46)；前景色代号(31-36)
+     * @param type    样式代号：0无；1加粗；3斜体；4下划线
+     * @param content 要打印的内容
+     */
+    private static String getFormatLogString(String content, int colour, int type) {
+        boolean hasType = type != 1 && type != 3 && type != 4;
+        if (hasType) {
+            return String.format("\033[%dm%s\033[0m", colour, content);
+        } else {
+            return String.format("\033[%d;%dm%s\033[0m", colour, type, content);
+        }
+    }
     private static String getPrefix(Level level) {
         return String.format("[%s] [%s]", getTime(), level.getDisplay());
     }
@@ -76,17 +89,19 @@ public final class Logger {
 
     public enum Level {
 
-        ERROR("ERROR", 0),
-        WARNING("WARNING", 1),
-        INFO("INFO", 2),
-        DEBUG("DEBUG", 3);
+        ERROR("ERROR", 0, 91),
+        WARNING("WARNING", 1, 93),
+        INFO("INFO", 2, 92),
+        DEBUG("DEBUG", 3, 94);
 
         private final String display;
         private final int index;
+        private final int color;
 
-        Level(String display, int index) {
+        Level(String display, int index, int color) {
             this.display = display;
             this.index = index;
+            this.color = color;
         }
 
         public String getDisplay() {
@@ -95,6 +110,10 @@ public final class Logger {
 
         public int getIndex() {
             return index;
+        }
+
+        public int getColor() {
+            return color;
         }
     }
 }
