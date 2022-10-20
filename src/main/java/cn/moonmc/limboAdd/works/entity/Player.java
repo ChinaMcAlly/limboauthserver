@@ -2,6 +2,9 @@ package cn.moonmc.limboAdd.works.entity;
 
 import cn.moonmc.limboAdd.packets.out.PlayDisconnect;
 import cn.moonmc.limboAdd.packets.out.PlayerCloveInventory;
+import cn.moonmc.limboAdd.works.event.EventManager;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCloseContainer;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerConnectEvent;
 import cn.moonmc.limboAdd.works.menu.InventoryManager;
 import cn.moonmc.limboAdd.works.menu.PlayerInventory;
 import cn.moonmc.limboAdd.works.menu.ShowInventory;
@@ -114,6 +117,7 @@ public class Player {
     }
     public void closeInventory(){
         getClientConnection().sendPacket(new PlayerCloveInventory());
+        EventManager.call(new PlayerCloseContainer(this,0));
     }
     /**
      * 获取玩家正在查看的界面

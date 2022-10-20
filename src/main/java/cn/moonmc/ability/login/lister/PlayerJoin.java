@@ -66,19 +66,29 @@ public class PlayerJoin {
         });
     }
 
+    public String getIP(Player player){
+        String s = player.getClientConnection().getAddress().toString();
+        return s.split(":")[0].replaceFirst("/","");
+    }
+
 
     /**
      * 执行登录逻辑
      * */
     public void login(Player player,User user){
+        boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("登录 | 请输入密码"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonText("QAQ忘记密码了"))));
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
+            if (send[0]){
+                return;
+            }
             if (event.getSlot()==1){
+                send[0] = true;
                 resetPassword(player,user);
             }
             if (event.getSlot()!=2) {
@@ -89,12 +99,16 @@ public class PlayerJoin {
                 return;
             }
             //登录成功，关闭界面，通知事件
+            send[0] = true;
             player.closeInventory();
             EventManager.call(new LoginSuccessfulEvent(player));
-            //更新name和ip地址
-            user.setName(player.getName());
-            user.setIp(player.getClientConnection().getAddress().toString());
-            login.getUserManager().update(user);
+
+            if (!player.getName().equals(user.getName())||!getIP(player).equals(user.getIp())){
+                //更新name和ip地址
+                user.setName(player.getName());
+                user.setIp(getIP(player));
+                login.getUserManager().update(user);
+            }
         });
         player.openInventory(anvilInventory);
     }
@@ -109,12 +123,13 @@ public class PlayerJoin {
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonText("想起来了awa"))));
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
             }
             if (event.getSlot()==1){
+                send[0] = true;
                 login(player,user);
             }
             if (event.getSlot()!=2) {
@@ -143,12 +158,16 @@ public class PlayerJoin {
     }
 
     private void resetPassword1(Player player,User user,String verificationCode){
+        boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("重置密码 | 请输入您接收到的手机验证码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
-        anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
+        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
+            if (send[0]){
+                return;
+            }
             if (event.getSlot()!=2) {
                 return;
             }
@@ -157,18 +176,23 @@ public class PlayerJoin {
                 anvilInventory.setOut(getErrorTime(new JsonText("验证码错误！请重新输入。")));
                 return;
             }
+            send[0] = true;
             resetPassword2(player,user);
         });
         player.openInventory(anvilInventory);
     }
 
     private void resetPassword2(Player player,User user){
+        boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("重置密码 | 请设置密码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
+            if (send[0]){
+                return;
+            }
             if (event.getSlot()!=2) {
                 return;
             }
@@ -177,20 +201,26 @@ public class PlayerJoin {
                 anvilInventory.setOut(getErrorTime(new JsonText("密码长度必须大于6位！请重新输入。")));
                 return;
             }
+            send[0] = true;
             resetPassword3(player,user,passwordText);
         });
         player.openInventory(anvilInventory);
     }
 
     private void resetPassword3(Player player, User user, String passwordText) {
+        boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("重置密码 | 请重新输入一次密码确保我们得到的是正确的密码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonText("上一步"))));
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
+        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
+            if (send[0]){
+                return;
+            }
             if (event.getSlot()==1){
+                send[0] = true;
                 resetPassword2(player,user);
             }
             if (event.getSlot()!=2) {
@@ -205,8 +235,12 @@ public class PlayerJoin {
             user.setPassword(User.Password.plaintextPassword(passwordText2));
             //更新name和ip地址
             user.setName(player.getName());
-            user.setIp(player.getClientConnection().getAddress().toString());
+            user.setIp(getIP(player));
+            //更新数据可能需要等待
+            send[0] = true;
+            anvilInventory.setOut(getErrorTime(new JsonText("正在重置密码，请稍等..")));
             login.getUserManager().update(user);
+            //关闭界面
             player.closeInventory();
             //通知登录成功事件
             EventManager.call(new LoginSuccessfulEvent(player));
@@ -218,13 +252,17 @@ public class PlayerJoin {
      * 执行注册逻辑
      * */
     public void reg(Player player){
-        User user = new User(player.getUUID(),player.getName(),null,null,player.getClientConnection().getAddress().toString());
+        boolean[] send = {false};
+        User user = new User(player.getUUID(),player.getName(),null,null,getIP(player));
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("创建账户 | 请设置密码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
+            if (send[0]){
+                return;
+            }
             if (event.getSlot()!=2) {
                 return;
             }
@@ -235,17 +273,23 @@ public class PlayerJoin {
             }
             reg1(player,user,passwordText);
         });
+        send[0] = true;
         player.openInventory(anvilInventory);
     }
     private void reg1(Player player, User user, String passwordText1){
+        boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("创建账户 | 请重新输入一次密码确保我们得到的是正确的密码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonText("上一步"))));
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
+            if (send[0]){
+                return;
+            }
             if (event.getSlot()==1){
+                send[0] = true;
                 reg(player);
             }
             if (event.getSlot()!=2) {
@@ -257,6 +301,7 @@ public class PlayerJoin {
                 return;
             }
             user.setPassword(User.Password.plaintextPassword(passwordText2));
+            send[0] = true;
             reg2(player,user);
         });
         player.openInventory(anvilInventory);
@@ -268,7 +313,7 @@ public class PlayerJoin {
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -289,6 +334,7 @@ public class PlayerJoin {
                 return;
             }
             String code = String.valueOf(random.nextInt(100000,999999));
+            //发送验证码可能需要等待
             send[0] = true;
             anvilInventory.setOut(getErrorTime(new JsonText("正在发送验证码，请稍等..")));
             //发送验证码
@@ -299,12 +345,16 @@ public class PlayerJoin {
     }
 
     private void reg3(Player player, User user, String phone, String verificationCode){
+        boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonText("创建账户 | 请输入您接收到的手机验证码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setCloseLister(event -> event.getPlayer().openInventory(anvilInventory));
-        anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
+        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
         anvilInventory.setClickLister(event -> {
+            if (send[0]){
+                return;
+            }
             if (event.getSlot()!=2) {
                 return;
             }
@@ -314,6 +364,9 @@ public class PlayerJoin {
                 return;
             }
             user.setPhone(phone);
+            //提交到数据库可能需要等待
+            send[0] = true;
+            anvilInventory.setOut(getErrorTime(new JsonText("正在完成注册，请稍等..")));
             login.getUserManager().insert(user);
             //注册成功，关闭界面，通知事件
             player.closeInventory();
