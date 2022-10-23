@@ -30,16 +30,4 @@ public class PlayerInventory implements Inventory{
         player.getClientConnection().sendPacket(packetSetContainerSlot);
     }
 
-    /**
-     * 设置玩家第一物品栏物品
-     */
-    public void setSlot36(Item item){
-        PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
-        packetSetContainerSlot.setWindowID(0);
-        packetSetContainerSlot.setStateID(0);
-        packetSetContainerSlot.setSlotID((short) 36);
-        packetSetContainerSlot.setSlot(item.createSlot());
-        player.getClientConnection().sendPacket(packetSetContainerSlot);
-    }
-
 }

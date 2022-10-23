@@ -1,9 +1,6 @@
 package cn.moonmc.limboAdd.works.entity;
 
-import cn.moonmc.limboAdd.packets.out.PacketOpenBook;
-import cn.moonmc.limboAdd.packets.out.PacketSetHeldItem;
-import cn.moonmc.limboAdd.packets.out.PlayDisconnect;
-import cn.moonmc.limboAdd.packets.out.PlayerCloveInventory;
+import cn.moonmc.limboAdd.packets.out.*;
 import cn.moonmc.limboAdd.works.event.EventManager;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCloseContainer;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerConnectEvent;
@@ -133,10 +130,25 @@ public class Player {
             return null;
         }
     }
+    /**
+     * 设置玩家主手所在快捷栏位置
+     * */
+    public void setShortcutBarSlot(int slot){
+        clientConnection.sendPacket(new PacketSetHeldItem((byte) slot));
+    }
+    /**
+     * 给玩家打开一本书
+     * */
     public void openBook(Item item){
-        playerInventory.setSlot36(item);
-        clientConnection.sendPacket(new PacketSetHeldItem((byte) 0));
+        PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
+        packetSetContainerSlot.setWindowID(-2);
+        packetSetContainerSlot.setStateID(0);
+        packetSetContainerSlot.setSlotID((short) 36);
+        packetSetContainerSlot.setSlot(item.createSlot());
+        getClientConnection().sendPacket(packetSetContainerSlot);
+        setShortcutBarSlot(0);
         clientConnection.sendPacket(new PacketOpenBook());
-        playerInventory.setSlot36(new Item().setItemID(ItemType.air));
+        packetSetContainerSlot.setSlot(new Item().setItemID(ItemType.air).createSlot());
+        getClientConnection().sendPacket(packetSetContainerSlot);
     }
 }
