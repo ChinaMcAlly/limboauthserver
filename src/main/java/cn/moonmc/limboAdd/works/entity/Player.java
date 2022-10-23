@@ -3,9 +3,9 @@ package cn.moonmc.limboAdd.works.entity;
 import cn.moonmc.limboAdd.packets.out.*;
 import cn.moonmc.limboAdd.works.event.EventManager;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCloseContainer;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerConnectEvent;
 import cn.moonmc.limboAdd.works.menu.*;
 import cn.moonmc.limboAdd.works.message.JsonText;
+import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import lombok.Getter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
@@ -141,7 +141,7 @@ public class Player {
      * */
     public void openBook(Item item){
         PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
-        packetSetContainerSlot.setWindowID(-2);
+        packetSetContainerSlot.setWindowID(0);
         packetSetContainerSlot.setStateID(0);
         packetSetContainerSlot.setSlotID((short) 36);
         packetSetContainerSlot.setSlot(item.createSlot());

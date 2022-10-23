@@ -1,6 +1,7 @@
 package cn.moonmc.limboAdd.packets.out;
 
 import cn.moonmc.limboAdd.works.message.JsonText;
+import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import lombok.Data;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
@@ -25,7 +26,7 @@ public class PacketOpenMenu implements PacketOut {
     /**
      * window标题
      * */
-    JsonText title = new JsonText("null");
+    JsonText title = new JsonTextParagraph("null");
 
     /**
      * 格子数量

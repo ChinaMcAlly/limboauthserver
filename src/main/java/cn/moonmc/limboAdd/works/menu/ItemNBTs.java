@@ -1,6 +1,7 @@
 package cn.moonmc.limboAdd.works.menu;
 
 import cn.moonmc.limboAdd.works.message.JsonText;
+import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import lombok.Data;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.nbt.ListBinaryTag;
@@ -15,18 +16,24 @@ import java.util.List;
  * */
 @Data
 public class ItemNBTs {
-
-    /**
-     * 物品显示名字
-     * */
     JsonText displayName;
-    /**
-     * 物品的描述（lore）
-     * */
     List<JsonText> lore;
 
+    /**
+     * 设置物品显示名称
+     * @return 返回自己，用于神奇写法
+     * */
     public ItemNBTs setDisplayName(JsonText displayName) {
         this.displayName = displayName;
+        return this;
+    }
+
+    /**
+     * 设置物品lore
+     * @return 返回自己，用于神奇写法
+     * */
+    public ItemNBTs setLore(List<JsonText> lore) {
+        this.lore = lore;
         return this;
     }
 

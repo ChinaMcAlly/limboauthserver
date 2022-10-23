@@ -3,6 +3,7 @@ package cn.moonmc.limboAdd.works.menu;
 import cn.moonmc.limboAdd.packets.out.PacketSetContainerSlot;
 import lombok.Data;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 代表一个物品
@@ -43,5 +44,12 @@ public class Item {
             slot.setNbt(itemNBTs.getNBT());
         }
         return slot;
+    }
+
+    public CompoundBinaryTag ToNBT(){
+        CompoundBinaryTag.@NotNull Builder nbt = CompoundBinaryTag.builder();
+        nbt.putInt("id",itemID.id);
+        nbt.put("tag", itemNBTs.getNBT());
+        return nbt.build();
     }
 }

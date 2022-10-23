@@ -1,6 +1,7 @@
 package cn.moonmc.limboAdd.packets.out;
 
 import cn.moonmc.limboAdd.works.message.JsonText;
+import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
@@ -15,7 +16,7 @@ public class PlayDisconnect implements PacketOut {
         this.reason = reason;
     }
     public PlayDisconnect(){
-        reason = new JsonText("null");
+        reason = new JsonTextParagraph("null");
     }
 
     @Override

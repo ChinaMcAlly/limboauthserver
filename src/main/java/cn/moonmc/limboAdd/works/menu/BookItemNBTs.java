@@ -1,6 +1,7 @@
 package cn.moonmc.limboAdd.works.menu;
 
 import cn.moonmc.limboAdd.works.message.JsonText;
+import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import lombok.Data;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.nbt.ListBinaryTag;
@@ -15,16 +16,41 @@ public class BookItemNBTs extends ItemNBTs{
     /**
      * 书的标题
      * */
-    String title;
+    String bookTitle = "默认的书";
     /**
      * 书的作者
      * */
-    String author;
+    String bookAuthor = "jianjian";
 
     /**
      * 书的页面
      * */
-    List<JsonText> pages;
+    List<JsonText> bookPages = List.of(new JsonTextParagraph("默认页面"));
+
+    /**
+     * 设置书的标题
+     * @return 返回自己，用于神奇写法
+     * */
+    public BookItemNBTs setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+        return this;
+    }
+    /**
+     * 设置书的作者
+     * @return 返回自己，用于神奇写法
+     * */
+    public BookItemNBTs setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
+        return this;
+    }
+    /**
+     * 设置书的页面
+     * @return 返回自己，用于神奇写法
+     * */
+    public BookItemNBTs setBookPages(List<JsonText> bookPages) {
+        this.bookPages = bookPages;
+        return this;
+    }
 
     @Override
     protected void builderNBT(CompoundBinaryTag.@NotNull Builder nbt) {
@@ -35,25 +61,19 @@ public class BookItemNBTs extends ItemNBTs{
     }
 
     private void addPages(CompoundBinaryTag.@NotNull Builder nbt) {
-        if (pages!=null){
-            ListBinaryTag.Builder<net.kyori.adventure.nbt.BinaryTag> binaryTagBuilder = ListBinaryTag.builder();
-            for (JsonText jsonText : lore) {
-                binaryTagBuilder.add(StringBinaryTag.of(jsonText.toJsonText()));
-            }
-            nbt.put("pages",binaryTagBuilder.build());
+        ListBinaryTag.Builder<net.kyori.adventure.nbt.BinaryTag> binaryTagBuilder = ListBinaryTag.builder();
+        for (JsonText jsonText : bookPages) {
+            binaryTagBuilder.add(StringBinaryTag.of(jsonText.toJsonText()));
         }
+        nbt.put("pages",binaryTagBuilder.build());
     }
 
     private void addAuthor(CompoundBinaryTag.Builder nbt) {
-        if (author!=null){
-            nbt.putString("author",author);
-        }
+        nbt.putString("author", bookAuthor);
     }
 
     private void addTitle(CompoundBinaryTag.Builder nbt) {
-        if (title!=null){
-            nbt.putString("title",title);
-        }
+        nbt.putString("title", bookTitle);
     }
 
 
