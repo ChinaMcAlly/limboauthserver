@@ -40,7 +40,7 @@ public class Item {
         if (itemNBTs==null){
             slot.setNbt(CompoundBinaryTag.builder().build());
         }else {
-            slot.setNbt(itemNBTs.createNBT());
+            slot.setNbt(itemNBTs.getNBT());
         }
         return slot;
     }
