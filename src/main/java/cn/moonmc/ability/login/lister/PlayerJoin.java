@@ -6,6 +6,7 @@ import cn.moonmc.ability.login.event.LoginSuccessfulEvent;
 import cn.moonmc.ability.login.utils.SMSCodeUtils;
 import cn.moonmc.limboAdd.works.entity.Player;
 import cn.moonmc.limboAdd.works.event.EventManager;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCommandEvent;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerJoinEvent;
 import cn.moonmc.limboAdd.works.menu.*;
 import cn.moonmc.limboAdd.works.message.JsonText;
@@ -54,7 +55,12 @@ public class PlayerJoin {
 
     public PlayerJoin(Login login) {
         this.login = login;
-
+        EventManager.regLister(PlayerCommandEvent.class,event ->{
+            Logger.info("PlayerCommandEvent");
+            Item item = new Item();
+            item.setItemID(ItemType.written_book);
+            event.getPlayer().openBook(item);
+        });
         EventManager.regLister(PlayerJoinEvent.class, event -> {
             Logger.info(event.getPlayer().getUUID());
             User user = login.getUserManager().selectOfUUID(event.getPlayer().getUUID());

@@ -1,13 +1,13 @@
 package cn.moonmc.limboAdd.works.entity;
 
+import cn.moonmc.limboAdd.packets.out.PacketOpenBook;
+import cn.moonmc.limboAdd.packets.out.PacketSetHeldItem;
 import cn.moonmc.limboAdd.packets.out.PlayDisconnect;
 import cn.moonmc.limboAdd.packets.out.PlayerCloveInventory;
 import cn.moonmc.limboAdd.works.event.EventManager;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCloseContainer;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerConnectEvent;
-import cn.moonmc.limboAdd.works.menu.InventoryManager;
-import cn.moonmc.limboAdd.works.menu.PlayerInventory;
-import cn.moonmc.limboAdd.works.menu.ShowInventory;
+import cn.moonmc.limboAdd.works.menu.*;
 import cn.moonmc.limboAdd.works.message.JsonText;
 import lombok.Getter;
 import ru.nanit.limbo.connection.ClientConnection;
@@ -115,6 +115,10 @@ public class Player {
     public void openInventory(ShowInventory inventory){
         getClientConnection().getServer().getAddServer().getInventoryManager().openInventory(inventory,this);
     }
+
+    /**
+     * 关闭玩家打开的界面
+     */
     public void closeInventory(){
         getClientConnection().sendPacket(new PlayerCloveInventory());
         EventManager.call(new PlayerCloseContainer(this,0));
@@ -128,5 +132,11 @@ public class Player {
         }catch (ClassCastException classCastException){
             return null;
         }
+    }
+    public void openBook(Item item){
+        playerInventory.setSlot36(item);
+        clientConnection.sendPacket(new PacketSetHeldItem((byte) 0));
+        clientConnection.sendPacket(new PacketOpenBook());
+        playerInventory.setSlot36(new Item().setItemID(ItemType.air));
     }
 }

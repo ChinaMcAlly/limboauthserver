@@ -88,10 +88,21 @@ public final class Logger {
     }
 
     public enum Level {
-
+        /**
+         * 错误
+         */
         ERROR("ERROR", 0, 91),
+        /**
+         * 警告
+         */
         WARNING("WARNING", 1, 93),
+        /**
+         * 信息
+         */
         INFO("INFO", 2, 92),
+        /**
+         * 调试
+         */
         DEBUG("DEBUG", 3, 94);
 
         private final String display;

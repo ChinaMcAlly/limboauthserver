@@ -8,7 +8,9 @@ import lombok.Getter;
  * */
 public enum ItemType {
     paper(829),
+    written_book(986),
     stone(1),
+    air(0),
     ;
     @Getter
     final int id;

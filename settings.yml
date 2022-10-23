@@ -44,7 +44,7 @@ spawnPosition:
 # 1 - 创造
 # 2 - 冒险
 # 3 - 旁观者
-gameMode: 3
+gameMode: 0
 
 # F3中显示的服务器名称
 brandName:

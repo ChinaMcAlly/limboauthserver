@@ -43,7 +43,7 @@ public class PacketSetContainerSlot implements PacketOut {
 
     @Override
     public void encode(ByteMessage msg, Version version) {
-        msg.writeByte(windowID);//
+        msg.writeByte(windowID);
         msg.writeVarInt(stateID);
         msg.writeShort(slotID);
 

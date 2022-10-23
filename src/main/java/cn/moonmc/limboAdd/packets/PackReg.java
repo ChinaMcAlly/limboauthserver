@@ -37,7 +37,14 @@ public class PackReg {
         clientBound.register(PlayerCloveInventory::new,
                 new State.Mapping(0x10,Version.getMin(),Version.getMax())
         );
-
+        //打开主手上的书
+        clientBound.register(PacketOpenBook::new,
+                new State.Mapping(0x2C,Version.getMin(),Version.getMax())
+        );
+        //设置玩家物品栏指向
+        clientBound.register(PacketSetHeldItem::new,
+                new State.Mapping(0x4A,Version.getMin(),Version.getMax())
+        );
         serverBound.register(PacketCloseContainer::new,
                 new State.Mapping(0xC,Version.getMin(),Version.getMax()));
         serverBound.register(PacketClickContainer::new,
