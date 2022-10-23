@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * @author jja8
+ * */
 @Data
 public class BookItemNBTs extends ItemNBTs{
 
