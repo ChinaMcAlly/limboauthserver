@@ -3,6 +3,7 @@ package cn.moonmc.limboAdd.works.menu;
 import cn.moonmc.limboAdd.works.message.JsonText;
 import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.nbt.ListBinaryTag;
 import net.kyori.adventure.nbt.StringBinaryTag;
@@ -14,6 +15,7 @@ import java.util.List;
  * @author jja8
  * */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class BookItemNBTs extends ItemNBTs{
 
     /**
