@@ -365,9 +365,9 @@ public class PlayerJoin {
                 anvilInventory.setOut(getErrorTime(new JsonTextParagraph("密码长度必须大于6位！请重新输入。")));
                 return;
             }
+            send[0] = true;
             reg1(player,user,passwordText);
         });
-        send[0] = true;
         player.openInventory(anvilInventory);
     }
     private void reg1(Player player, User user, String passwordText1){
@@ -384,7 +384,7 @@ public class PlayerJoin {
             }
             if (event.getSlot()==1){
                 send[0] = true;
-                reg(player);
+                reg0(player);
             }
             if (event.getSlot()!=2) {
                 return;
