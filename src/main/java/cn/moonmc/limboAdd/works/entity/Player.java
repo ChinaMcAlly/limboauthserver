@@ -29,6 +29,10 @@ public class Player {
     private final String regCmd;
     @Getter
     private final String quitCmd;
+
+    @Getter
+    @Setter
+    private Boolean readEula = false;
     /**
      * 获取玩家的物品栏
      * */
@@ -149,15 +153,26 @@ public class Player {
      * 给玩家打开一本书
      * */
     public void openBook(Item item){
-        PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
-        packetSetContainerSlot.setWindowID(0);
-        packetSetContainerSlot.setStateID(0);
-        packetSetContainerSlot.setSlotID((short) 36);
-        packetSetContainerSlot.setSlot(item.createSlot());
-        getClientConnection().sendPacket(packetSetContainerSlot);
-        setShortcutBarSlot(0);
-        clientConnection.sendPacket(new PacketOpenBook());
-        packetSetContainerSlot.setSlot(new Item().setItemID(ItemType.air).createSlot());
-        getClientConnection().sendPacket(packetSetContainerSlot);
+
+        LecternInventory lecternInventory = new LecternInventory(item);
+        lecternInventory.setCloseLister(event -> {
+            if (!readEula){
+             openInventory(lecternInventory);
+            }
+        });
+        openInventory(lecternInventory);
+
+
+
+//        PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
+//        packetSetContainerSlot.setWindowID(0);
+//        packetSetContainerSlot.setStateID(0);
+//        packetSetContainerSlot.setSlotID((short) 36);
+//        packetSetContainerSlot.setSlot(item.createSlot());
+//        getClientConnection().sendPacket(packetSetContainerSlot);
+//        setShortcutBarSlot(0);
+//        clientConnection.sendPacket(new PacketOpenBook());
+//        packetSetContainerSlot.setSlot(new Item().setItemID(ItemType.air).createSlot());
+//        getClientConnection().sendPacket(packetSetContainerSlot);
     }
 }
