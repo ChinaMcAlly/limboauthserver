@@ -20,6 +20,9 @@ public class PackReg {
         //玩家命令包
         serverBound.register(PacketPlayerCommand::new,
                 new State.Mapping(0x04,V1_19_1,V1_19_1));
+        serverBound.register(PacketPlayerTurnPages::new,
+                new State.Mapping(0xa,V1_19_1,V1_19_1));
+
         //打开窗口包
         clientBound.register(PacketOpenMenu::new,
                 new State.Mapping(0x2D,V1_19_1,V1_19_1));
