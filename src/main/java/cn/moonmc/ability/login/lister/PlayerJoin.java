@@ -57,6 +57,10 @@ public class PlayerJoin {
         this.login = login;
         EventManager.regLister(PlayerJoinEvent.class, event -> {
             Logger.info(event.getPlayer().getUUID());
+
+            //添加附件
+            event.getPlayer().getAttachments().set(LoginState.class,new LoginState());
+
             User user = login.getUserManager().selectOfUUID(event.getPlayer().getUUID());
             if (user==null){
                 reg(event.getPlayer());//注册流程
@@ -66,10 +70,15 @@ public class PlayerJoin {
         });
 
         EventManager.regLister(PlayerCommandEvent.class, event -> {
-            if (event.getCommand().equals(event.getPlayer().getQuitCmd())){
+            //获取附件
+            LoginState state = event.getPlayer().getAttachments().get(LoginState.class);
+            if (state==null || !state.logined){
+                return;
+            }
+            if (event.getCommand().equals(state.getQuitCmd())){
                 event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程"));
             }
-            if (event.getCommand().equals(event.getPlayer().getRegCmd())){
+            if (event.getCommand().equals(state.getRegCmd())){
                 reg0(event.getPlayer());
             }
         });
@@ -110,6 +119,9 @@ public class PlayerJoin {
             //登录成功，关闭界面，通知事件
             send[0] = true;
             player.closeInventory();
+
+            //设置玩家已登录
+            player.getAttachments().get(LoginState.class).logined = true;
             EventManager.call(new LoginSuccessfulEvent(player));
 
             if (!player.getName().equals(user.getName())||!getIP(player).equals(user.getIp())){
@@ -252,6 +264,7 @@ public class PlayerJoin {
             //关闭界面
             player.closeInventory();
             //通知登录成功事件
+            player.getAttachments().get(LoginState.class).logined = true;
             EventManager.call(new LoginSuccessfulEvent(player));
         });
         player.openInventory(anvilInventory);
@@ -338,12 +351,12 @@ public class PlayerJoin {
                                                 new JsonTextArticle(new JsonTextParagraph("前往注册\n"))
                                                         .addParagraph(
                                                                 new JsonTextParagraph("§6§l同意服规,前往注册\n")
-                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getRegCmd()))
+                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getAttachments().get(LoginState.class).getRegCmd()))
                                                                         .setHoverEvent(new HoverEventShowText("点击即认为您同意以上服务器条例,\n并且同意遵守服务器规则"))
                                                         )
                                                         .addParagraph(
                                                                 new JsonTextParagraph("§c§l拒绝服规,退出服务器\n")
-                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getQuitCmd()))
+                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getAttachments().get(LoginState.class).getQuitCmd()))
                                                                         .setHoverEvent(new HoverEventShowText("点击即认为您拒绝以上服务器条例,\n并且拒绝遵守服务器规则\n您可以在下次进入服务器时重新选择"))
                                                         )
                                         )
@@ -479,6 +492,7 @@ public class PlayerJoin {
             login.getUserManager().insert(user);
             //注册成功，关闭界面，通知事件
             player.closeInventory();
+            player.getAttachments().get(LoginState.class).logined = true;
             EventManager.call(new LoginSuccessfulEvent(player));
         });
         player.openInventory(anvilInventory);

@@ -2,17 +2,14 @@ package cn.moonmc.limboAdd.works.entity;
 
 import cn.moonmc.limboAdd.packets.out.*;
 import cn.moonmc.limboAdd.works.event.EventManager;
-import cn.moonmc.limboAdd.works.event.Lister;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCloseContainer;
 import cn.moonmc.limboAdd.works.menu.*;
 import cn.moonmc.limboAdd.works.message.JsonText;
-import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
 import ru.nanit.limbo.protocol.packets.play.*;
-import ru.nanit.limbo.server.Logger;
 import ru.nanit.limbo.server.data.BossBar;
 
 import java.util.UUID;
@@ -22,13 +19,13 @@ import java.util.UUID;
  * @author jja8 CNLuminous
  * */
 public class Player {
+    /**
+     * 附件
+     * */
+    @Getter
+    private final Attachments attachments = new Attachments();
     @Getter
     private final ClientConnection clientConnection;
-
-    @Getter
-    private final String regCmd;
-    @Getter
-    private final String quitCmd;
 
     @Getter
     @Setter
@@ -40,8 +37,6 @@ public class Player {
     private final PlayerInventory playerInventory = new PlayerInventory(this);
     public Player(ClientConnection clientConnection) {
         this.clientConnection = clientConnection;
-        regCmd = UUID.randomUUID().toString();
-        quitCmd = UUID.randomUUID().toString();
     }
 
     /**
