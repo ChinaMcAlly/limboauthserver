@@ -287,17 +287,6 @@ public class PlayerJoin {
                                 .setBookAuthor("沙盒世界视角")
                                 .setBookPages(
                                         List.of(
-                                                new JsonTextArticle(new JsonTextParagraph("前往注册\n"))
-                                                        .addParagraph(
-                                                                new JsonTextParagraph("§6§l同意服规,前往注册\n")
-                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getAttachments().get(LoginState.class).getRegCmd()))
-                                                                        .setHoverEvent(new HoverEventShowText("点击即认为您同意以上服务器条例,\n并且同意遵守服务器规则"))
-                                                        )
-                                                        .addParagraph(
-                                                                new JsonTextParagraph("§c§l拒绝服规,退出服务器\n")
-                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getAttachments().get(LoginState.class).getQuitCmd()))
-                                                                        .setHoverEvent(new HoverEventShowText("点击即认为您拒绝以上服务器条例,\n并且拒绝遵守服务器规则\n您可以在下次进入服务器时重新选择"))
-                                                        ),
                                                 new JsonTextParagraph("""
                                                         服规《服务器法则手册》
                                                         核心观念：禁止以下行为

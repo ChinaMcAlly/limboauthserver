@@ -3,10 +3,7 @@ package cn.moonmc.limboAdd.works.menu;
 import cn.moonmc.limboAdd.AddServer;
 import cn.moonmc.limboAdd.works.entity.Player;
 import cn.moonmc.limboAdd.works.event.EventManager;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerClickContainer;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCloseContainer;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerQuitEvent;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerRenameItem;
+import cn.moonmc.limboAdd.works.event.playerEvent.*;
 
 import java.util.*;
 
@@ -40,6 +37,13 @@ public class InventoryManager {
                 control.beClick(event);
             }
         });
+        EventManager.regLister(PlayerClickButtonContainer.class,event -> {
+            Control control = playerControlMap.get(event.getPlayer());
+            if (control!=null){
+                control.beClickButton(event);
+            }
+
+        });
 
         //通知铁砧改变名字
         EventManager.regLister(PlayerRenameItem.class, event -> {
@@ -66,7 +70,10 @@ public class InventoryManager {
          * 被点击时通知
          * */
         protected void beClick(PlayerClickContainer event){};
-
+        /**
+         * 点击按钮时通知
+         */
+        protected void beClickButton(PlayerClickButtonContainer event){};
         //用来调用
         /**
          * 获取所有正在查看此界面的玩家

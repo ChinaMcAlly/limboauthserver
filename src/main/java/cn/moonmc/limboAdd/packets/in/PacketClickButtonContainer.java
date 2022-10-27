@@ -1,7 +1,7 @@
 package cn.moonmc.limboAdd.packets.in;
 
 import cn.moonmc.limboAdd.works.event.EventManager;
-import cn.moonmc.limboAdd.works.event.playerEvent.PlayerTurnPagesEvent;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerClickButtonContainer;
 import cn.moonmc.limboAdd.works.message.ClickEventChangePage;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.ByteMessage;
@@ -12,20 +12,21 @@ import ru.nanit.limbo.server.LimboServer;
 /**
  * @author CNLuminous 2022/10/26
  */
-public class PacketPlayerTurnPages implements PacketIn {
-    Integer rid;
+public class PacketClickButtonContainer implements PacketIn {
+    Integer windowId;
+    Integer buttonId;
+    Integer nowPage;
     @Override
     public void decode(ByteMessage msg, Version version) {
-        rid =msg.readVarInt();
-        System.out.println(msg);
-        System.out.println(msg);
-        System.out.println(msg);
-//        command = msg.readString();
+        windowId = msg.readVarInt();
+        buttonId = msg.readVarInt();
+
     }
 
     @Override
     public void handle(ClientConnection conn, LimboServer server) {
-        conn.getPlayer().getClientConnection().sendPacket(new ClickEventChangePage(rid+1));
-        EventManager.call(new PlayerTurnPagesEvent(conn.getPlayer()));
+        EventManager.call(new PlayerClickButtonContainer(conn.getPlayer(),buttonId));
     }
+
+
 }
