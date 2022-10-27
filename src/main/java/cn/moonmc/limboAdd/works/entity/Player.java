@@ -26,10 +26,6 @@ public class Player {
     private final Attachments attachments = new Attachments();
     @Getter
     private final ClientConnection clientConnection;
-
-    @Getter
-    @Setter
-    private Boolean readEula = false;
     /**
      * 获取玩家的物品栏
      * */
@@ -145,15 +141,12 @@ public class Player {
         clientConnection.sendPacket(new PacketSetHeldItem((byte) slot));
     }
     /**
-     * 给玩家打开一本书
+     * 向玩家打开服务器Eula
      * */
-    public void openBook(Item item){
-
+    public void openEula(Item item){
         LecternInventory lecternInventory = new LecternInventory(item);
         lecternInventory.setCloseLister(event -> {
-            if (!readEula){
              openInventory(lecternInventory);
-            }
         });
         openInventory(lecternInventory);
 
