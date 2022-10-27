@@ -479,6 +479,24 @@ public class PlayerJoin {
                 anvilInventory.setOut(getErrorTime(new JsonTextParagraph("手机号格式不正确！请重新输入。")));
                 return;
             }
+            //验证手机号是否已经注册
+            //验证手机号可能需要等待
+            send[0] = true;
+            anvilInventory.setOut(getErrorTime(new JsonTextParagraph("正在验证手机号，请稍等..")));
+            User phoneUser = login.getUserManager().selectOfPhone(phoneText);
+            send[0] = false;
+            if (phoneUser!=null){
+                Item out = getErrorTime(new JsonTextParagraph("§d此手机号已经被注册！"));
+                out.getItemNBTs().setLore(List.of(
+                        new JsonTextParagraph("§f手机号已被"+phoneUser.getName()+"注册。"),
+                        new JsonTextParagraph("§d§l如果是您本人注册的，请继续使用本账号。"),
+                        new JsonTextParagraph("§f请关闭游戏"),
+                        new JsonTextParagraph("§f在启动器使用"+phoneUser.getName()+"启动游戏"),
+                        new JsonTextParagraph("§f再次进入服务器，输入密码登录，或找回密码。")
+                ));
+                anvilInventory.setOut(out);
+                return;
+            }
             String code = String.valueOf(random.nextInt(100000,999999));
             //发送验证码可能需要等待
             send[0] = true;

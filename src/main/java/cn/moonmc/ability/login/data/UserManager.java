@@ -2,6 +2,7 @@ package cn.moonmc.ability.login.data;
 
 import cn.moonmc.ability.login.Login;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,8 @@ public class UserManager {
             throw new RuntimeException("插入数据时uuid不能为空");
         }
         try (
-                PreparedStatement p = login.getDataSource().getConnection().prepareStatement("insert into user(uuid,name,password,phone,ip) values (?,?,?,?,?)");
+                Connection c = login.getDataSource().getConnection();
+                PreparedStatement p = c.prepareStatement("insert into user(uuid,name,password,phone,ip) values (?,?,?,?,?)");
         ){
             p.setString(1,u.uuid.toString());
             p.setString(2,u.name);
@@ -48,7 +50,8 @@ public class UserManager {
      * */
     public User update(User user){
         try (
-                PreparedStatement p = login.getDataSource().getConnection().prepareStatement("update user set name=?,password=?,phone=?,ip=? where uuid=?");
+                Connection c = login.getDataSource().getConnection();
+                PreparedStatement p = c.prepareStatement("update user set name=?,password=?,phone=?,ip=? where uuid=?");
                 ){
             p.setString(1,user.name);
             p.setString(2,user.password.ciphertext);
@@ -70,20 +73,22 @@ public class UserManager {
      * */
     public User selectOfUUID(UUID uuid){
         try (
-                PreparedStatement p = login.getDataSource().getConnection().prepareStatement("select uuid,name,password,phone,ip from user where uuid=?");
+                Connection c = login.getDataSource().getConnection();
+                PreparedStatement p = c.prepareStatement("select uuid,name,password,phone,ip from user where uuid=?");
                 ){
             p.setString(1,uuid.toString());
-            ResultSet r = p.executeQuery();
-            if (r.next()){
-                return new User(
-                        UUID.fromString(r.getString(1)),
-                        r.getString(2),
-                        r.getString(3),
-                        r.getString(4),
-                        r.getString(5)
-                );
-            }else {
-                return null;
+            try (ResultSet r = p.executeQuery()){
+                if (r.next()){
+                    return new User(
+                            UUID.fromString(r.getString(1)),
+                            r.getString(2),
+                            r.getString(3),
+                            r.getString(4),
+                            r.getString(5)
+                    );
+                }else {
+                    return null;
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -94,20 +99,22 @@ public class UserManager {
      * */
     public User selectOfPhone(String phone){
         try (
-                PreparedStatement p = login.getDataSource().getConnection().prepareStatement("select uuid,name,password,phone,ip from user where phone=?");
+                Connection c = login.getDataSource().getConnection();
+                PreparedStatement p = c.prepareStatement("select uuid,name,password,phone,ip from user where phone=?");
         ){
             p.setString(1,phone);
-            ResultSet r = p.executeQuery();
-            if (r.next()){
-                return new User(
-                        UUID.fromString(r.getString(1)),
-                        r.getString(2),
-                        r.getString(3),
-                        r.getString(4),
-                        r.getString(5)
-                );
-            }else {
-                return null;
+            try (ResultSet r = p.executeQuery()){
+                if (r.next()){
+                    return new User(
+                            UUID.fromString(r.getString(1)),
+                            r.getString(2),
+                            r.getString(3),
+                            r.getString(4),
+                            r.getString(5)
+                    );
+                }else {
+                    return null;
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
