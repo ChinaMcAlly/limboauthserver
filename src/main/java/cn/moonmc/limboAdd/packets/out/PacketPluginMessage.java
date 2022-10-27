@@ -7,8 +7,6 @@ import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * 插件消息包
  * */

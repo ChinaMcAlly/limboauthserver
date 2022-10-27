@@ -55,14 +55,13 @@ public class ChooseServer {
                             )
             );
             lecternInventory.setCloseLister(event1 -> event1.getPlayer().openInventory(lecternInventory));
-
-            event.getPlayer().openInventory(lecternInventory);
             lecternInventory.setClickButtonLister(event1 -> {
                 if (event1.getButtonId()==3){
                     event1.getPlayer().disconnect(new JsonTextParagraph("§6§l玩家自主退出服务器"));
                 }
-
             });
+            event.getPlayer().openInventory(lecternInventory);
+
         });
 
         /**
