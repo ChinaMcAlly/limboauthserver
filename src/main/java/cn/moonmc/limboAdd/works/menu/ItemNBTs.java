@@ -8,6 +8,7 @@ import net.kyori.adventure.nbt.ListBinaryTag;
 import net.kyori.adventure.nbt.StringBinaryTag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,5 +78,13 @@ public class ItemNBTs {
             binaryTagBuilder.add(StringBinaryTag.of(jsonText.toJsonText()));
         }
         display.put("Lore",binaryTagBuilder.build());
+    }
+
+    public ItemNBTs copy() {
+        ItemNBTs itemNBTs =  new ItemNBTs();
+        if (lore!=null){
+            itemNBTs.setLore(new ArrayList<>(lore));
+        }
+       return  itemNBTs.setDisplayName(displayName);
     }
 }

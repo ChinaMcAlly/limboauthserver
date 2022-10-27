@@ -89,4 +89,28 @@ public class UserManager {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * 通过手机号查询用户
+     * */
+    public User selectOfPhone(String phone){
+        try (
+                PreparedStatement p = login.getDataSource().getConnection().prepareStatement("select uuid,name,password,phone,ip from user where phone=?");
+        ){
+            p.setString(1,phone);
+            ResultSet r = p.executeQuery();
+            if (r.next()){
+                return new User(
+                        UUID.fromString(r.getString(1)),
+                        r.getString(2),
+                        r.getString(3),
+                        r.getString(4),
+                        r.getString(5)
+                );
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

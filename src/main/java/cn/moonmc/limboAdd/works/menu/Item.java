@@ -52,4 +52,8 @@ public class Item {
         nbt.put("tag", itemNBTs.getNBT());
         return nbt.build();
     }
+
+    public Item copy() {
+        return new Item().setItemID(itemID).setItemNBTs(itemNBTs.copy()).setCount(count);
+    }
 }

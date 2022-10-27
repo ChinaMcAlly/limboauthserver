@@ -52,5 +52,9 @@ public class PackReg {
                 new State.Mapping(0xC,Version.getMin(),Version.getMax()));
         serverBound.register(PacketClickContainer::new,
                 new State.Mapping(0xB,Version.getMin(),Version.getMax()));
+
+        clientBound.register(PacketPluginMessage::new,
+                new State.Mapping(0x16,Version.getMin(),Version.getMax())
+        );
     }
 }

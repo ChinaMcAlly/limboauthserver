@@ -29,6 +29,8 @@ dependencies {
     implementation 'net.kyori:adventure-nbt:4.11.0'
     implementation 'com.grack:nanojson:1.7'
 
+    implementation 'com.google.guava:guava:31.1-jre'
+
     //数据库连接池
     implementation 'com.zaxxer:HikariCP:5.0.1'
     //mysql jdbc

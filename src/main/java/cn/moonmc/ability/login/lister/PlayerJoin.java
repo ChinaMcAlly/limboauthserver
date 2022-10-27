@@ -72,7 +72,7 @@ public class PlayerJoin {
         EventManager.regLister(PlayerCommandEvent.class, event -> {
             //获取附件
             LoginState state = event.getPlayer().getAttachments().get(LoginState.class);
-            if (state==null || !state.logined){
+            if (state==null || state.logined){
                 return;
             }
             if (event.getCommand().equals(state.getQuitCmd())){
@@ -96,7 +96,13 @@ public class PlayerJoin {
     public void login(Player player,User user){
         boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("登录 | 请输入密码"));
-        anvilInventory.setIn1(getInItem());
+        Item in1 = getInItem().copy();
+        in1.getItemNBTs().setLore(List.of(
+                new JsonTextParagraph("§f§l请输入"+player.getName()+"的密码。"),
+                new JsonTextParagraph("§f若你没有注册过此ID，请在启动器更换ID"),
+                new JsonTextParagraph("§fID仅支持包含字母与数字")
+        ));
+        anvilInventory.setIn1(in1);
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonTextParagraph("QAQ忘记密码了"))));
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
@@ -281,6 +287,17 @@ public class PlayerJoin {
                                 .setBookAuthor("沙盒世界视角")
                                 .setBookPages(
                                         List.of(
+                                                new JsonTextArticle(new JsonTextParagraph("前往注册\n"))
+                                                        .addParagraph(
+                                                                new JsonTextParagraph("§6§l同意服规,前往注册\n")
+                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getAttachments().get(LoginState.class).getRegCmd()))
+                                                                        .setHoverEvent(new HoverEventShowText("点击即认为您同意以上服务器条例,\n并且同意遵守服务器规则"))
+                                                        )
+                                                        .addParagraph(
+                                                                new JsonTextParagraph("§c§l拒绝服规,退出服务器\n")
+                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getAttachments().get(LoginState.class).getQuitCmd()))
+                                                                        .setHoverEvent(new HoverEventShowText("点击即认为您拒绝以上服务器条例,\n并且拒绝遵守服务器规则\n您可以在下次进入服务器时重新选择"))
+                                                        ),
                                                 new JsonTextParagraph("""
                                                         服规《服务器法则手册》
                                                         核心观念：禁止以下行为
@@ -377,7 +394,14 @@ public class PlayerJoin {
         boolean[] send = {false};
         User user = new User(player.getUUID(),player.getName(),null,null,getIP(player));
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("创建账户 | 请设置密码。"));
-        anvilInventory.setIn1(getInItem());
+        Item in1 = getInItem().copy();
+        in1.getItemNBTs().setLore(List.of(
+                new JsonTextParagraph("§f§l为"+player.getName()+"创建密码。"),
+                new JsonTextParagraph("§d§l请记住此ID "+player.getName()),
+                new JsonTextParagraph("§f若不想使用此ID，请在启动器更换ID"),
+                new JsonTextParagraph("§fID仅支持包含字母与数字")
+        ));
+        anvilInventory.setIn1(in1);
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
         anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
