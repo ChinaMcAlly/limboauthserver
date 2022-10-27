@@ -278,7 +278,7 @@ public class PlayerJoin {
 
     public void reg(Player player){
 
-        player.openBook(new Item()
+        player.openEula(new Item()
                 .setItemID(ItemType.written_book)
                 .setCount(1)
                 .setItemNBTs(
