@@ -10,6 +10,7 @@ import cn.moonmc.limboAdd.works.menu.BookItemNBTs;
 import cn.moonmc.limboAdd.works.menu.Item;
 import cn.moonmc.limboAdd.works.menu.ItemType;
 import cn.moonmc.limboAdd.works.menu.LecternInventory;
+import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import lombok.Getter;
@@ -54,6 +55,12 @@ public class ChooseServer {
                             )
             );
             lecternInventory.setCloseLister(event1 -> event1.getPlayer().openInventory(lecternInventory));
+            lecternInventory.setClickButtonLister(event1 -> {
+                if (event1.getButtonId()==3){
+                    event1.getPlayer().disconnect(new JsonTextParagraph("§6§l玩家自主退出服务器"));
+                }
+
+            });
             event.getPlayer().openInventory(lecternInventory);
         });
 
