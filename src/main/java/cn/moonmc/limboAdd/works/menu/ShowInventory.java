@@ -4,6 +4,7 @@ import cn.moonmc.limboAdd.packets.out.PacketSetContainerSlot;
 import cn.moonmc.limboAdd.works.entity.Player;
 import cn.moonmc.limboAdd.works.event.Event;
 import cn.moonmc.limboAdd.works.event.Lister;
+import cn.moonmc.limboAdd.works.event.playerEvent.PlayerClickButtonContainer;
 import cn.moonmc.limboAdd.works.event.playerEvent.PlayerClickContainer;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,12 @@ public abstract class ShowInventory extends InventoryManager.Control implements 
     Lister<PlayerClickContainer> clickLister;
 
     /**
+     * 点击按钮监听器
+     */
+    @Getter
+    @Setter
+    Lister<PlayerClickButtonContainer> clickButtonLister;
+    /**
      * 关闭事件监听器
      * */
     @Getter
@@ -56,6 +63,17 @@ public abstract class ShowInventory extends InventoryManager.Control implements 
 
     }
 
+    @Override
+    protected void beClickButton(PlayerClickButtonContainer event){
+        try {
+            if (clickButtonLister!=null){
+                clickButtonLister.listen(event);
+            }
+        }catch (Throwable throwable){
+            throwable.printStackTrace();
+        }
+
+    }
     /**
      * 被关闭时传递事件
      * */
