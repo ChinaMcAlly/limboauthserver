@@ -2,6 +2,8 @@ package cn.moonmc.ability.login.lister;
 
 import cn.moonmc.ability.login.Login;
 import cn.moonmc.ability.login.data.User;
+import cn.moonmc.ability.login.data.password.EncryptionMethod;
+import cn.moonmc.ability.login.data.password.Sha256;
 import cn.moonmc.ability.login.event.LoginSuccessfulEvent;
 import cn.moonmc.ability.login.utils.SMSCodeUtils;
 import cn.moonmc.limboAdd.works.entity.Player;
@@ -17,6 +19,7 @@ import java.util.*;
 
 public class PlayerJoin {
     final static Random random = new Random();
+    final static EncryptionMethod encryptionMethod = new Sha256();
     /**
      * 输入按钮
      * */
@@ -118,7 +121,7 @@ public class PlayerJoin {
             if (event.getSlot()!=2) {
                 return;
             }
-            if (anvilInventory.getReSetName()==null||!user.getPassword().check(anvilInventory.getReSetName())) {
+            if (anvilInventory.getReSetName()==null||! encryptionMethod.comparePassword(anvilInventory.getReSetName(),user.getPassword())) {
                 anvilInventory.setOut(getErrorTime(new JsonTextParagraph("密码错误！请重新输入。")));
                 return;
             }
@@ -259,7 +262,7 @@ public class PlayerJoin {
                 return;
             }
             //更新密码
-            user.setPassword(User.Password.plaintextPassword(passwordText2));
+            user.setPassword(encryptionMethod.computeHash(passwordText2));
             //更新name和ip地址
             user.setName(player.getName());
             user.setIp(getIP(player));
@@ -450,7 +453,7 @@ public class PlayerJoin {
                 anvilInventory.setOut(getErrorTime(new JsonTextParagraph("两次密码不一致！请重新输入。")));
                 return;
             }
-            user.setPassword(User.Password.plaintextPassword(passwordText2));
+            user.setPassword(encryptionMethod.computeHash(passwordText2));
             send[0] = true;
             reg2(player,user);
         });

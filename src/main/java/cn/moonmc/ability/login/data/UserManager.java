@@ -32,7 +32,7 @@ public class UserManager {
         ){
             p.setString(1,u.uuid.toString());
             p.setString(2,u.name);
-            p.setString(3,u.password.ciphertext);
+            p.setString(3,u.password.getHash());
             p.setString(4,u.phone);
             p.setString(5,u.ip);
             if (p.executeLargeUpdate()>0) {
@@ -54,7 +54,7 @@ public class UserManager {
                 PreparedStatement p = c.prepareStatement("update user set name=?,password=?,phone=?,ip=? where uuid=?");
                 ){
             p.setString(1,user.name);
-            p.setString(2,user.password.ciphertext);
+            p.setString(2,user.password.getHash());
             p.setString(3,user.phone);
             p.setString(4,user.ip);
             p.setString(5,user.uuid.toString());

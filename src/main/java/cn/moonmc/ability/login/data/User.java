@@ -1,5 +1,6 @@
 package cn.moonmc.ability.login.data;
 
+import cn.moonmc.ability.login.data.password.HashedPassword;
 import cn.moonmc.ability.login.utils.HashUtils;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ public class User {
     /**
      * 密码
      * */
-    Password password;
+    HashedPassword password;
     /**
      * 手机号
      * */
@@ -31,42 +32,16 @@ public class User {
     User(UUID uuid, String name, String ciphertextPassword, String phone, String ip) {
         this.uuid = uuid;
         this.name = name;
-        this.password =ciphertextPassword==null?null:new Password(ciphertextPassword);
+        this.password =ciphertextPassword==null?null:new HashedPassword(ciphertextPassword);
         this.phone = phone;
         this.ip = ip;
     }
 
-    public User(UUID uuid, String name, Password password, String phone, String ip) {
+    public User(UUID uuid, String name, HashedPassword password, String phone, String ip) {
         this.uuid = uuid;
         this.name = name;
         this.password = password;
         this.phone = phone;
         this.ip = ip;
-    }
-
-    /**
-     * 代表用户的密码
-     * */
-    public static class Password {
-        final String ciphertext;
-
-        private Password(String ciphertext) {
-            this.ciphertext = ciphertext;
-        }
-
-        /**
-         * 通过明文创建密码
-         * */
-        public static Password plaintextPassword(String plaintextPassword){
-            return new Password(HashUtils.sha256(plaintextPassword));
-        }
-
-        /**
-         * 检查密码是否正确
-         * @param plaintextPassword 明文密码
-         * */
-        public boolean check(String plaintextPassword){
-            return ciphertext.equals(HashUtils.sha256(plaintextPassword));
-        }
     }
 }
