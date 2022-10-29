@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
@@ -5,7 +7,7 @@ plugins {
 }
 
 group 'ru.nanit'
-version '1.4.1'
+version new SimpleDateFormat("yyyy.MM.dd.HHmm").format(new Date())
 
 compileJava {
     options.encoding = "UTF-8"

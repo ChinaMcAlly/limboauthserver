@@ -26,7 +26,7 @@ public class LecternInventory extends ShowInventory {
     protected void show(Player player) {
         //打开窗口
         PacketOpenMenu packetOpenMenu = new PacketOpenMenu();
-        packetOpenMenu.setSlots(0);
+        packetOpenMenu.setSlots(1);
         packetOpenMenu.setWindowsType(PacketOpenMenu.WindowsType.lectern);
         packetOpenMenu.setWindowID(windowID);
         player.getClientConnection().sendPacket(packetOpenMenu);

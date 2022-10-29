@@ -278,7 +278,7 @@ public class PlayerJoin {
 
     public void reg(Player player){
 
-        player.openEula(new Item()
+        LecternInventory lecternInventory = new LecternInventory(new Item()
                 .setItemID(ItemType.written_book)
                 .setCount(1)
                 .setItemNBTs(
@@ -367,8 +367,23 @@ public class PlayerJoin {
                                                         )
                                         )
                                 )
-                )
-        );
+                ));
+        lecternInventory.setCloseLister(event -> {
+             player.openInventory(lecternInventory);
+        });
+        player.openInventory(lecternInventory);
+
+
+//        PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
+//        packetSetContainerSlot.setWindowID(0);
+//        packetSetContainerSlot.setStateID(0);
+//        packetSetContainerSlot.setSlotID((short) 36);
+//        packetSetContainerSlot.setSlot(item.createSlot());
+//        getClientConnection().sendPacket(packetSetContainerSlot);
+//        setShortcutBarSlot(0);
+//        clientConnection.sendPacket(new PacketOpenBook());
+//        packetSetContainerSlot.setSlot(new Item().setItemID(ItemType.air).createSlot());
+//        getClientConnection().sendPacket(packetSetContainerSlot);
         //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
         //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
         //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。

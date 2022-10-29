@@ -31,15 +31,15 @@ public class Login {
             try (Connection connection = dataSource.getConnection()){
                 connection.createStatement().execute("""
 CREATE TABLE IF NOT EXISTS `user`  (
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `ip` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`uuid`) USING BTREE,
   INDEX `phone`(`phone` ASC) USING BTREE,
   INDEX `id`(`ip` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
 """);
             }catch (Throwable e){
                 e.printStackTrace();

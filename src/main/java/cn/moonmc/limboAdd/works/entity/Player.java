@@ -6,7 +6,6 @@ import cn.moonmc.limboAdd.works.event.playerEvent.PlayerCloseContainer;
 import cn.moonmc.limboAdd.works.menu.*;
 import cn.moonmc.limboAdd.works.message.JsonText;
 import lombok.Getter;
-import lombok.Setter;
 import ru.nanit.limbo.connection.ClientConnection;
 import ru.nanit.limbo.protocol.PacketSnapshot;
 import ru.nanit.limbo.protocol.packets.play.*;
@@ -139,28 +138,5 @@ public class Player {
      * */
     public void setShortcutBarSlot(int slot){
         clientConnection.sendPacket(new PacketSetHeldItem((byte) slot));
-    }
-    /**
-     * 向玩家打开服务器Eula
-     * */
-    public void openEula(Item item){
-        LecternInventory lecternInventory = new LecternInventory(item);
-        lecternInventory.setCloseLister(event -> {
-             openInventory(lecternInventory);
-        });
-        openInventory(lecternInventory);
-
-
-
-//        PacketSetContainerSlot packetSetContainerSlot = new PacketSetContainerSlot();
-//        packetSetContainerSlot.setWindowID(0);
-//        packetSetContainerSlot.setStateID(0);
-//        packetSetContainerSlot.setSlotID((short) 36);
-//        packetSetContainerSlot.setSlot(item.createSlot());
-//        getClientConnection().sendPacket(packetSetContainerSlot);
-//        setShortcutBarSlot(0);
-//        clientConnection.sendPacket(new PacketOpenBook());
-//        packetSetContainerSlot.setSlot(new Item().setItemID(ItemType.air).createSlot());
-//        getClientConnection().sendPacket(packetSetContainerSlot);
     }
 }
