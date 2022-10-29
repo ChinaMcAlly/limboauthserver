@@ -47,7 +47,7 @@ shadowJar {
         attributes('Main-Class': 'ru.nanit.limbo.NanoLimbo')
     }
 
-    minimize()
+   // minimize()  //这会导致mysql没打包
 }
 
 test {
