@@ -13,8 +13,22 @@ import java.util.UUID;
  * */
 public class UserManager {
     Login login;
-    public UserManager(Login login) {
+    public UserManager(Login login) throws SQLException {
         this.login = login;
+        try (Connection connection = login.getDataSource().getConnection()){
+            connection.createStatement().execute("""
+CREATE TABLE IF NOT EXISTS `user`  (
+  `uuid` char(36) CHARACTER SET utf8mb4 NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4,
+  `password` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `ip` varchar(255) CHARACTER SET utf8mb4,
+  PRIMARY KEY (`uuid`) USING BTREE,
+  INDEX `phone`(`phone` ASC) USING BTREE,
+  INDEX `id`(`ip` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
+""");
+        }
     }
 
     /**
