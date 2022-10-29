@@ -79,7 +79,7 @@ public class PlayerJoin {
                 return;
             }
             if (event.getCommand().equals(state.getQuitCmd())){
-                event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程"));
+                event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程1"));
             }
             if (event.getCommand().equals(state.getRegCmd())){
                 reg0(event.getPlayer());
@@ -109,10 +109,17 @@ public class PlayerJoin {
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonTextParagraph("QAQ忘记密码了"))));
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setCloseLister(event -> {
+            if(!send[0]) {
+                event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程2"));
+            }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
+            }
+            if (event.getSlot()==0){
+                player.openInventory(anvilInventory);
             }
             if (event.getSlot()==1){
                 send[0] = true;
@@ -152,8 +159,14 @@ public class PlayerJoin {
         anvilInventory.setIn1(getInItem());
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonTextParagraph("想起来了awa"))));
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setRenameItemLister(event -> {if(!send[0]) {
+            anvilInventory.setOut(getOkTime());
+        }
+        });
+        anvilInventory.setCloseLister(event -> {if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程3"));
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -192,8 +205,14 @@ public class PlayerJoin {
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("重置密码 | 请输入您接收到的手机验证码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setRenameItemLister(event -> {if(!send[0]) {
+            anvilInventory.setOut(getOkTime());
+        }
+        });
+        anvilInventory.setCloseLister(event -> {if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程4"));
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -218,7 +237,10 @@ public class PlayerJoin {
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setCloseLister(event -> {if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程5"));
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -243,8 +265,14 @@ public class PlayerJoin {
         anvilInventory.setIn1(getInItem());
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonTextParagraph("上一步"))));
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setRenameItemLister(event -> {if(!send[0]) {
+            anvilInventory.setOut(getOkTime());
+        }
+        });
+        anvilInventory.setCloseLister(event -> {if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程6"));
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -290,7 +318,9 @@ public class PlayerJoin {
                                 .setBookAuthor("沙盒世界视角")
                                 .setBookPages(
                                         List.of(
-                                                new JsonTextParagraph("""
+                                                new JsonTextArticle(new JsonTextParagraph(""))
+                                                        .addParagraph(
+                                                                new JsonTextParagraph("""
                                                         服规《服务器法则手册》
                                                         核心观念：禁止以下行为
                                                         游戏作弊 不尊重他人 故意卡服 不爱惜服务器
@@ -299,7 +329,12 @@ public class PlayerJoin {
                                                         对于君子 以礼相待
                                                         对于小人 更加小人
 
-                                                        请继续阅读本条例后面的内容,阅读完成后即可注册。"""),
+                                                        请继续阅读本条例后面的内容,阅读完成后即可注册。"""))
+                                                        .addParagraph(
+                                                                new JsonTextParagraph("\n§c§l拒绝服规,退出服务器\n")
+                                                                        .setClickEvent(new ClickEventRunCommand("/"+player.getAttachments().get(LoginState.class).getQuitCmd()))
+                                                                        .setHoverEvent(new HoverEventShowText("点击即认为您拒绝以上服务器条例,\n并且拒绝遵守服务器规则\n您可以在下次进入服务器时重新选择"))
+                                                        ),
                                                 new JsonTextParagraph("""
                                                         【服务器法则手册】
                                                           更新日期2021年7月17日
@@ -372,7 +407,7 @@ public class PlayerJoin {
                                 )
                 ));
         lecternInventory.setCloseLister(event -> {
-             player.openInventory(lecternInventory);
+            player.openInventory(lecternInventory);
         });
         player.openInventory(lecternInventory);
 
@@ -411,7 +446,11 @@ public class PlayerJoin {
         anvilInventory.setIn1(in1);
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setCloseLister(event -> {
+            if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程7"));
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -436,7 +475,10 @@ public class PlayerJoin {
         anvilInventory.setIn2(new Item().setItemID(ItemType.paper).setItemNBTs(new ItemNBTs().setDisplayName(new JsonTextParagraph("上一步"))));
         anvilInventory.setOut(getOkTime());
         anvilInventory.setRenameItemLister(event -> anvilInventory.setOut(getOkTime()));
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setCloseLister(event -> {if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程8"));
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -465,8 +507,14 @@ public class PlayerJoin {
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("创建账户 | 请输入手机号。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
+        anvilInventory.setRenameItemLister(event -> {if(!send[0]) {
+            anvilInventory.setOut(getOkTime());
+        }
+        });
+        anvilInventory.setCloseLister(event -> {if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程9"));
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;
@@ -520,8 +568,14 @@ public class PlayerJoin {
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("创建账户 | 请输入您接收到的手机验证码。"));
         anvilInventory.setIn1(getInItem());
         anvilInventory.setOut(getOkTime());
-        anvilInventory.setCloseLister(event -> {if(!send[0])event.getPlayer().openInventory(anvilInventory);});
-        anvilInventory.setRenameItemLister(event -> {if(!send[0])anvilInventory.setOut(getOkTime());});
+        anvilInventory.setCloseLister(event -> {if(!send[0]) {
+            event.getPlayer().disconnect(new JsonTextParagraph("§6§l您已退出登录流程10"));
+        }
+        });
+        anvilInventory.setRenameItemLister(event -> {if(!send[0]) {
+            anvilInventory.setOut(getOkTime());
+        }
+        });
         anvilInventory.setClickLister(event -> {
             if (send[0]){
                 return;

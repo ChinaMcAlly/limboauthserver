@@ -43,8 +43,6 @@ dependencies {
 }
 
 shadowJar {
-    from 'LICENSE'
-
     manifest {
         attributes('Main-Class': 'ru.nanit.limbo.NanoLimbo')
     }

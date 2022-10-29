@@ -32,6 +32,8 @@ public class LecternInventory extends ShowInventory {
         player.getClientConnection().sendPacket(packetOpenMenu);
         //设置书
         sendSlotUp(player);
+        //解决跳页问题
+        nowId = 0;
     }
 
     @Override
