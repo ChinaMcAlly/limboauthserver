@@ -26,8 +26,6 @@ public abstract class ShowInventory extends InventoryManager.Control implements 
         }
     }
 
-    protected int windowID = new Random().nextInt(0,127);
-
     /**
      * 点击事件监听器,当玩家在此界面点击时传递事件
      * */

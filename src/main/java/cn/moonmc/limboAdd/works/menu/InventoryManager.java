@@ -25,21 +25,22 @@ public class InventoryManager {
             }
         });
         EventManager.regLister(PlayerCloseContainer.class, event -> {
-            Control control = playerControlMap.remove(event.getPlayer());
-            if (control!=null){
+            Control control = playerControlMap.get(event.getPlayer());
+            if (control!=null && control.windowID==event.getWindowID()){
+                playerControlMap.remove(event.getPlayer());
                 control.openPlayers.remove(event.getPlayer());
                 control.beClose(event.getPlayer());
             }
         });
         EventManager.regLister(PlayerClickContainer.class, event -> {
             Control control = playerControlMap.get(event.getPlayer());
-            if (control!=null){
+            if (control!=null && control.windowID==event.getWindowID()){
                 control.beClick(event);
             }
         });
         EventManager.regLister(PlayerClickButtonContainer.class,event -> {
             Control control = playerControlMap.get(event.getPlayer());
-            if (control!=null){
+            if (control!=null && control.windowID==event.getWindowId()){
                 control.beClickButton(event);
             }
 
@@ -56,6 +57,13 @@ public class InventoryManager {
 
 
     abstract static class Control{
+        private static int windowIdCount = 0;
+        private static int nexWindowId(){
+            return (windowIdCount++ % 126)+1;
+        }
+
+        protected int windowID = nexWindowId();
+
         private final List<Player> openPlayers = new ArrayList<>();
         //需要实现或者用来实现
         /**

@@ -25,7 +25,7 @@ public class PacketClickButtonContainer implements PacketIn {
 
     @Override
     public void handle(ClientConnection conn, LimboServer server) {
-        EventManager.call(new PlayerClickButtonContainer(conn.getPlayer(),buttonId));
+        EventManager.call(new PlayerClickButtonContainer(conn.getPlayer(),buttonId,windowId));
     }
 
 
