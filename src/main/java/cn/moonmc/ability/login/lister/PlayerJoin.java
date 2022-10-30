@@ -13,9 +13,12 @@ import cn.moonmc.limboAdd.works.event.playerEvent.PlayerJoinEvent;
 import cn.moonmc.limboAdd.works.menu.*;
 import cn.moonmc.limboAdd.works.message.*;
 import lombok.Getter;
+import ru.nanit.limbo.protocol.registry.Version;
 import ru.nanit.limbo.server.Logger;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayerJoin {
     final static Random random = new Random();
@@ -61,7 +64,16 @@ public class PlayerJoin {
         EventManager.regLister(PlayerJoinEvent.class, event -> {
             Logger.info(event.getPlayer().getUUID());
 
-            //添加附件
+            if (event.getPlayer().getClientConnection().getClientVersion() != Version.V1_9_2){
+                event.getPlayer().disconnect(new JsonTextParagraph("§c请使用 1.19.2 版本进入本服务器!"));
+            }
+            String pattern = "[A-Za-z0-9_]{3,15}";
+            Pattern r = Pattern.compile(pattern);
+            Matcher m = r.matcher(event.getPlayer().getName());
+            if (!m.matches()){
+                event.getPlayer().disconnect(new JsonTextParagraph("§c用户名不合法!服务器仅支持3-15位英文/数字/下划线的ID注册"));
+            }
+                //添加附件
             event.getPlayer().getAttachments().set(LoginState.class,new LoginState());
 
             User user = login.getUserManager().selectOfUUID(event.getPlayer().getUUID());
