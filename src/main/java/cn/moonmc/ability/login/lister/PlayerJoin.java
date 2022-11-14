@@ -64,7 +64,7 @@ public class PlayerJoin {
         EventManager.regLister(PlayerJoinEvent.class, event -> {
             Logger.info(event.getPlayer().getUUID());
 
-            if (event.getPlayer().getClientConnection().getClientVersion() != Version.V1_9_2){
+            if (event.getPlayer().getClientConnection().getClientVersion() != Version.V1_19_1){
                 event.getPlayer().disconnect(new JsonTextParagraph("§c请使用 1.19.2 版本进入本服务器!"));
             }
             String pattern = "[A-Za-z0-9_]{3,15}";
