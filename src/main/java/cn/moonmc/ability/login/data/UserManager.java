@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `user`  (
   `password` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `ip` varchar(255) CHARACTER SET utf8mb4,
+  `lastLogin` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`uuid`) USING BTREE,
   INDEX `phone`(`phone` ASC) USING BTREE,
   INDEX `id`(`ip` ASC) USING BTREE
@@ -42,13 +43,14 @@ CREATE TABLE IF NOT EXISTS `user`  (
         }
         try (
                 Connection c = login.getDataSource().getConnection();
-                PreparedStatement p = c.prepareStatement("insert into user(uuid,name,password,phone,ip) values (?,?,?,?,?)");
+                PreparedStatement p = c.prepareStatement("insert into user(uuid,name,password,phone,ip,lastLogin) values (?,?,?,?,?,?)");
         ){
             p.setString(1,u.uuid.toString());
             p.setString(2,u.name);
             p.setString(3,u.password.getHash());
             p.setString(4,u.phone);
             p.setString(5,u.ip);
+            p.setLong(6,u.lastLogin);
             if (p.executeLargeUpdate()>0) {
                 return u;
             }else {
@@ -88,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `user`  (
     public User selectOfUUID(UUID uuid){
         try (
                 Connection c = login.getDataSource().getConnection();
-                PreparedStatement p = c.prepareStatement("select uuid,name,password,phone,ip from user where uuid=?");
+                PreparedStatement p = c.prepareStatement("select uuid,name,password,phone,ip,lastLogin from user where uuid=?");
                 ){
             p.setString(1,uuid.toString());
             try (ResultSet r = p.executeQuery()){
@@ -98,7 +100,8 @@ CREATE TABLE IF NOT EXISTS `user`  (
                             r.getString(2),
                             r.getString(3),
                             r.getString(4),
-                            r.getString(5)
+                            r.getString(5),
+                            r.getLong(6)
                     );
                 }else {
                     return null;
@@ -114,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `user`  (
     public User selectOfPhone(String phone){
         try (
                 Connection c = login.getDataSource().getConnection();
-                PreparedStatement p = c.prepareStatement("select uuid,name,password,phone,ip from user where phone=?");
+                PreparedStatement p = c.prepareStatement("select uuid,name,password,phone,ip,lastLogin from user where phone=?");
         ){
             p.setString(1,phone);
             try (ResultSet r = p.executeQuery()){
@@ -124,7 +127,8 @@ CREATE TABLE IF NOT EXISTS `user`  (
                             r.getString(2),
                             r.getString(3),
                             r.getString(4),
-                            r.getString(5)
+                            r.getString(5),
+                            r.getLong(6)
                     );
                 }else {
                     return null;

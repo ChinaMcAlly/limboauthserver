@@ -28,20 +28,26 @@ public class User {
      * ip地址
      * */
     String ip;
+    /**
+     * 上次登录时间
+     * */
+    long lastLogin;
 
-    User(UUID uuid, String name, String ciphertextPassword, String phone, String ip) {
+    User(UUID uuid, String name, String ciphertextPassword, String phone, String ip,long lastLogin) {
         this.uuid = uuid;
         this.name = name;
         this.password =ciphertextPassword==null?null:new HashedPassword(ciphertextPassword);
         this.phone = phone;
         this.ip = ip;
+        this.lastLogin = lastLogin;
     }
 
-    public User(UUID uuid, String name, HashedPassword password, String phone, String ip) {
+    public User(UUID uuid, String name, HashedPassword password, String phone, String ip,long lastLogin) {
         this.uuid = uuid;
         this.name = name;
         this.password = password;
         this.phone = phone;
         this.ip = ip;
+        this.lastLogin = lastLogin;
     }
 }

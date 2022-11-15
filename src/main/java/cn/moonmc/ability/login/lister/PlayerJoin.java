@@ -72,6 +72,7 @@ public class PlayerJoin {
             Matcher m = r.matcher(event.getPlayer().getName());
             if (!m.matches()){
                 event.getPlayer().disconnect(new JsonTextParagraph("§c用户名不合法!服务器仅支持3-15位英文/数字/下划线的ID注册"));
+                return;
             }
                 //添加附件
             event.getPlayer().getAttachments().set(LoginState.class,new LoginState());
@@ -109,6 +110,16 @@ public class PlayerJoin {
      * 执行登录逻辑
      * */
     public void login(Player player,User user){
+        //如果玩家ip相同，并且没有超过6小时，则免登录
+        if (getIP(player).equals(user.getIp()) && user.getLastLogin()+1000*60*60*6>System.currentTimeMillis()){
+            user.setName(player.getName());
+            user.setLastLogin(System.currentTimeMillis());
+            login.getUserManager().update(user);
+            player.getAttachments().get(LoginState.class).logined = true;
+            EventManager.call(new LoginSuccessfulEvent(player));
+            return;
+        }
+
         boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("登录 | 请输入密码"));
         Item in1 = getInItem().copy();
@@ -150,14 +161,13 @@ public class PlayerJoin {
 
             //设置玩家已登录
             player.getAttachments().get(LoginState.class).logined = true;
-            EventManager.call(new LoginSuccessfulEvent(player));
+            //更新name和ip地址,上次登录时间
+            user.setName(player.getName());
+            user.setIp(getIP(player));
+            user.setLastLogin(System.currentTimeMillis());
+            login.getUserManager().update(user);
 
-            if (!player.getName().equals(user.getName())||!getIP(player).equals(user.getIp())){
-                //更新name和ip地址
-                user.setName(player.getName());
-                user.setIp(getIP(player));
-                login.getUserManager().update(user);
-            }
+            EventManager.call(new LoginSuccessfulEvent(player));
         });
         player.openInventory(anvilInventory);
     }
@@ -213,6 +223,7 @@ public class PlayerJoin {
     }
 
     private void resetPassword1(Player player,User user,String verificationCode){
+        Logger.info("验证码:"+verificationCode);
         boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("重置密码 | 请输入您接收到的手机验证码。"));
         anvilInventory.setIn1(getInItem());
@@ -446,7 +457,7 @@ public class PlayerJoin {
      * */
     public void reg0(Player player){
         boolean[] send = {false};
-        User user = new User(player.getUUID(),player.getName(),null,null,getIP(player));
+        User user = new User(player.getUUID(),player.getName(),null,null,getIP(player),System.currentTimeMillis());
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("创建账户 | 请设置密码。"));
         Item in1 = getInItem().copy();
         in1.getItemNBTs().setLore(List.of(
@@ -576,6 +587,7 @@ public class PlayerJoin {
     }
 
     private void reg3(Player player, User user, String phone, String verificationCode){
+        Logger.info("验证码:"+verificationCode);
         boolean[] send = {false};
         AnvilInventory anvilInventory = new AnvilInventory(new JsonTextParagraph("创建账户 | 请输入您接收到的手机验证码。"));
         anvilInventory.setIn1(getInItem());
@@ -604,6 +616,7 @@ public class PlayerJoin {
             //提交到数据库可能需要等待
             send[0] = true;
             anvilInventory.setOut(getErrorTime(new JsonTextParagraph("正在完成注册，请稍等..")));
+            user.setLastLogin(System.currentTimeMillis());
             login.getUserManager().insert(user);
             //注册成功，关闭界面，通知事件
             player.closeInventory();
