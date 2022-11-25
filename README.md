@@ -1,3 +1,10 @@
+## moonlimboauthserver
+此分支为活跃状态,供学习参考使用
+公开服:x.moonmc.cn
+正版服:play.moonmc.cn
+交流:http://tt.moonmc.cn
+
+以下内容为NanoLimbo Readme.md
 ## NanoLimbo
 
 This is lightweight minecraft limbo server, written on Java with Netty.
