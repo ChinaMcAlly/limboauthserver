@@ -1,0 +1,2 @@
+当前分支已停止开发,目前主分支为 limboauthserver/jdbc
+此分支所开发内容为将NanoLimbo集成进入Springboot,仅拥有参考意义
