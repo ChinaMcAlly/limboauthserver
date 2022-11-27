@@ -1,4 +1,5 @@
 ## moonlimboauthserver
+本项目fork自项目https://github.com/Nan1t/NanoLimbo
 此分支为活跃状态,供学习参考使用
 公开服:x.moonmc.cn
 正版服:play.moonmc.cn
