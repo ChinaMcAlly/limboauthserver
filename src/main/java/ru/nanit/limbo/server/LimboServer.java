@@ -17,6 +17,7 @@
 
 package ru.nanit.limbo.server;
 
+import cn.moonmc.ability.login.utils.SMSCodeUtils;
 import cn.moonmc.limboAdd.AddServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
@@ -42,7 +43,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public final class LimboServer {
-
+    private static LimboServer instance;
     private LimboConfig config;
     private PacketHandler packetHandler;
     private Connections connections;
@@ -82,6 +83,7 @@ public final class LimboServer {
     }
 
     private void start() throws Exception {
+        instance = this;
         Logger.info("服务器启动中...");
 
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
@@ -161,4 +163,7 @@ public final class LimboServer {
         Logger.info("服务器已关闭!");
     }
 
+    public static LimboServer getInstance() {
+        return instance;
+    }
 }

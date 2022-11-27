@@ -1,3 +1,10 @@
+aliYun:
+  ak : "ak"
+  sk : "sk"
+  sign : "sign"
+  template_bind : "SMS_10086"
+  template_resetPassword : "SMS_10010"
+
 #
 # NanoLimbo 配置
 #

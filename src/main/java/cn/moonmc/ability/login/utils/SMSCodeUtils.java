@@ -6,6 +6,8 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.grack.nanojson.JsonWriter;
+import ru.nanit.limbo.configuration.LimboConfig;
+import ru.nanit.limbo.server.LimboServer;
 import ru.nanit.limbo.server.Logger;
 
 import java.util.Map;
@@ -14,12 +16,14 @@ import java.util.Map;
  * 短信验证码工具，暂时先写死吧，反正也不会改awa
  * */
 public class SMSCodeUtils {
-    static final String ak = "LTAI5tHQ45k8nSgVMs9a6pkt";
-    static final String sk = "Tz0IwuXNb5L2rftZM9AZkT4Pn3g3XS";
-    static final String sign = "沙盒世界视角";
-    static final String template_bind = "SMS_230676030";
-    static final String template_resetpwd = "SMS_231454649";
+    private static LimboConfig config = LimboServer.getInstance().getConfig();
+    static final String ak = config.getAli_ak();
+    static final String sk = config.getAli_sk();
+    static final String sign = config.getAli_sign();
+    static final String template_bind = config.getAli_template_bind();
+    static final String template_resetPassword = config.getAli_template_resetPassword();
     static DefaultAcsClient aliClient = new DefaultAcsClient(DefaultProfile.getProfile("cn-shenzhen",ak, sk));
+
 
     /**
      * 会阻塞线程哦，在新线程调用哦
@@ -34,7 +38,7 @@ public class SMSCodeUtils {
         request.putQueryParameter("SignName", sign);
         switch (templateType){
             case bind -> request.putQueryParameter("TemplateCode", template_bind);
-            case resetpwd -> request.putQueryParameter("TemplateCode", template_resetpwd);
+            case resetpwd -> request.putQueryParameter("TemplateCode", template_resetPassword);
         }
         request.putQueryParameter("TemplateParam", JsonWriter.string(Map.of("code", code)));
         try {

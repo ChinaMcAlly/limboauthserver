@@ -36,6 +36,18 @@ import java.nio.file.Paths;
 
 public final class LimboConfig {
 
+    //添加的新配置
+
+    private String ali_ak;
+    private String ali_sk;
+    private String ali_sign;
+    private String ali_template_bind;
+    private String ali_template_resetPassword;
+
+
+
+    //原配置内容
+
     private final Path root;
 
     private SocketAddress address;
@@ -82,6 +94,17 @@ public final class LimboConfig {
                 .build();
 
         ConfigurationNode conf = loader.load();
+
+
+        //添加的新配置
+
+        ali_ak = conf.node("aliYun","ak").getString();
+        ali_sk = conf.node("aliYun","sk").getString();
+        ali_sign = conf.node("aliYun","sign").getString();
+        ali_template_bind = conf.node("aliYun","template_bind").getString();
+        ali_template_resetPassword = conf.node("aliYun","template_resetPassword").getString();
+
+        //NanoLimbo配置
 
         address = conf.node("bind").get(SocketAddress.class);
         maxPlayers = conf.node("maxPlayers").getInt();
@@ -254,5 +277,25 @@ public final class LimboConfig {
 
     public int getWorkerGroupSize() {
         return workerGroupSize;
+    }
+
+    public String getAli_ak() {
+        return ali_ak;
+    }
+
+    public String getAli_sk() {
+        return ali_sk;
+    }
+
+    public String getAli_sign() {
+        return ali_sign;
+    }
+
+    public String getAli_template_bind() {
+        return ali_template_bind;
+    }
+
+    public String getAli_template_resetPassword() {
+        return ali_template_resetPassword;
     }
 }
