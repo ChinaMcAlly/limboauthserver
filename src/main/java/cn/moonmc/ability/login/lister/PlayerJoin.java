@@ -366,11 +366,6 @@ public class PlayerJoin {
 //        packetSetContainerSlot.setSlot(new Item().setItemID(ItemType.air).createSlot());
 //        getClientConnection().sendPacket(packetSetContainerSlot);
         //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
-        //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
-        //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
-        //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
-        //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
-        //玩家执行书本上的命令才表示同意协议，之后才执行 reg0() 方法开始注册。
     }
     /**
      * 执行注册逻辑
