@@ -18,6 +18,7 @@
 package ru.nanit.limbo.server;
 
 import cn.moonmc.ability.login.utils.SMSCodeUtils;
+import cn.moonmc.ability.notify.ServerEula;
 import cn.moonmc.limboAdd.AddServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
@@ -44,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class LimboServer {
     private static LimboServer instance;
+    private ServerEula serverEula;
     private LimboConfig config;
     private PacketHandler packetHandler;
     private Connections connections;
@@ -78,12 +80,17 @@ public final class LimboServer {
         return commandManager;
     }
 
+    public ServerEula getServerEula() {
+        return serverEula;
+    }
+
     public LimboServer() throws Exception {
         start();
     }
 
     private void start() throws Exception {
         instance = this;
+        serverEula = new ServerEula();
         Logger.info("服务器启动中...");
 
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);

@@ -67,13 +67,14 @@ CREATE TABLE IF NOT EXISTS `user`  (
     public User update(User user){
         try (
                 Connection c = login.getDataSource().getConnection();
-                PreparedStatement p = c.prepareStatement("update user set name=?,password=?,phone=?,ip=? where uuid=?");
+                PreparedStatement p = c.prepareStatement("update user set name=?,password=?,phone=?,ip=?,lastLogin=? where uuid=?");
                 ){
             p.setString(1,user.name);
             p.setString(2,user.password.getHash());
             p.setString(3,user.phone);
             p.setString(4,user.ip);
-            p.setString(5,user.uuid.toString());
+            p.setString(5,String.valueOf(user.lastLogin));
+            p.setString(6,user.uuid.toString());
             if (p.executeUpdate()>0) {
                 return user;
             }else {

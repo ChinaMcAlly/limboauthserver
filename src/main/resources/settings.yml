@@ -51,7 +51,7 @@ spawnPosition:
 # 1 - 创造
 # 2 - 冒险
 # 3 - 旁观者
-gameMode: 3
+gameMode: 0
 
 # F3中显示的服务器名称
 brandName:
@@ -76,7 +76,7 @@ bossBar:
 
 # 显示标题和副标题
 title:
-  enable: true
+  enable: false
   # 如果只显示主标题请将 subtitle 设置为空
   title: '{"text": "&9&lWelcome!"}'
   # 如果只显示副标题，请将 title 设置为空

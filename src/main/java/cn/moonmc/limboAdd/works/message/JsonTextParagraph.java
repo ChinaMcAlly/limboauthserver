@@ -30,6 +30,7 @@ public class JsonTextParagraph implements JsonText{
         this.text = text;
     }
 
+    @Override
     public String toJsonText(){
         return JsonWriter.string(toMap());
     }
