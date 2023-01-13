@@ -10,10 +10,12 @@ import cn.moonmc.limboAdd.works.menu.BookItemNBTs;
 import cn.moonmc.limboAdd.works.menu.Item;
 import cn.moonmc.limboAdd.works.menu.ItemType;
 import cn.moonmc.limboAdd.works.menu.LecternInventory;
+import cn.moonmc.limboAdd.works.message.JsonText;
 import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import lombok.Getter;
+import ru.nanit.limbo.protocol.registry.Version;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -40,17 +42,16 @@ public class ChooseServer {
          * 监听玩家登录成功事件
          * */
         EventManager.regLister(LoginSuccessfulEvent.class, event -> {
+            Version version = event.getPlayer().getClientConnection().getClientVersion();
             LecternInventory lecternInventory = new LecternInventory(
-                    new Item()
+                    new Item(event.getPlayer().getClientConnection().getClientVersion())
                             .setItemID(ItemType.written_book)
                             .setItemNBTs(
-                                    new BookItemNBTs()
+                                    new BookItemNBTs(version)
                                             .setBookTitle("选择服务器")
                                             .setBookAuthor("沙盒事件视角")
                                             .setBookPages(
-                                                    List.of(
-                                                            () -> jsonText
-                                                    )
+                                                    List.of(versiona -> jsonText)
                                             )
                             )
             );

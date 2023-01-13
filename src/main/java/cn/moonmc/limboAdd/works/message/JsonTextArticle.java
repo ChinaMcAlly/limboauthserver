@@ -1,6 +1,7 @@
 package cn.moonmc.limboAdd.works.message;
 
 import com.grack.nanojson.JsonWriter;
+import ru.nanit.limbo.protocol.registry.Version;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,10 @@ public class JsonTextArticle  implements JsonText{
     }
 
     @Override
-    public String toJsonText() {
+    public String toJsonText(Version version) {
         List<Map<String,Object>> list = new ArrayList<>();
         for (JsonTextParagraph paragraph : paragraphs) {
-            list.add(paragraph.toMap());
+            list.add(paragraph.toMap(version));
         }
         return JsonWriter.string(list);
     }

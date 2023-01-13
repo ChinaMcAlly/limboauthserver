@@ -21,7 +21,7 @@ public class PlayDisconnect implements PacketOut {
 
     @Override
     public void encode(ByteMessage msg, Version version) {
-        msg.writeString(reason.toJsonText());
+        msg.writeString(reason.toJsonText(version));
     }
 
     @Override

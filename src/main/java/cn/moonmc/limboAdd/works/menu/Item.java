@@ -1,9 +1,9 @@
 package cn.moonmc.limboAdd.works.menu;
 
-import cn.moonmc.limboAdd.packets.out.PacketSetContainerSlot;
 import lombok.Data;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import org.jetbrains.annotations.NotNull;
+import ru.nanit.limbo.protocol.registry.Version;
 
 /**
  * 代表一个物品
@@ -14,6 +14,11 @@ public class Item {
     ItemType itemID;
     int count = 1;
     ItemNBTs itemNBTs;
+    Version version;
+
+    public Item(Version version) {
+        this.version = version;
+    }
 
     public Item setItemID(ItemType itemID) {
         this.itemID = itemID;
@@ -30,13 +35,13 @@ public class Item {
         return this;
     }
 
-    public PacketSetContainerSlot.Slot createSlot(){
-        PacketSetContainerSlot.Slot slot = new PacketSetContainerSlot.Slot();
+    public Slot createSlot(){
+        Slot slot = new Slot();
         if (itemID==null||count<=0){
             slot.setHasItem(false);
             return slot;
         }
-        slot.setItemID(itemID.id);
+        slot.setItemType(itemID);
         slot.setCount(count);
         if (itemNBTs==null){
             slot.setNbt(CompoundBinaryTag.builder().build());
@@ -48,12 +53,12 @@ public class Item {
 
     public CompoundBinaryTag ToNBT(){
         CompoundBinaryTag.@NotNull Builder nbt = CompoundBinaryTag.builder();
-        nbt.putInt("id",itemID.id);
+        nbt.putInt("id",itemID.getItemTypeNetID(version));
         nbt.put("tag", itemNBTs.getNBT());
         return nbt.build();
     }
 
     public Item copy() {
-        return new Item().setItemID(itemID).setItemNBTs(itemNBTs.copy()).setCount(count);
+        return new Item(version).setItemID(itemID).setItemNBTs(itemNBTs.copy()).setCount(count);
     }
 }

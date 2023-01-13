@@ -41,7 +41,7 @@ public class PacketOpenMenu implements PacketOut {
     public void encode(ByteMessage msg, Version version) {
         msg.writeVarInt(windowID);
         msg.writeVarInt(windowsTypeID);
-        msg.writeString(title.toJsonText());
+        msg.writeString(title.toJsonText(version));
     }
 
 

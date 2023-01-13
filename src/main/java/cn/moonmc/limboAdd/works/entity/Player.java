@@ -57,8 +57,8 @@ public class Player {
         PacketTitleSetSubTitle packetSubtitle = new PacketTitleSetSubTitle();
         PacketTitleTimes packetTimes = new PacketTitleTimes();
 
-        packetTitle.setTitle(title.toJsonText());
-        packetSubtitle.setSubtitle(subtitle.toJsonText());
+        packetTitle.setTitle(title.toJsonText(clientConnection.getClientVersion()));
+        packetSubtitle.setSubtitle(subtitle.toJsonText(clientConnection.getClientVersion()));
         packetTimes.setFadeIn(in);
         packetTimes.setStay(stay);
         packetTimes.setFadeOut(out);
@@ -79,7 +79,7 @@ public class Player {
     public void sendBoosBar(JsonText text, float health, BossBar.Color color, BossBar.Division division,UUID uuid){
         PacketBossBar bossBarPaket = new PacketBossBar();
         BossBar bossBar = new BossBar();
-        bossBar.setText(text.toJsonText());
+        bossBar.setText(text.toJsonText(clientConnection.getClientVersion()));
         bossBar.setHealth(health);
         bossBar.setColor(color);
         bossBar.setDivision(division);
@@ -95,7 +95,7 @@ public class Player {
      * */
     public void sendMessage(PacketChatMessage.PositionLegacy type,JsonText message){
         PacketChatMessage joinMessage = new PacketChatMessage();
-        joinMessage.setJsonData(message.toJsonText());
+        joinMessage.setJsonData(message.toJsonText(clientConnection.getClientVersion()));
         joinMessage.setPosition(type);
         joinMessage.setSender(UUID.randomUUID());
         clientConnection.sendPacket(PacketSnapshot.of(joinMessage));

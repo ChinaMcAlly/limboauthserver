@@ -2,6 +2,7 @@ package cn.moonmc.limboAdd.works.message;
 
 import cn.moonmc.limboAdd.works.menu.Item;
 import net.kyori.adventure.nbt.TagStringIO;
+import ru.nanit.limbo.protocol.registry.Version;
 
 import java.io.IOException;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class HoverEventShowItem implements HoverEvent {
     }
 
     @Override
-    public Map<String, Object> toMap() {
+    public Map<String, Object> toMap(Version version) {
         try {
             return Map.of("action", "show_item", "value", TagStringIO.get().asString(item.ToNBT()));
         } catch (IOException e) {

@@ -24,6 +24,7 @@ public class LecternInventory extends ShowInventory {
 
     @Override
     protected void show(Player player) {
+
         //打开窗口
         PacketOpenMenu packetOpenMenu = new PacketOpenMenu();
         packetOpenMenu.setSlots(1);
@@ -32,6 +33,7 @@ public class LecternInventory extends ShowInventory {
         player.getClientConnection().sendPacket(packetOpenMenu);
         //设置书
         sendSlotUp(player);
+
         //解决跳页问题
         nowId = 0;
     }

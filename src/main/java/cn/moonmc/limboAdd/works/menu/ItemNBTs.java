@@ -1,12 +1,12 @@
 package cn.moonmc.limboAdd.works.menu;
 
 import cn.moonmc.limboAdd.works.message.JsonText;
-import cn.moonmc.limboAdd.works.message.JsonTextParagraph;
 import lombok.Data;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.nbt.ListBinaryTag;
 import net.kyori.adventure.nbt.StringBinaryTag;
 import org.jetbrains.annotations.NotNull;
+import ru.nanit.limbo.protocol.registry.Version;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,11 @@ import java.util.List;
 public class ItemNBTs {
     JsonText displayName;
     List<JsonText> lore;
+    protected Version version;
+
+    public ItemNBTs(Version version) {
+        this.version = version;
+    }
 
     /**
      * 设置物品显示名称
@@ -65,7 +70,7 @@ public class ItemNBTs {
         }
         display.putString(
                 "Name",
-                displayName.toJsonText()
+                displayName.toJsonText(version)
         );
     }
 
@@ -75,13 +80,13 @@ public class ItemNBTs {
         }
         ListBinaryTag.Builder<net.kyori.adventure.nbt.BinaryTag> binaryTagBuilder = ListBinaryTag.builder();
         for (JsonText jsonText : lore) {
-            binaryTagBuilder.add(StringBinaryTag.of(jsonText.toJsonText()));
+            binaryTagBuilder.add(StringBinaryTag.of(jsonText.toJsonText(version)));
         }
         display.put("Lore",binaryTagBuilder.build());
     }
 
     public ItemNBTs copy() {
-        ItemNBTs itemNBTs =  new ItemNBTs();
+        ItemNBTs itemNBTs =  new ItemNBTs(version);
         if (lore!=null){
             itemNBTs.setLore(new ArrayList<>(lore));
         }

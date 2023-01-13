@@ -2,6 +2,7 @@ package cn.moonmc.limboAdd.works.message;
 
 import com.grack.nanojson.JsonWriter;
 import lombok.Getter;
+import ru.nanit.limbo.protocol.registry.Version;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +32,8 @@ public class JsonTextParagraph implements JsonText{
     }
 
     @Override
-    public String toJsonText(){
-        return JsonWriter.string(toMap());
+    public String toJsonText(Version version){
+        return JsonWriter.string(toMap(version));
     }
 
     /**
@@ -51,11 +52,11 @@ public class JsonTextParagraph implements JsonText{
         return this;
     }
 
-    Map<String,Object> toMap(){
+    Map<String,Object> toMap(Version version){
         Map<String,Object> map = new HashMap<>();
         map.put("text",text);
         if (hoverEvent!=null){
-            map.put("hoverEvent",hoverEvent.toMap());
+            map.put("hoverEvent",hoverEvent.toMap(version));
         }
         if (clickEvent!=null){
             map.put("clickEvent",clickEvent.toMap());

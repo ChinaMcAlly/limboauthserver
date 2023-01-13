@@ -1,5 +1,7 @@
 package cn.moonmc.limboAdd.works.message;
 
+import ru.nanit.limbo.protocol.registry.Version;
+
 import java.util.Map;
 
 /**
@@ -14,7 +16,7 @@ public class HoverEventShowText implements HoverEvent {
     }
 
     @Override
-    public Map<String, Object> toMap() {
+    public Map<String, Object> toMap(Version version) {
         return Map.of("action", "show_text", "value", text);
     }
 }

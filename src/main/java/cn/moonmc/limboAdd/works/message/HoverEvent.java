@@ -1,5 +1,7 @@
 package cn.moonmc.limboAdd.works.message;
 
+import ru.nanit.limbo.protocol.registry.Version;
+
 import java.util.Map;
 
 /**
@@ -8,5 +10,5 @@ import java.util.Map;
  * @author jja8
  */
 public interface HoverEvent {
-    Map<String, Object> toMap();
+    Map<String, Object> toMap(Version version);
 }

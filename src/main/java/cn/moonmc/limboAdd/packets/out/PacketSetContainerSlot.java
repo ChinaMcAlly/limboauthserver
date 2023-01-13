@@ -1,7 +1,7 @@
 package cn.moonmc.limboAdd.packets.out;
 
+import cn.moonmc.limboAdd.works.menu.Slot;
 import lombok.Data;
-import net.kyori.adventure.nbt.CompoundBinaryTag;
 import ru.nanit.limbo.protocol.ByteMessage;
 import ru.nanit.limbo.protocol.PacketOut;
 import ru.nanit.limbo.protocol.registry.Version;
@@ -12,14 +12,6 @@ import ru.nanit.limbo.protocol.registry.Version;
  * */
 @Data
 public class PacketSetContainerSlot implements PacketOut {
-
-    @Data
-    public static class Slot{
-        boolean hasItem = true;
-        int itemID = 829;
-        int count = 1;
-        CompoundBinaryTag nbt = CompoundBinaryTag.builder().build();
-    }
 
     /**
      * 要设置的窗口id  -1设置玩家鼠标 -2设置玩家背包 其他窗口使用PacketOpenWindow的id
@@ -48,9 +40,9 @@ public class PacketSetContainerSlot implements PacketOut {
         msg.writeShort(slotID);
 
         //物品
-        msg.writeBoolean(slot.hasItem);
-        msg.writeVarInt(slot.itemID);
-        msg.writeByte(slot.count);
-        msg.writeCompoundTag(slot.nbt);
+        msg.writeBoolean(slot.isHasItem());
+        msg.writeVarInt(slot.getItemType().getItemTypeNetID(version));
+        msg.writeByte(slot.getCount());
+        msg.writeCompoundTag(slot.getNbt());
     }
 }
